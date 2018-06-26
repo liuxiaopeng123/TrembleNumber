@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager
+        android:id="@+id/vp_content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rg_content_fragment"
+        android:layout_alignParentTop="true" />
+
+    <RadioGroup
+        android:id="@+id/rg_content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
+            android:id="@+id/rb_bottom_agmenthome"
+            android:drawableTop="@drawable/selector_home_bg"
+            style="@style/bottom_bg"
+            android:paddingTop="10dp"
+            android:checked="true"
+            android:layout_marginLeft="20dp"
+            android:text="我" />
+
+        <com.theworldofluster.example.ziang.tremblenumber.view.CounterRadioButton
+            android:id="@+id/rb_main_information"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/selector_user_bg"
+            style="@style/bottom_bg"
+            android:layout_marginRight="20dp"
+            android:text="私信"
+            android:textColor="@drawable/textcolor_bg"
+            android:textSize="10dp" />
+    </RadioGroup>
+
+
+</RelativeLayout>

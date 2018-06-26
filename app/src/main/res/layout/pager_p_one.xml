@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:background="@mipmap/white_bg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="健康报告"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:drawableLeft="@mipmap/jiankangbaogao"
+            android:textColor="@color/blue_text"
+            android:drawablePadding="10dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3月19日-3月20日"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:drawableLeft="@mipmap/rili"
+            android:textColor="@color/blue_text"
+            android:drawableRight="@mipmap/bluemore"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart1"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="深圳市南山区"
+                android:drawableLeft="@mipmap/tubiao"
+                android:textColor="@color/black"
+                android:drawablePadding="5dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第999名"
+                android:textColor="@color/darkred"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                >
+
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:layout_marginRight="40dp"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="提示：【抖擞】力求为你提供精准的健康分析与改善建议·但不能替代专业的医疗诊断·请知悉"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

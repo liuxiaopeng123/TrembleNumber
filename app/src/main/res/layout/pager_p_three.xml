@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@mipmap/white_bg"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="20dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="身体分析"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:drawableLeft="@mipmap/shentifenxi"
+            android:textColor="@color/blue_text"
+            android:drawablePadding="10dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="近期熬夜较多，身体体质有所下降，具体表现为，食欲不振，持续性身体乏力"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:drawablePadding="10dp"
+            android:lineSpacingExtra="5dp"
+            />
+
+    </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+    <TextView
+        android:id="@+id/pager_p_three_go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/blue_btn"
+        android:text="开启权限"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="3dp"
+        />
+
+</LinearLayout>
+
+</LinearLayout>
