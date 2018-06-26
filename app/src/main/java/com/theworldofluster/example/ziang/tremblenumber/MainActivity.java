@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.parseColor("#ffffff"));
 
         if(PreferenceUtil.getString("isLogin","").equals("")){
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, PersonalActivity.class));
         }else{
             startActivity(new Intent(this, PersonalActivity.class));
         }

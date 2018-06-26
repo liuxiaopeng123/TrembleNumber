@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -70,6 +71,9 @@ public class PersonalActivity extends AppCompatActivity implements SensorEventLi
 
     @ViewInject(R.id.yuan_c)
     ImageView yuan_c;
+
+    @ViewInject(R.id.activity_persion_pk)
+    TextView activity_persion_pk;
 
     float strength;
 
@@ -190,6 +194,13 @@ public class PersonalActivity extends AppCompatActivity implements SensorEventLi
         activity_personal_userdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(PersonalActivity.this,MyActivity.class));
+            }
+        });
+
+        activity_persion_pk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(PersonalActivity.this,MyActivity.class));
             }
         });
