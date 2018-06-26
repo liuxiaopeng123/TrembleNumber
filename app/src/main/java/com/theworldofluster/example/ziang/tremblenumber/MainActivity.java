@@ -19,6 +19,7 @@ import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 public class MainActivity extends AppCompatActivity {
 
    //nihao
+    //buhao
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
