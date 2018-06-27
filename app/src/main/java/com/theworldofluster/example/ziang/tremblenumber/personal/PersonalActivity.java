@@ -41,6 +41,7 @@ import com.theworldofluster.example.ziang.tremblenumber.fragment.APthreePager;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.APtwoPager;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.AUserPager;
 import com.theworldofluster.example.ziang.tremblenumber.jpushdemo.ExampleUtil;
+import com.theworldofluster.example.ziang.tremblenumber.pk.HealthIntegralTableActivity;
 import com.theworldofluster.example.ziang.tremblenumber.user.MyActivity;
 import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
 
@@ -201,7 +202,7 @@ public class PersonalActivity extends AppCompatActivity implements SensorEventLi
         activity_persion_pk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PersonalActivity.this,MyActivity.class));
+                startActivity(new Intent(PersonalActivity.this,HealthIntegralTableActivity.class));
             }
         });
 

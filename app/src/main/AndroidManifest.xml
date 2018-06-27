@@ -231,6 +231,7 @@
             android:value="58172663c865837213f71c8a" /> <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity android:name=".pk.HealthIntegralTableActivity"></activity>
+        <activity android:name=".pk.PKRecordActivity"></activity>
     </application>
 
 </manifest>
