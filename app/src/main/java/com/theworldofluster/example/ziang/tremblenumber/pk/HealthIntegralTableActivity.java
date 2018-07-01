@@ -46,12 +46,13 @@ public class HealthIntegralTableActivity extends Activity {
     Button health_integral_table_invite_pk;
     @ViewInject(R.id.activity_pk_record_type_select)
     TextView activity_pk_record_type_select;
+    @ViewInject(R.id.health_integral_table_pk_tab)
+    TextView health_integral_table_pk_tab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_integral_table);
         ViewUtils.inject(this); //注入view和事件
-
         initPopupWindow();
         initView();
         initData();
@@ -84,13 +85,17 @@ public class HealthIntegralTableActivity extends Activity {
     }
 
 
-    @OnClick({R.id.health_integral_table_back,R.id.pk_rules,R.id.pk_record,R.id.health_integral_table_invite_pk,R.id.activity_pk_record_type_select})
+    @OnClick({R.id.health_integral_table_pk_tab,R.id.health_integral_table_back,R.id.pk_rules,R.id.pk_record,R.id.health_integral_table_invite_pk,R.id.activity_pk_record_type_select})
     private void Onclick(View v){
         switch (v.getId()){
+            case R.id.health_integral_table_pk_tab:
+                startActivity(new Intent(HealthIntegralTableActivity.this,PsychologicalTestActivity.class));
+                break;
             case R.id.health_integral_table_back:
                 finish();
                 break;
             case R.id.pk_rules:
+
                 showPKAboutDialog();
                 break;
             case R.id.pk_record:

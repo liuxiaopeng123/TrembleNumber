@@ -449,7 +449,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void base_code(){
         dia.show();
-
         RequestParams params = new RequestParams();
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));

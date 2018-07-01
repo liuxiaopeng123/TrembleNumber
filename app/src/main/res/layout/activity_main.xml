@@ -1,18 +1,372 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+    <RelativeLayout
+        android:id="@+id/home_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:id="@+id/activity_health_consult_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            >
 
-</android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/backblack" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:text="场景应用"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_bg_color"/>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="快捷应用"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="编辑"
+            android:background="@drawable/button_shape_circle_2"/>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/main_gv"
+        android:layout_width="match_parent"
+        android:numColumns="4"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:layout_height="wrap_content">
+
+    </GridView>
+
+    <LinearLayout
+        android:background="@color/gray_bg_color"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:text="全部应用"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="身心健康应用"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/main_jiankangtixing"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_tixing"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康提醒"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_jiankangbaogao"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_baogao"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康报告"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_jiankangzixun"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_jiankangzixun"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康资讯"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="心理健康专项服务"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/main_xinqingriji"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_riji"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="心情日记"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_xinliceshi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_xinli"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="心理测试"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="竞技中心"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/main_jiankangfenpk"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:background="@mipmap/main_bt_bg"
+                android:src="@mipmap/main_icon_pk"
+                android:padding="5dp"
+                android:layout_marginTop="10dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dip"
+                android:textColor="@color/blue_text"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康分PK"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

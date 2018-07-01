@@ -60,7 +60,6 @@ public class PKRecordActivity extends Activity {
                 break;
             case R.id.activity_pk_record_type_select:
                 showPopWindow();
-
                 break;
 
             default:

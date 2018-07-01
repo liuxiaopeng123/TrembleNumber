@@ -132,11 +132,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
 
-            <ImageView
+            <CheckBox
                 android:layout_margin="5dp"
                 android:layout_width="25dp"
+                android:checked="true"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_launcher"/>
+                android:button="@drawable/selector_pk_bg"/>
 
         </LinearLayout>
 
@@ -174,12 +175,11 @@
                 android:text="拒绝"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
-
-            <ImageView
+            <CheckBox
                 android:layout_margin="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_launcher"/>
+                android:button="@drawable/selector_pk_bg"/>
 
         </LinearLayout>
 
@@ -217,12 +217,11 @@
                 android:text="失败"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
-
-            <ImageView
+            <CheckBox
                 android:layout_margin="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_launcher"/>
+                android:button="@drawable/selector_pk_bg"/>
 
         </LinearLayout>
 
@@ -264,11 +263,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
 
-                <ImageView
+                <CheckBox
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/ic_launcher"/>
+                    android:button="@drawable/selector_pk_bg"/>
 
             </LinearLayout>
 
@@ -305,12 +304,11 @@
                     android:text="【败】"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
-
-                <ImageView
+                <CheckBox
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/ic_launcher"/>
+                    android:button="@drawable/selector_pk_bg"/>
 
             </LinearLayout>
 
@@ -348,11 +346,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
 
-                <ImageView
+                <CheckBox
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/ic_launcher"/>
+                    android:button="@drawable/selector_pk_bg"/>
 
             </LinearLayout>
 

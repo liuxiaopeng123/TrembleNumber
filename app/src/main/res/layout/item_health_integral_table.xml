@@ -12,7 +12,9 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/item_health_check_box"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_pk_bg"
+  />
 <TextView
     android:id="@+id/pk_record_num"
     android:gravity="center"

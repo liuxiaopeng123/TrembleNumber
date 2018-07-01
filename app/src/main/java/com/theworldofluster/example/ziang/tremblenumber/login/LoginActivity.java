@@ -133,20 +133,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void base_userInfo(){
 
+        Log.i("xiaopeng---","我爱你123");
         dia.show();
 
         RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("imsi", ZiangUtils.getIMSI(LoginActivity.this));
-//        params.addQueryStringParameter("imei",  ZiangUtils.getIMEI(LoginActivity.this));
+        params.addQueryStringParameter("imsi", ZiangUtils.getIMSI(LoginActivity.this));
+        params.addQueryStringParameter("imei",  ZiangUtils.getIMEI(LoginActivity.this));
 
-        params.addQueryStringParameter("imsi", "460004306794886");
-        params.addQueryStringParameter("imei",  "865901030381860");
+//        params.addQueryStringParameter("imsi", "460004306794886");
+//        params.addQueryStringParameter("imei",  "865901030381860");
 
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_device, params, new RequestCallBack<String>() {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.i("xiaopeng---","我爱你123"+responseInfo.result);
                 Log.e("ZiangS---初始化",responseInfo.result);
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
@@ -164,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
 
                 } catch (JSONException e) {
+                    Log.i("xiaopeng---","我爱你123"+e);
                     e.printStackTrace();
                 }
 
@@ -172,6 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(HttpException error, String msg) {
+                Log.i("xiaopeng---","我爱你123"+msg);
                 Log.e("ZiangF-初始化",msg);
                 dia.dismiss();
             }

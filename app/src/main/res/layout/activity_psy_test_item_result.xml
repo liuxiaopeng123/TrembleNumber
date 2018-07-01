@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/home_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/activity_psy_test_item_result_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/backblack" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/activity_psy_test_item_result_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:text="心理测试"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_bg_color"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试结果"/>
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试结果测试结果测试结果测试结果测试结果测试结果测试结果XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx"/>
+
+
+        <TextView
+            android:id="@+id/activity_psy_test_item_result_other"
+            android:textColor="@color/blue_text"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:autoLink="all"
+            android:layout_height="wrap_content"
+            android:text="看看其他测试结果"/>
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/activity_psy_test_item_result_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:text="再测一次"/>
+
+
+
+
+</LinearLayout>

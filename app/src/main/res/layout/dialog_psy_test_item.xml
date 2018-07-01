@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/dialog_cancle"
+            android:layout_gravity="right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@mipmap/dialog_cancle"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="试题简介"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            />
+
+
+
+    </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="360dp">
+
+
+
+            <LinearLayout
+                android:padding="20dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="批判性思维很强"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:text="用户pk是指用户之间身心综合情况的pk，以用户每周的健康分作为基础。用户只能向【比我好】、【旗鼓相当】的用户发起PK，不能向【比我差】的用户发起PK，且一次仅可向1-5人发起PK。\n1. 以每周：周一8：00至周日23：00为PK开放时间，用户在此时间段内可随时发起pk挑战。\n2.PK胜负的依据即下一周的健康周报的综合评分，高者胜出。\n3.当用户发起挑战24小时内，不能再次对其他人发起挑战，需等上一轮邀请失效后（当发起挑战后24小时内无人应答，则挑战失效），或24小时内邀请的用户都明确拒绝挑战后，才可再次向其他用户发起挑战。\n4.当用户收到别人在有效期内（24小时内）的挑战邀请时，需应答（即接收或拒绝）后，才能主动发起对他人的挑战。发起挑战和接受挑战不能同时进行。"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:drawablePadding="10dp"
+                    android:lineSpacingExtra="5dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1)获胜一方可获得成长值奖励\n①每周一、二发起挑战：奖励4成长值\n②每周三、四发起挑战：奖励2成长值\n③每周五、六发起挑战：奖励1成长值\n注：以上成长值奖励以VIP1等级用户为标准，用户VIP等级越高，可获得更高的成长值奖励。具体规则请参照VIP等级体系规则。\n2)失败一方会被扣减成长值\n①每周一、二发起挑战：扣减1成长值\n②每周三、四发起挑战：扣减2成长值\n③每周五、六、日发起挑战：扣减4成长值\n3)平局不奖励也不扣减成长值"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:drawablePadding="10dp"
+                    android:lineSpacingExtra="5dp"
+                    />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/dialog_confirm"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="开始"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape_half_2"/>
+
+</LinearLayout>
+
+</LinearLayout>
