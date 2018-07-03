@@ -13,7 +13,7 @@
         >
 
         <RelativeLayout
-            android:id="@+id/activity_psy_test_item_back"
+            android:id="@+id/activity_health_alert_same_person_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             >
@@ -28,11 +28,11 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/activity_psy_test_item_title"
+            android:id="@+id/activity_health_alert_same_person_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/black"
-            android:text="心理测试"
+            android:text="同类症状的用户"
             android:textSize="18sp"
             android:gravity="center"
             android:layout_centerVertical="true"
@@ -45,9 +45,37 @@
         android:layout_height="1dp"
         android:background="@color/gray_bg_color"/>
 
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/gray_text_color"
+            android:text="超过"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/new_redbg"
+            android:text="35%"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/gray_text_color"
+            android:text="的用户和你有同类症状"/>
+
+    </LinearLayout>
+
     <ListView
+
         android:divider="@null"
-        android:id="@+id/activity_psy_test_item_lv"
+        android:id="@+id/activity_health_alert_same_person_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

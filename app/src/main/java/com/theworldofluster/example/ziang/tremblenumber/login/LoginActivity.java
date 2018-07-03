@@ -27,6 +27,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.theworldofluster.example.ziang.tremblenumber.MainActivity;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
@@ -85,8 +86,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     HttpDialog dia;
 
-    String userid;
-    String token;
+    String userid="";
+    String token="";
 
     public static LoginActivity loginactivity;
 
@@ -460,7 +461,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if ("SUCCESS".equals(jsonobject.getString("code"))) {
 
-                        startActivity(new Intent(LoginActivity.this,PersonalActivity.class));
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
                         PreferenceUtil.putString("isLogin","yes");
                         finish();
 

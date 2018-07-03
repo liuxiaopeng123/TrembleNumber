@@ -292,10 +292,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString());
-        params.addQueryStringParameter("password",activity_register2_password.getText().toString());
-        params.addQueryStringParameter("verify",activity_register2_newpassword.getText().toString());
+        params.addQueryStringParameter("password",activity_register2_newpassword.getText().toString());
+        params.addQueryStringParameter("verify",activity_register2_password.getText().toString());
 
         HttpUtils http = new HttpUtils();
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_login_mobilenotecode + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_login_mobilenotecode, params, new RequestCallBack<String>() {
 
             @Override
