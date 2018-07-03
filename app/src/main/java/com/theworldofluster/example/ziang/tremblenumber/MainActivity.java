@@ -46,7 +46,6 @@ public class MainActivity extends Activity {
     @ViewInject(R.id.main_jiankangfenpk)
     LinearLayout main_jiankangfenpk;
 
-
     private static final String[] names = {"健康提醒","健康报告","心情日记","健康PK"};
     private static final int[] icons = {R.mipmap.main_icon_tixing,R.mipmap.main_icon_baogao,R.mipmap.main_icon_riji,R.mipmap.main_icon_pk};
 
