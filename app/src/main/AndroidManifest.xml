@@ -233,11 +233,11 @@
         <activity android:name=".pk.HealthIntegralTableActivity" />
         <activity android:name=".pk.PKRecordActivity" />
         <activity android:name=".pk.PsychologicalTestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".pk.PsyTestItemActivity"></activity>
         <activity android:name=".pk.PsyTestItemDetailActivity"></activity>
