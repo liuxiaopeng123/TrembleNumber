@@ -246,6 +246,8 @@
         <activity android:name=".pk.HealthConsultActivity"/>
         <activity android:name=".pk.HealthConsultListActivity"/>
         <activity android:name=".pk.HealthConsultDetailActivity"/>
+        <activity android:name=".pk.HealthAlertActivity"/>
+        <activity android:name=".pk.HealthSamePersonActivity"/>
     </application>
 
 </manifest>

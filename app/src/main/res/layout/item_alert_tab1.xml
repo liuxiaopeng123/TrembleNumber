@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/main_icon_xinli"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/item_material_name"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="今天的你有点不开心啊"
+            android:textColor="@color/blue_text"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="3月28日"
+            android:textColor="@color/gray_text_color"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

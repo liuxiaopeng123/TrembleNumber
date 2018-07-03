@@ -22,6 +22,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
 import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
+import com.theworldofluster.example.ziang.tremblenumber.pk.HealthAlertActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthIntegralTableActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.PsychologicalTestActivity;
@@ -63,9 +64,10 @@ public class MainActivity extends Activity {
         //设置状态栏颜色
         window.setStatusBarColor(Color.parseColor("#ffffff"));
 
-//        if(PreferenceUtil.getString("isLogin","").equals("")){
-//            startActivity(new Intent(this, LoginActivity.class));
-//        }else{
+        if(PreferenceUtil.getString("isLogin","").equals("")){
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+//        else{
 //            startActivity(new Intent(this, PersonalActivity.class));
 //        }
 
@@ -84,7 +86,7 @@ public class MainActivity extends Activity {
     private void Onclick(View v){
         switch (v.getId()){
             case R.id.main_jiankangtixing:
-                ToastUtil.showContent(getApplicationContext(),"健康提醒");
+                startActivity(new Intent(MainActivity.this, HealthAlertActivity.class));
                 break;
             case R.id.main_jiankangbaogao:
                 startActivity(new Intent(MainActivity.this, PersonalActivity.class));

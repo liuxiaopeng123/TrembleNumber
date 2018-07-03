@@ -46,7 +46,7 @@
         android:background="@color/gray_bg_color"/>
 
     <ListView
-
+        android:divider="@null"
         android:id="@+id/activity_psy_test_item_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/main_icon_xinli"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/dialog_cancle"
+            android:layout_gravity="right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@mipmap/dialog_cancle"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:text="长看屏幕对视力不好哦~"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/blue_text"
+            />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/date"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="3月20日 13:00"
+            android:textSize="14sp"
+            android:textColor="@color/gray_text_color"
+            />
+
+
+
+
+    </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
+
+            <LinearLayout
+                android:padding="20dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:text="我说你这么玩游戏的时间是够长的啊，你如果在这么玩下去的别说你玩出毛病来，眼镜一直盯着手机会出人名的啊~~~~~~~~~~你心里可是要有点数啊~~~~~~~~~~~~~~别老叫我说了~~~~~~~~~"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:drawablePadding="10dp"
+                    android:lineSpacingExtra="5dp"
+                    />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+
+                        android:layout_height="wrap_content"
+                        android:text="查看"/>
+                    <TextView
+                        android:id="@+id/dialog_alert_health_godetail"
+                        android:textColor="@color/blue_text"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="视网膜破裂"/>
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+
+                        android:layout_height="wrap_content"
+                        android:text="相关资讯"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dialog_alert_health_gosameperson"
+                android:layout_weight="1"
+                android:textColor="@color/blue_text"
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:text="查看有同类症状的用户"/>
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="60dp">
+
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="10dp"
+                    />
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="30dp"
+                    />
+                <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/expert_b"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="50dp"
+                    />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/gduo"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>

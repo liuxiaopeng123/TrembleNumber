@@ -33,6 +33,7 @@
                     android:text="娱乐心理测试"/>
         </LinearLayout>
         <ListView
+            android:divider="@null"
             android:id="@+id/psytab3_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
