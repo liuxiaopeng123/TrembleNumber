@@ -3,6 +3,7 @@ package com.theworldofluster.example.ziang.tremblenumber.pk;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView;
 
 public class PKRecordActivity extends Activity {
@@ -48,7 +56,60 @@ public class PKRecordActivity extends Activity {
     }
 
     private void initData() {
+        getList("");
+        getStatistics();
         activity_pk_record_lv.setAdapter(new MyAdapter());
+    }
+
+    //获取列表
+    public void getList(String name) {
+        RequestParams params = new RequestParams();
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("active", "0");
+        params.addQueryStringParameter("status", "0");
+        params.addQueryStringParameter("result", "0");
+        params.addQueryStringParameter("pageIndex", "1");
+        params.addQueryStringParameter("pageSize", "12");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_list , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    //获取列表
+    public void getStatistics() {
+        RequestParams params = new RequestParams();
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_statistics + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_statistics , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
 

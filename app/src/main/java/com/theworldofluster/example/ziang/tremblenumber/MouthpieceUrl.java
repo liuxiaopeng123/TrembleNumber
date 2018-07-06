@@ -17,7 +17,7 @@ public class MouthpieceUrl {
     //基础的url
     public static String base_url = "http://39.105.118.62/sliver/";
     //加载图片的url
-    public static String base_loading_img = "http://47.104.197.109:8080/jeasyvip/";
+    public static String base_loading_img = "http://39.105.118.62/image/";
     //用户主页信息
     public static String base_device = base_url+"account/createAccount/device";
     //获取验证法
@@ -34,6 +34,61 @@ public class MouthpieceUrl {
     public static String base_obtaininformations = base_url+"user/changeHeadUrl";
     //补充用户信息
     public static String base_edituser = base_url+"/user/editUser";
+
+    //小鹏的接口
+
+    //获取测试列表
+    public static String base_psy_test_list = base_url+"test/cate";
+    //获取测试题集
+    public static String base_psy_test_tiji = base_url+"test/set";
+    //获取题目列表
+    public static String base_psy_test_question_list = base_url+"test/question";
+    //提交测试得结果
+    public static String base_psy_test_result = base_url+"test/result";
+    //更多结果
+    public static String base_psy_test_more_result = base_url+"test/result/more";
+    //已测试列表
+    public static String base_psy_test_completed = base_url+"test/set/completed";
+    //心理分析
+    public static String base_psy_test_analysis = base_url+"test/analysis";
+
+    //健康资讯列表
+    public static String base_health_consult_list = base_url+"health/cate";
+    //健康资讯文章
+    public static String base_health_consult_articles = base_url+"health/articles";
+    //健康资讯收藏文章
+    public static String base_health_consult_collect = base_url+"health/collect";
+
+    //健康提醒列表
+    public static String base_health_alert_list = base_url+"remind/list";
+    //健康提醒列表
+    public static String base_health_alert_read = base_url+"remind/read";
+    //相同病症人群
+    public static String base_health_alert_symptom = base_url+"remind/symptom";
+
+    //查询龙湖榜个人
+    public static String base_pk_recored_rank_self = base_url+"rank/self";
+    //查询龙湖榜前三
+    public static String base_pk_recored_rank_top = base_url+"rank/top";
+    //查询龙湖榜列表
+    public static String base_pk_recored_rank_list = base_url+"rank/list";
+    //查询龙湖榜总榜
+    public static String base_pk_recored_rank_total = base_url+"rank/total";
+
+    //查询PK列表
+    public static String base_pk_list = base_url+"pk/list";
+    //查询PK统计
+    public static String base_pk_statistics = base_url+"pk/statistics";
+    //查询PK状态
+    public static String base_pk_status = base_url+"pk/status";
+    //发起PK
+    public static String base_pk_lauch = base_url+"pk/lauch";
+    //确认PK
+    public static String base_pk_confirm = base_url+"pk/confirm";
+
+    //获取好友列表
+    public static String base_friend_list = base_url+"friend/list";
+
 
     //发布返程需求
     public static String base_adddriverbackdata = base_url+"/appApi/driverBackData/addDriverBackData";

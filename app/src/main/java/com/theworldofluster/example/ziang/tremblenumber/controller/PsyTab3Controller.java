@@ -1,6 +1,7 @@
 package com.theworldofluster.example.ziang.tremblenumber.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,7 +11,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 /**
  * @author xiaopeng
@@ -44,6 +52,25 @@ public class PsyTab3Controller extends TabController {
 
     //获取列表
     public void getList(String name) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_completed + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_psy_test_completed , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
     class MyAdapter extends BaseAdapter {

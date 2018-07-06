@@ -18,14 +18,14 @@
             />
         <TextView
             android:layout_alignParentBottom="true"
-            android:id="@+id/item_material_name"
+            android:id="@+id/item_psy_test_name"
             android:layout_width="match_parent"
             android:padding="5dp"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape_half_2"
             android:text="测一测职场中你的应变能力/40题"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
 
@@ -45,24 +46,35 @@
 
     </RelativeLayout>
 
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
+        android:id="@+id/activity_psy_test_question_title"
+        android:padding="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试详情"/>
+        android:textColor="@color/black"
+        android:text="心理测试"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        />
+    <ListView
+        android:divider="@null"
+        android:id="@+id/activity_question_lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:choiceMode="singleChoice"
+        android:layout_weight="1" />
 
 
     <Button
         android:id="@+id/activity_psy_test_item_detail_btn"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
+        android:textSize="16sp"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
-        android:text="完成"/>
+        android:background="@color/black_overlay"
+        android:text="下一题"/>
 
 
-
-
-</RelativeLayout>
+</LinearLayout>

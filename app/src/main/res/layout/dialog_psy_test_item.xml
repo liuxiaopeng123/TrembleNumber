@@ -69,6 +69,7 @@
 
 
                     <TextView
+                        android:id="@+id/dialog_psy_test_title"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
@@ -84,6 +85,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/dialog_psy_test_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
@@ -95,19 +97,6 @@
                     android:drawablePadding="10dp"
                     android:lineSpacingExtra="5dp"
                     />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1)获胜一方可获得成长值奖励\n①每周一、二发起挑战：奖励4成长值\n②每周三、四发起挑战：奖励2成长值\n③每周五、六发起挑战：奖励1成长值\n注：以上成长值奖励以VIP1等级用户为标准，用户VIP等级越高，可获得更高的成长值奖励。具体规则请参照VIP等级体系规则。\n2)失败一方会被扣减成长值\n①每周一、二发起挑战：扣减1成长值\n②每周三、四发起挑战：扣减2成长值\n③每周五、六、日发起挑战：扣减4成长值\n3)平局不奖励也不扣减成长值"
-                    android:textSize="15dp"
-                    android:padding="10dp"
-                    android:textColor="@color/white"
-                    android:drawablePadding="10dp"
-                    android:lineSpacingExtra="5dp"
-                    />
-
 
             </LinearLayout>
 
@@ -121,7 +110,7 @@
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/button_shape_half_2"/>
+            android:background="@drawable/button_shape_half_2_blue"/>
 
 </LinearLayout>
 

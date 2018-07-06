@@ -21,10 +21,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView;
+
+import java.util.Date;
 
 public class HealthIntegralTableActivity extends Activity {
 
@@ -81,8 +90,109 @@ public class HealthIntegralTableActivity extends Activity {
     }
 
     private void initData() {
+        getPKStauts();
+        getRankSelf("1");
+        getRankTop("1");
+        getRankTotal("1");
 
     }
+
+    private void getRankSelf(String type) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("period", "");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_recored_rank_self + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_recored_rank_self , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    private void getRankTop(String type) {
+        RequestParams params = new RequestParams();
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("period", new Date(System.currentTimeMillis())+"");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_recored_rank_top + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_recored_rank_top , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    private void getRankTotal(String type) {
+        RequestParams params = new RequestParams();
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("period", "2018-07-01");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_recored_rank_total + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_recored_rank_total , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    private void getPKStauts() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_status + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_status , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+
+
 
 
     @OnClick({R.id.health_integral_table_pk_tab,R.id.health_integral_table_back,R.id.pk_rules,R.id.pk_record,R.id.health_integral_table_invite_pk,R.id.activity_pk_record_type_select})

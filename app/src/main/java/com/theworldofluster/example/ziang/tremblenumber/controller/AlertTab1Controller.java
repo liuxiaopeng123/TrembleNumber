@@ -3,6 +3,7 @@ package com.theworldofluster.example.ziang.tremblenumber.controller;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -12,9 +13,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultDetailActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+
+import org.apache.http.Header;
 
 /**
  * @author xiaopeng
@@ -90,6 +100,29 @@ public class AlertTab1Controller extends TabController {
 
     //获取列表
     public void getList(String name) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("type", "1");
+        params.addQueryStringParameter("readed", "0");
+        params.addQueryStringParameter("pageIndex", "1");
+        params.addQueryStringParameter("pageSize", "10");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
     class MyAdapter extends BaseAdapter {

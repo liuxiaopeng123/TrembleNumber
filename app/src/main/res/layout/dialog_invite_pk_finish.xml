@@ -42,7 +42,7 @@
             android:layout_width="120dp"
             android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black_overlay"
             android:layout_height="35dp"
             android:text="知道了"
              />

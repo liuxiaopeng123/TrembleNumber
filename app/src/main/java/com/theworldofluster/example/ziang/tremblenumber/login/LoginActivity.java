@@ -462,6 +462,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if ("SUCCESS".equals(jsonobject.getString("code"))) {
 
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        PreferenceUtil.putString("token",jsonobject.getString("data"));
                         PreferenceUtil.putString("isLogin","yes");
                         finish();
 
