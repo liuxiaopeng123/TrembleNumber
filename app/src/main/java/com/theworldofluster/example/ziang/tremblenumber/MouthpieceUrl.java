@@ -86,8 +86,16 @@ public class MouthpieceUrl {
     //确认PK
     public static String base_pk_confirm = base_url+"pk/confirm";
 
-    //获取好友列表
-    public static String base_friend_list = base_url+"friend/list";
+    //查询心情日记
+    public static String base_mood_getbyday = base_url+"mood/getByDay";
+    //上传心情
+    public static String base_mood_save = base_url+"mood/save";
+
+    //查询心事
+    public static String base_mind_list = base_url+"mind/list";
+
+    //添加心事
+    public static String base_mind_add = base_url+"mind/add";
 
 
     //发布返程需求

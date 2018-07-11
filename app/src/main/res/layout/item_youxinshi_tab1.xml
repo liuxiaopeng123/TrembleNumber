@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+
+        <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+            android:layout_centerHorizontal="true"
+            android:layout_width="40dp"
+            android:id="@+id/item_youxinshi_user_img"
+            android:layout_height="40dp"
+            android:src="@mipmap/expert_b"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="5dp"
+            />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/item_youxinshi_user_name"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="昵称"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/item_youxinshi_hugnumber"
+            android:layout_width="80dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/button_shape_half_white_blue_2"
+            android:gravity="center"
+            android:layout_height="30dp"
+            android:text="99 抱抱"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_youxinshi_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="64dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:maxLines="3"
+        android:layout_height="wrap_content"
+        android:text="昨晚发现我两个孩子的爸爸出轨了这是我们在一起的第十五个年头十分不敢相信竟然十分冷静。"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

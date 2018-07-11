@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/bottom_pop_biaoqing_glass"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent"
+        android:layout_weight="1"
+        >
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:id="@+id/content"
+        android:background="@color/silver"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/pop_edit_et"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:maxLength="50"
+            android:singleLine="true"
+            android:hint="输入心情"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:padding="10dp"
+            android:layout_height="120dp" />
+
+        <LinearLayout
+            android:layout_below="@+id/pop_edit_et"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/pop_edit_checked_img"
+                android:layout_width="35dp"
+                android:padding="8dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/like_on" />
+            <TextView
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:text="同时发布到【有心事】"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bootom_pop_edit_cancle"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_marginTop="110dp"
+            android:drawablePadding="5dp"
+            android:layout_marginRight="10dp"
+            android:drawableRight="@mipmap/dialog_cancle"
+            android:text="0 / 50"
+            android:layout_alignParentRight="true"
+            android:layout_height="35dp"
+             />
+
+    </RelativeLayout>
+</LinearLayout>

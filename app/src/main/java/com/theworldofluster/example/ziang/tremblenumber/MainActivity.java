@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.theworldofluster.example.ziang.tremblenumber.activity.CalendarActivity;
 import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
 import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthAlertActivity;
@@ -94,7 +95,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, HealthConsultActivity.class));
                 break;
             case R.id.main_xinqingriji:
-                ToastUtil.showContent(getApplicationContext(),"心情日记");
+                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
                 break;
             case R.id.main_xinliceshi:
                 startActivity(new Intent(MainActivity.this, PsychologicalTestActivity.class));

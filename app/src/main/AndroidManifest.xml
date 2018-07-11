@@ -248,6 +248,8 @@
         <activity android:name=".pk.HealthConsultDetailActivity"/>
         <activity android:name=".pk.HealthAlertActivity"/>
         <activity android:name=".pk.HealthSamePersonActivity"/>
+        <activity android:name=".pk.YouXinShiActivity"/>
+        <activity android:name=".pk.EditXinShiActivity"/>
     </application>
 
 </manifest>

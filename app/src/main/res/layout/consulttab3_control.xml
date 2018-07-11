@@ -12,6 +12,7 @@
             android:paddingRight="30dp"
             android:layout_height="45dp">
                 <TextView
+                    android:id="@+id/consult_type_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -22,7 +23,7 @@
                     android:background="@drawable/button_shape_half_white_blue_2"
                     android:text="心理类资讯"/>
                 <TextView
-
+                    android:id="@+id/consult_type_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -35,7 +36,7 @@
         </LinearLayout>
         <ListView
             android:divider="@null"
-            android:id="@+id/psytab3_lv"
+            android:id="@+id/consulttab3_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </ListView>

@@ -155,6 +155,12 @@ public class PsyTestItemActivity extends Activity {
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_psytab3, null);
             }
+            ImageView imageView =convertView.findViewById(R.id.item_psytab3_img);
+            if (position%2==0){
+                imageView.setBackgroundResource(R.mipmap.psytest_bg1);
+            }else {
+                imageView.setBackgroundResource(R.mipmap.psytest_bg2);
+            }
             TextView name = convertView.findViewById(R.id.item_psy_test_name);
             name.setText(psyTestTiJiList.get(position).getSetTitle());
             return convertView;

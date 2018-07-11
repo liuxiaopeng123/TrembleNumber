@@ -112,6 +112,7 @@ public class HealthIntegralTableActivity extends Activity {
 
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
             }
 
             @Override
@@ -126,7 +127,7 @@ public class HealthIntegralTableActivity extends Activity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("type", type);
-        params.addQueryStringParameter("period", new Date(System.currentTimeMillis())+"");
+        params.addQueryStringParameter("period", "2018-07-01");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_recored_rank_top + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_recored_rank_top , this, params) {
             @Override
@@ -136,6 +137,7 @@ public class HealthIntegralTableActivity extends Activity {
 
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
             }
 
             @Override
@@ -160,6 +162,7 @@ public class HealthIntegralTableActivity extends Activity {
 
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
             }
 
             @Override

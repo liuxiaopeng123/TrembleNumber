@@ -28,6 +28,7 @@
                             android:layout_height="10dp"
                             android:background="@color/colorPrimary"/>
                         <TextView
+                            android:id="@+id/psy_tab1_cateName1"
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
                             android:layout_height="10dp"
                             android:background="@color/colorPrimaryGreen"/>
                         <TextView
+                            android:id="@+id/psy_tab1_cateName2"
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.theworldofluster.example.ziang.tremblenumber.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.activity.FoldlinediagramActivity;
 
 import java.util.ArrayList;
 
@@ -167,7 +169,7 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-
+        startActivity(new Intent(getActivity(),FoldlinediagramActivity.class));
     }
 
     @Override

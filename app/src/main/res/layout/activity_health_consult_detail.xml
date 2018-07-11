@@ -28,11 +28,11 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/activity_health_consult_detail_title"
+            android:id="@+id/activity_health_consult_detail_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/black"
-            android:text="心理健康"
+            android:text="文章详情"
             android:textSize="18sp"
             android:gravity="center"
             android:layout_centerVertical="true"
@@ -52,31 +52,51 @@
             >
 
             <ImageView
+                android:id="@+id/health_consult_like_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/wen" />
+                android:background="@mipmap/like_off" />
 
         </RelativeLayout>
     </RelativeLayout>
 
 
-    <TextView
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我们似乎都在挥霍善良"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/activity_health_consult_detail_title"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:maxLines="2"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我们似乎都在挥霍善良"/>
 
-    <TextView
-        android:padding="10dp"
-        android:textColor="@color/gray_text_color"
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良v"/>
+            <TextView
+                android:id="@+id/activity_health_consult_detail_content"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="16sp"
+                android:lineSpacingExtra="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良我们似乎都在挥霍善良v"/>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 
 </LinearLayout>

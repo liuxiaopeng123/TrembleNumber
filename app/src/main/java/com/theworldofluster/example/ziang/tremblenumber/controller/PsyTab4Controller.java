@@ -110,6 +110,7 @@ public class PsyTab4Controller extends TabController {
 
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
             }
 
             @Override

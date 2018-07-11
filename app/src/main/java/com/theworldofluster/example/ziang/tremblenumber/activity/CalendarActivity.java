@@ -1,32 +1,47 @@
 package com.theworldofluster.example.ziang.tremblenumber.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.controller.CalendarTab1Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.CalendarTab2Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.TabController;
+import com.theworldofluster.example.ziang.tremblenumber.pk.YouXinShiActivity;
 import com.theworldofluster.example.ziang.tremblenumber.view.CalendarView;
+import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    private CalendarView calendar;
-    private ImageButton calendarLeft;
-    private TextView calendarCenter;
-    private TextView calendarText;
-    private ImageButton calendarRight;
-    private SimpleDateFormat format;
+    List<TabController> list;
+    public int ChoiceWhere = 0;
+
+    @ViewInject(R.id.calendar_view_pager)
+    NoAnimViewpager calendar_view_pager;
+    @ViewInject(R.id.activity_calendar_today)
+    TextView activity_calendar_today;
+    @ViewInject(R.id.activity_calendar_month)
+    TextView activity_calendar_month;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -34,72 +49,123 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_calendar);
+        ViewUtils.inject(this); //注入view和事件
+
 
         Window window = getWindow();
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
         window.setStatusBarColor(Color.parseColor("#28d3bd"));
+        init();
+    }
 
-        format = new SimpleDateFormat("yyyy-MM-dd");
-        //获取日历控件对象
-        calendar = (CalendarView)findViewById(R.id.calendar);
-        calendar.setSelectMore(false); //单选
 
-        calendarLeft = (ImageButton)findViewById(R.id.calendarLeft);
-        calendarCenter = (TextView)findViewById(R.id.calendarCenter);
-        calendarText = (TextView)findViewById(R.id.calendarText);
-        calendarRight = (ImageButton)findViewById(R.id.calendarRight);
-        try {
-            //设置日历日期
-            Date date = format.parse("2015-01-01");
-            calendar.setCalendarData(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    private void init() {
+        list = new ArrayList<>();
+        list.add(new CalendarTab1Controller(this));
+        list.add(new CalendarTab2Controller(this));
 
-        //获取日历中年月 ya[0]为年，ya[1]为月（格式大家可以自行在日历控件中改）
-        String[] ya = calendar.getYearAndmonth().split("-");
-
-        calendarCenter.setText(ya[0]+"年");
-        calendarText.setText(ya[1]+"月");
-
-        calendarLeft.setOnClickListener(new View.OnClickListener() {
-
+        calendar_view_pager.setAdapter(new MessageAdapter());
+        calendar_view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View v) {
-                //点击上一月 同样返回年月
-                String leftYearAndmonth = calendar.clickLeftMonth();
-                String[] ya = leftYearAndmonth.split("-");
-                calendarCenter.setText(ya[0]+"年");
-                calendarText.setText(ya[1]+"月");
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
-        });
-
-        calendarRight.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(View v) {
-                //点击下一月
-                String rightYearAndmonth = calendar.clickRightMonth();
-                String[] ya = rightYearAndmonth.split("-");
-                calendarCenter.setText(ya[0]+"年");
-                calendarText.setText(ya[1]+"月");
-            }
-        });
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        activity_calendar_today.setTextColor(Color.BLACK);
+                        activity_calendar_month.setTextColor(Color.WHITE);
+                        activity_calendar_today.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
+                        activity_calendar_month.setBackgroundResource(R.drawable.button_shape_half_white_cricle_stoke);
+                        ChoiceWhere = 0;
+                        break;
+                    case 1:
+                        activity_calendar_today.setTextColor(Color.WHITE);
+                        activity_calendar_month.setTextColor(Color.BLACK);
+                        activity_calendar_today.setBackgroundResource(R.drawable.button_shape_half_white_cricle_stoke);
+                        activity_calendar_month.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
+                        ChoiceWhere = 1;
+                        break;
 
-        //设置控件监听，可以监听到点击的每一天（大家也可以在控件中根据需求设定）
-        calendar.setOnItemClickListener(new CalendarView.OnItemClickListener() {
-
-            @Override
-            public void OnItemClick(Date selectedStartDate,
-                                    Date selectedEndDate, Date downDate) {
-                if(calendar.isSelectMore()){
-                    Toast.makeText(getApplicationContext(), format.format(selectedStartDate)+"到"+format.format(selectedEndDate), Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(), format.format(downDate), Toast.LENGTH_SHORT).show();
                 }
             }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
         });
+    }
+
+    @OnClick({R.id.activity_calendar_today,R.id.activity_calendar_month,R.id.activity_calendar_back,R.id.activity_calendar_xinshi})
+    private void Onclick(View v){
+        switch (v.getId()){
+            case R.id.activity_calendar_xinshi:
+                startActivity(new Intent(CalendarActivity.this, YouXinShiActivity.class));
+                break;
+            case R.id.activity_calendar_back:
+                finish();
+                break;
+            case R.id.activity_calendar_today:
+                activity_calendar_today.setTextColor(Color.BLACK);
+                activity_calendar_month.setTextColor(Color.WHITE);
+                activity_calendar_today.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
+                activity_calendar_month.setBackgroundResource(R.drawable.button_shape_half_white_cricle_stoke);
+                ChoiceWhere = 0;
+                calendar_view_pager.setCurrentItem(0);
+                break;
+            case R.id.activity_calendar_month:
+                activity_calendar_today.setTextColor(Color.WHITE);
+                activity_calendar_month.setTextColor(Color.BLACK);
+                activity_calendar_today.setBackgroundResource(R.drawable.button_shape_half_white_cricle_stoke);
+                activity_calendar_month.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
+                ChoiceWhere = 1;
+                calendar_view_pager.setCurrentItem(1);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+    class MessageAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            TabController controller = list.get(position);
+            // 获得数据
+            View view = controller.getRootView();
+            container.addView(view);
+            // 加载数据
+            controller.initData();
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            CalendarTab1Controller controller = (CalendarTab1Controller) list.get(0);
+//            return false;
+//        }
+        return super.onKeyDown(keyCode, event);
     }
 }

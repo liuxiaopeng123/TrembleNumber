@@ -9,15 +9,13 @@
     >
 
     <RelativeLayout
-        android:id="@+id/home_title_rl"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="45dp"
         >
 
         <RelativeLayout
-            android:id="@+id/information_back"
+            android:id="@+id/activity_calendar_back"
             android:layout_width="60dp"
-            android:layout_marginTop="20dp"
             android:layout_height="match_parent"
             >
 
@@ -34,69 +32,75 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:gravity="center"
-            android:paddingTop="20dp"
-            android:drawablePadding="5dp"
+            android:text="心情日记"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             />
 
+        <RelativeLayout
+            android:id="@+id/activity_calendar_xinshi"
+            android:layout_width="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/main_icon_riji" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
-<RelativeLayout
-    android:id="@+id/layout_calendar"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:visibility="visible"
-    >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        >
 
-    <TextView
-        android:id="@+id/calendarCenter"
-        style="@style/main_bar_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        />
+        <TextView
+            android:id="@+id/activity_calendar_today"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="今日"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_shape_half_white_cricle"
+            />
 
-    <TextView
-        android:id="@+id/calendarText"
-        style="@style/main_bar_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/calendarCenter"
-        android:layout_marginLeft="10dp" />
+        <TextView
+            android:id="@+id/activity_calendar_month"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="月"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_shape_half_white_cricle_stoke"
+            />
 
-    <ImageButton
-        android:id="@+id/calendarLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:contentDescription="@null"
-        android:visibility="gone"
-        android:padding="8dp"
-        android:src="@mipmap/calendar_month_left" />
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/calendarRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:visibility="gone"
-        android:contentDescription="@null"
-        android:padding="8dp"
-        android:src="@mipmap/calendar_month_right" />
-
-    <com.theworldofluster.example.ziang.tremblenumber.view.CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="fill_parent"
+    <com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager
+        android:id="@+id/calendar_view_pager"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/calendarText" />
+        android:layout_weight="1" />
 
-</RelativeLayout>
+
 </LinearLayout>

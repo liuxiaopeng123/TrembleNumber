@@ -12,6 +12,7 @@
         android:layout_height="130dp">
 
         <ImageView
+            android:id="@+id/item_psytab3_img"
             android:background="@mipmap/activity_personal_01"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape_half_2"
             android:text="测一测职场中你的应变能力/40题"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 

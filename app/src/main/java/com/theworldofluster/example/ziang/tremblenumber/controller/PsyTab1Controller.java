@@ -34,7 +34,8 @@ public class PsyTab1Controller extends TabController {
     View view;
     GridView gridView1 ;
     GridView gridView2 ;
-
+    TextView psy_tab1_cateName1;
+    TextView psy_tab1_cateName2;
     List<PsyTestBean> psyTestBeanList=null;
     private static final String[] names = {"情绪","人格性格","家庭","亲密关系","婚姻","成长"};
     private static final int[] icons = {R.mipmap.zhuanye1,R.mipmap.zhuanye2,R.mipmap.zhuanye3,R.mipmap.zhuanye7,R.mipmap.zhuanye4,R.mipmap.zhuanye5,R.mipmap.zhuanye6};
@@ -53,6 +54,8 @@ public class PsyTab1Controller extends TabController {
 
     @Override
     public void initData() {
+        psy_tab1_cateName1=view.findViewById(R.id.psy_tab1_cateName1);
+        psy_tab1_cateName2=view.findViewById(R.id.psy_tab1_cateName2);
         gridView1= (GridView) view.findViewById(R.id.psytab1_gv1);
         gridView2= (GridView) view.findViewById(R.id.psytab1_gv2);
 
@@ -69,8 +72,8 @@ public class PsyTab1Controller extends TabController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mContext, PsyTestItemActivity.class);
-                intent.putExtra("title",psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryName());
-                intent.putExtra("cateCode",psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryCode());
+                intent.putExtra("title",psyTestBeanList.get(1).getSecondCategoryList().get(position).getCategoryName());
+                intent.putExtra("cateCode",psyTestBeanList.get(1).getSecondCategoryList().get(position).getCategoryCode());
                 mContext.startActivity(intent);
             }
         });
@@ -92,6 +95,8 @@ public class PsyTab1Controller extends TabController {
                     psyTestBeanList=response.data;
                     gridView1.setAdapter(new GridViewAdapter());
                     gridView2.setAdapter(new GridView2Adapter());
+                    psy_tab1_cateName1.setText(psyTestBeanList.get(0).getCategoryName());
+                    psy_tab1_cateName2.setText(psyTestBeanList.get(1).getCategoryName());
                 }
             }
 
@@ -121,8 +126,8 @@ public class PsyTab1Controller extends TabController {
             ImageView iv_icon = (ImageView) view
                     .findViewById(R.id.iv_homeitem_icon);
             tv_name.setText(psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryName());
-            iv_icon.setImageResource(icons[position]);
-//            Utils.BJSloadImg(mContext,MouthpieceUrl.base_loading_img+psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryPic(),iv_icon);
+//            iv_icon.setImageResource(icons[position]);
+            Utils.BJSloadImg(mContext,MouthpieceUrl.base_loading_img+psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryPic(),iv_icon);
             return view;
         }
 
@@ -155,8 +160,8 @@ public class PsyTab1Controller extends TabController {
             ImageView iv_icon = (ImageView) view
                     .findViewById(R.id.iv_homeitem_icon);
             tv_name.setText(psyTestBeanList.get(1).getSecondCategoryList().get(position).getCategoryName());
-            iv_icon.setImageResource(icons2[position]);
-//            Utils.BJSloadImg(mContext,MouthpieceUrl.base_url+psyTestBeanList.get(0).getSecondCategoryList().get(position).getCategoryPic(),iv_icon);
+//            iv_icon.setImageResource(icons2[position]);
+            Utils.BJSloadImg(mContext,MouthpieceUrl.base_loading_img+psyTestBeanList.get(1).getSecondCategoryList().get(position).getCategoryPic(),iv_icon);
 
             return view;
         }
