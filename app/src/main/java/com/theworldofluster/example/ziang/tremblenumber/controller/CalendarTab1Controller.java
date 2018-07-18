@@ -37,6 +37,7 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.XinShi;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthAlertActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.PKRecordActivity;
@@ -61,9 +62,11 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
     View view;
     ListView psytab3_lv;
 
+    List<XinShi> xinShiList =new ArrayList<>();
+
     private int selected_icon=-1;
-    ImageView pager_today_img1;
-    TextView pager_today_xinqing_tv1;
+    ImageView pager_today_img1,pager_today_dialy_date_img1,pager_today_img2,pager_today_dialy_date_img2,pager_today_img3,pager_today_dialy_date_img3;
+    TextView pager_today_xinqing_tv1,pager_today_dialy_date1,pager_today_xinqing_tv2,pager_today_dialy_date2,pager_today_xinqing_tv3,pager_today_dialy_date3,pager_today_commit1,pager_today_commit2,pager_today_commit3;
 
     LinearLayout bottom_pop_biaoqing_glass;
 
@@ -92,7 +95,8 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
     SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM E");
     SimpleDateFormat sf2 = new SimpleDateFormat("dd");
     SimpleDateFormat sf3 = new SimpleDateFormat("yyyy-MM-dd");
-
+    SimpleDateFormat sf4 = new SimpleDateFormat("HH");
+    int currentTime=-1;
     MyAdapter adapter = new MyAdapter();
 
     ViewPagerAdapter viewPagerAdapter;
@@ -107,24 +111,42 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
         view = View.inflate(context, R.layout.pager_today, null);
         return view;
     }
-
     @Override
     public void initData() {
-        getList("");
         TextView day = view.findViewById(R.id.pager_today_day);
         TextView year = view.findViewById(R.id.pager_today_year);
         day.setText(sf2.format(new Date(System.currentTimeMillis())));
         year.setText(sf.format(new Date(System.currentTimeMillis())));
+        String hour = sf4.format(new Date(System.currentTimeMillis()));
+        if ("0".equals(hour.substring(0,1))){
+            currentTime = Integer.parseInt(hour.substring(1,2));
+        }else {
+            currentTime = Integer.parseInt(hour.substring(0,2));
+        }
         initView();
         initPopupWindow();
+        getList("");
     }
 
     private void initView() {
+        //上午
         pager_today_img1=view.findViewById(R.id.pager_today_img1);
-        TextView pager_today_commit1 = view.findViewById(R.id.pager_today_commit1);
-        pager_today_commit1.setOnClickListener(this);
+        pager_today_commit1 = view.findViewById(R.id.pager_today_commit1);
         pager_today_xinqing_tv1 =view.findViewById(R.id.pager_today_xinqing_tv1);
-        pager_today_xinqing_tv1.setOnClickListener(this);
+        pager_today_dialy_date_img1=view.findViewById(R.id.pager_today_dialy_date_img1);
+        pager_today_dialy_date1=view.findViewById(R.id.pager_today_dialy_date1);
+        //中午
+        pager_today_img2=view.findViewById(R.id.pager_today_img2);
+        pager_today_commit2 = view.findViewById(R.id.pager_today_commit2);
+        pager_today_xinqing_tv2 =view.findViewById(R.id.pager_today_xinqing_tv2);
+        pager_today_dialy_date_img2=view.findViewById(R.id.pager_today_dialy_date_img2);
+        pager_today_dialy_date2=view.findViewById(R.id.pager_today_dialy_date2);
+        //晚上
+        pager_today_img3=view.findViewById(R.id.pager_today_img3);
+        pager_today_commit3 = view.findViewById(R.id.pager_today_commit3);
+        pager_today_xinqing_tv3 =view.findViewById(R.id.pager_today_xinqing_tv3);
+        pager_today_dialy_date_img3=view.findViewById(R.id.pager_today_dialy_date_img3);
+        pager_today_dialy_date3=view.findViewById(R.id.pager_today_dialy_date3);
         initBiaoQing();
     }
 
@@ -216,7 +238,19 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                 showPopWindow();
                 break;
             case R.id.pager_today_xinqing_tv1:
-                showEditDialog();
+                showEditDialog("1");
+                break;
+            case R.id.pager_today_commit2:
+                showPopWindow();
+                break;
+            case R.id.pager_today_xinqing_tv2:
+                showEditDialog("2");
+                break;
+            case R.id.pager_today_commit3:
+                showPopWindow();
+                break;
+            case R.id.pager_today_xinqing_tv3:
+                showEditDialog("3");
                 break;
             case R.id.bottom_pop_biaoqing_glass:
                 if (popupWindow.isShowing()){
@@ -329,7 +363,7 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
 
     private boolean flag_tongbuyouxinshi=true;
     ButtomDialogView buttomDialogView;
-    private void showEditDialog() {
+    private void showEditDialog(final String type) {
         View view = View.inflate(mContext, R.layout.bottom_pop_edit, null);
         buttomDialogView = new ButtomDialogView(mContext,view,true,true);
         final TextView pop_cancle=view.findViewById(R.id.bootom_pop_edit_cancle);
@@ -340,9 +374,9 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
             public void onClick(View v) {
                 flag_tongbuyouxinshi=!flag_tongbuyouxinshi;
                 if (flag_tongbuyouxinshi==false){
-                    checked_img.setImageResource(R.mipmap.like_off);
+                    checked_img.setImageResource(R.mipmap.tongbu_off);
                 }else {
-                    checked_img.setImageResource(R.mipmap.like_on);
+                    checked_img.setImageResource(R.mipmap.tongbu_on);
                 }
 
             }
@@ -363,7 +397,7 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                     }else {
                         pager_today_xinqing_tv1.setText(editText.getText().toString().trim());
                         buttomDialogView.dismiss();
-                        commitxinqing(editText.getText().toString().trim());
+                        commitxinqing(type,editText.getText().toString().trim());
                     }
                     return true;
                 }
@@ -391,11 +425,11 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
     }
 
     //提交心情
-    private void commitxinqing(String dialyContext) {
+    private void commitxinqing(String type,String dialyContext) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
-        params.addQueryStringParameter("type", "1");
+        params.addQueryStringParameter("type", type);
         params.addQueryStringParameter("dialyDay", sf3.format(new Date(System.currentTimeMillis())));
         params.addQueryStringParameter("emojiId", commitIconCode+"");
         params.addQueryStringParameter("dialyContext", dialyContext);
@@ -405,6 +439,9 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
             @Override
             public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
+                if (response.code==200){
+                    getList("");
+                }
             }
 
             @Override
@@ -428,10 +465,14 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("dialyDay", sf3.format(new Date(System.currentTimeMillis())));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mood_getbyday + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_mood_getbyday , mContext, params) {
+        new HttpPost<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mood_getbyday , mContext, params) {
             @Override
-            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+            public void onParseSuccess(GsonObjModel<List<XinShi>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
+                xinShiList=response.data;
+                if (response.code==200){
+                    initXinQingView();
+                }
             }
 
             @Override
@@ -444,6 +485,65 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                 super.onFailure(e, s);
             }
         };
+    }
+
+    //初始化心情界面
+    private void initXinQingView() {
+        if (currentTime>0&&currentTime<7){
+            pager_today_dialy_date_img1.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img2.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img3.setImageResource(R.mipmap.wuseqizi);
+        }else if (currentTime>=7&&currentTime<13){
+            pager_today_dialy_date_img1.setImageResource(R.mipmap.youseqizi);
+            pager_today_dialy_date_img2.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img3.setImageResource(R.mipmap.wuseqizi);
+            pager_today_commit1.setOnClickListener(this);
+            pager_today_xinqing_tv1.setOnClickListener(this);
+            pager_today_commit1.setBackgroundResource(R.drawable.button_shape_half_white_s_three);
+        }else if (currentTime>=13&&currentTime<19){
+            pager_today_dialy_date_img1.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img2.setImageResource(R.mipmap.youseqizi);
+            pager_today_dialy_date_img3.setImageResource(R.mipmap.wuseqizi);
+            pager_today_commit2.setBackgroundResource(R.drawable.button_shape_half_white_s_three);
+            pager_today_commit2.setOnClickListener(this);
+            pager_today_xinqing_tv2.setOnClickListener(this);
+        }else {
+            pager_today_dialy_date_img1.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img2.setImageResource(R.mipmap.wuseqizi);
+            pager_today_dialy_date_img3.setImageResource(R.mipmap.youseqizi);
+            pager_today_commit3.setBackgroundResource(R.drawable.button_shape_half_white_s_three);
+            pager_today_commit3.setOnClickListener(this);
+            pager_today_xinqing_tv3.setOnClickListener(this);
+        }
+
+        for (int i=0;i<xinShiList.size();i++){
+            switch (i){
+                case 0:
+                    pager_today_commit1.setText("更新表情");
+                    pager_today_dialy_date1.setText(xinShiList.get(i).getUpdateDate().substring(11,16));
+                    pager_today_xinqing_tv1.setText(xinShiList.get(i).getDialyContext());
+                    for (int j=0;j<haoIconCode.length;j++){
+                        if (haoIconCode[j]==xinShiList.get(i).getEmojiId()){
+                            pager_today_img1.setImageResource(haoicons[j]);
+                        }
+                    }
+                    for (int j=0;j<huaiIconCode.length;j++){
+                        if (huaiIconCode[j]==xinShiList.get(i).getEmojiId()){
+                            pager_today_img1.setImageResource(huaiicons[j]);
+                        }
+                    }
+                    for (int j=0;j<yibanIconCode.length;j++){
+                        if (yibanIconCode[j]==xinShiList.get(i).getEmojiId()){
+                            pager_today_img1.setImageResource(yibanicons[j]);
+                        }
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+        }
     }
 
 
