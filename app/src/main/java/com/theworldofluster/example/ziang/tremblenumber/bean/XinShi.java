@@ -21,21 +21,6 @@ public class XinShi {
     private String mindContext;
     private int mindId;
     private int userId;
-    /**
-     * dialyContext : 发生了不开心的事
-     * dialyDay : 2018-07-12
-     * dialyId : 11
-     * dialyType : 1
-     * emojiId : 93
-     * updateDate : 2018-07-12 14:45:32
-     */
-
-    private String dialyContext;
-    private String dialyDay;
-    private int dialyId;
-    private int dialyType;
-    private int emojiId;
-    private String updateDate;
 
     public String getCreateDate() {
         return createDate;
@@ -83,53 +68,5 @@ public class XinShi {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getDialyContext() {
-        return dialyContext;
-    }
-
-    public void setDialyContext(String dialyContext) {
-        this.dialyContext = dialyContext;
-    }
-
-    public String getDialyDay() {
-        return dialyDay;
-    }
-
-    public void setDialyDay(String dialyDay) {
-        this.dialyDay = dialyDay;
-    }
-
-    public int getDialyId() {
-        return dialyId;
-    }
-
-    public void setDialyId(int dialyId) {
-        this.dialyId = dialyId;
-    }
-
-    public int getDialyType() {
-        return dialyType;
-    }
-
-    public void setDialyType(int dialyType) {
-        this.dialyType = dialyType;
-    }
-
-    public int getEmojiId() {
-        return emojiId;
-    }
-
-    public void setEmojiId(int emojiId) {
-        this.emojiId = emojiId;
-    }
-
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
     }
 }

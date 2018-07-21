@@ -56,7 +56,7 @@ public class CalendarActivity extends AppCompatActivity {
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
-//        window.setStatusBarColor(Color.parseColor("#28d3bd"));
+        window.setStatusBarColor(Color.parseColor("#28d3bd"));
         init();
     }
 

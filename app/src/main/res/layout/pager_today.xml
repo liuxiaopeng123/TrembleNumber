@@ -181,21 +181,11 @@
             >
 
             <ImageView
-                android:id="@+id/pager_today_dialy_date_img1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/wuseqizi"
+                android:src="@mipmap/youseqizi"
                 android:layout_margin="5dp"
                 />
-
-            <TextView
-                android:id="@+id/pager_today_dialy_date1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:textSize="12dp"
-                android:textColor="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="20dp" />
 
 
             <LinearLayout
@@ -231,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:background="@drawable/button_shape_half_white_s_fore"
+                        android:background="@drawable/button_shape_half_white_s_three"
                         android:textColor="@color/white"
                         android:text="上传表情"
                         />
@@ -326,21 +316,11 @@
             >
 
             <ImageView
-                android:id="@+id/pager_today_dialy_date_img2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/wuseqizi"
                 android:layout_margin="5dp"
                 />
-
-            <TextView
-                android:id="@+id/pager_today_dialy_date2"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:textSize="12dp"
-                android:textColor="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="20dp" />
 
 
             <LinearLayout
@@ -358,7 +338,6 @@
                     >
 
                     <ImageView
-                        android:id="@+id/pager_today_img2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@mipmap/huibiaoqing"
@@ -372,7 +351,6 @@
                         />
 
                     <TextView
-                        android:id="@+id/pager_today_commit2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -383,36 +361,21 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:background="@color/lightgray"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginLeft="3dp"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/pager_today_xinqing_tv2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="top|left"
-                        android:maxLines="3"
-                        android:textSize="14sp"
-                        android:layout_weight="1"
-                        android:background="#00000000"
-                        android:hint="说说发生了什么？"
-                        android:padding="5dp"
-                        />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="说说发生了什么？"
+                    android:padding="10dp"
+                    />
 
-                    <TextView
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="0 / 50"
-                        android:gravity="right"
-                        android:padding="5dp"
-                        />
-                </RelativeLayout>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="0 / 50"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    />
 
             </LinearLayout>
 
@@ -470,21 +433,11 @@
             >
 
             <ImageView
-                android:id="@+id/pager_today_dialy_date_img3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/wuseqizi"
                 android:layout_margin="5dp"
                 />
-
-            <TextView
-                android:id="@+id/pager_today_dialy_date3"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:textSize="12dp"
-                android:textColor="@color/white"
-                android:layout_width="40dp"
-                android:layout_height="20dp" />
 
 
             <LinearLayout
@@ -502,7 +455,6 @@
                     >
 
                     <ImageView
-                        android:id="@+id/pager_today_img3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@mipmap/huibiaoqing"
@@ -516,7 +468,6 @@
                         />
 
                     <TextView
-                        android:id="@+id/pager_today_commit3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -527,36 +478,21 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:background="@color/lightgray"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginLeft="3dp"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/pager_today_xinqing_tv3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="top|left"
-                        android:maxLines="3"
-                        android:textSize="14sp"
-                        android:layout_weight="1"
-                        android:background="#00000000"
-                        android:hint="说说发生了什么？"
-                        android:padding="5dp"
-                        />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:hint="说说发生了什么？"
+                    android:padding="10dp"
+                    />
 
-                    <TextView
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="0 / 50"
-                        android:gravity="right"
-                        android:padding="5dp"
-                        />
-                </RelativeLayout>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="0 / 50"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    />
 
             </LinearLayout>
 

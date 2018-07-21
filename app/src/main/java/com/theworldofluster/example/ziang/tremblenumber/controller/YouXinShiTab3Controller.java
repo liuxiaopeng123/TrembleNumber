@@ -19,13 +19,9 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
-import com.theworldofluster.example.ziang.tremblenumber.bean.XinShi;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author xiaopeng
@@ -35,8 +31,6 @@ import java.util.List;
 public class YouXinShiTab3Controller extends TabController {
     View view;
     ListView youxinshi_lv;
-
-    List<XinShi> xinShiList=new ArrayList<>();
 
     MyAdapter adapter = new MyAdapter();
     public YouXinShiTab3Controller(Context context) {
@@ -54,6 +48,7 @@ public class YouXinShiTab3Controller extends TabController {
     @Override
     public void initData() {
         youxinshi_lv=view.findViewById(R.id.youxinshi_lv);
+        youxinshi_lv.setAdapter(adapter);
         youxinshi_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,19 +100,15 @@ public class YouXinShiTab3Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
-        params.addQueryStringParameter("isDecline", "false");
+        params.addQueryStringParameter("isDecline", "true");
         params.addQueryStringParameter("isMine", "true");
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_mind_list , mContext, params) {
             @Override
-            public void onParseSuccess(GsonObjModel<List<XinShi>> response, String result) {
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
-                xinShiList=response.data;
-                if (response.code==200){
-                    youxinshi_lv.setAdapter(adapter);
-                }
             }
 
             @Override
@@ -136,7 +127,7 @@ public class YouXinShiTab3Controller extends TabController {
 
         @Override
         public int getCount() {
-            return xinShiList==null?0:xinShiList.size();
+            return 3;
         }
 
         @Override
@@ -152,14 +143,8 @@ public class YouXinShiTab3Controller extends TabController {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = View.inflate(mContext, R.layout.item_youxinshi_tab3, null);
+                convertView = View.inflate(mContext, R.layout.item_youxinshi_tab1, null);
             }
-//            TextView content=convertView.findViewById(R.id.item_youxinshi_content);
-//            TextView username=convertView.findViewById(R.id.item_youxinshi_user_name);
-//            TextView hugnum=convertView.findViewById(R.id.item_youxinshi_hugnumber);
-//            hugnum.setText(xinShiList.get(position).getHugNumber()+" 抱抱");
-//            username.setText(xinShiList.get(position).getUserId()+"");
-//            content.setText(xinShiList.get(position).getMindContext());
             return convertView;
         }
     }
