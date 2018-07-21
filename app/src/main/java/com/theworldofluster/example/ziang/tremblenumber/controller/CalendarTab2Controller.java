@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.view.CalendarView;
 
@@ -169,7 +170,7 @@ public class CalendarTab2Controller extends TabController {
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpGet<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
+        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
