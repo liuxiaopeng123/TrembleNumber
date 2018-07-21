@@ -2,66 +2,248 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/calendar_top_bg"
     android:orientation="vertical">
 
+
     <RelativeLayout
-        android:id="@+id/layout_calendar"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:visibility="visible"
         >
 
         <TextView
-            android:id="@+id/calendarCenter"
-            style="@style/main_bar_text_style"
+            android:id="@+id/smail_year"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageButton
+                android:id="@+id/calendarLeft"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:src="@mipmap/calendar_month_left" />
+
+            <TextView
+                android:id="@+id/calendarText"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageButton
+                android:id="@+id/calendarRight"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:src="@mipmap/calendar_month_right" />
+
+        </LinearLayout>
+
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <GridView
+                android:id="@+id/pager_month_gv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="4"
+                android:padding="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/date_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="MON"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="TUE"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="WED"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="THU"
+                    />
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="FRI"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="SAT"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="SUN"
+                    />
+
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/pager_day_gv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="7"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
-
-        <ImageButton
-            android:id="@+id/calendarLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:padding="8dp"
-            android:src="@mipmap/calendar_month_left" />
         <TextView
-            android:id="@+id/calendarText"
-            style="@style/main_bar_text_style"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@mipmap/title_coayt"
+            android:text="查看月评分"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textColor="@color/Indigo_colorPrimary"
+            android:textSize="16sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             />
-        <ImageButton
-            android:id="@+id/calendarRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:padding="8dp"
-            android:src="@mipmap/calendar_month_right" />
+
+            <com.theworldofluster.example.ziang.tremblenumber.view.ChartView
+                android:id="@+id/chartview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                app:bgcolor="#ffffff"
+                app:interval="25sp"
+                app:isScroll="false"
+                app:linecolor="#02bbb7"
+                app:xylinecolor="#e2e2e2"
+                app:xylinewidth="1dp"
+                app:xytextcolor="#7e7e7e"
+                app:xytextsize="12sp" />
+
 
     </LinearLayout>
 
-    <com.theworldofluster.example.ziang.tremblenumber.view.CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        />
 </LinearLayout>
