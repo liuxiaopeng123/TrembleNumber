@@ -66,6 +66,16 @@ public class Utils {
 	private static String CALANDER_EVENT_URL = "content://com.android.calendar/events";
 	private static String CALANDER_REMIDER_URL = "content://com.android.calendar/reminders";
 
+	public static int getDaysOfMonth(String  date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+		try {
+			calendar.setTime(sdf.parse(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+	}
 
 	public static String time(long milSecond) {
 		Date date = new Date(milSecond);
@@ -217,6 +227,48 @@ public static void BJSloadImg(Context context, String url, ImageView imageView){
 		String date = dateFormat.format(now);
 		return date;
 	}
+
+	/**
+	 * 获取当前时间，格式为 :yyyy-MM-dd HH:mm:ss
+	 *
+	 * @return
+	 */
+	public static String getyear() {
+		Date now = new Date();
+		now.setTime(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"yyyy");
+		String date = dateFormat.format(now);
+		return date;
+	}
+
+	/**
+	 * 获取当前时间，格式为 :yyyy-MM-dd HH:mm:ss
+	 *
+	 * @return
+	 */
+	public static String getmouth() {
+		Date now = new Date();
+		now.setTime(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"MM");
+		String date = dateFormat.format(now);
+		return date;
+	}
+
+    /**
+     * 获取当前时间，格式为 :yyyy-MM-dd HH:mm:ss
+     *
+     * @return
+     */
+    public static String getday() {
+        Date now = new Date();
+        now.setTime(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd");
+        String date = dateFormat.format(now);
+        return date;
+    }
 
 	/*
  * 将时间转换为时间戳
