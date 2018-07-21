@@ -50,6 +50,7 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
+//2018-07-21
 public class PersonalActivity extends AppCompatActivity implements SensorEventListener {
 
     @ViewInject(R.id.view_pager)
