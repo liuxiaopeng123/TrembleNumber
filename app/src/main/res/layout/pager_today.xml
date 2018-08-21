@@ -259,6 +259,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/pager_today_riji_zishu1"
                         android:layout_alignParentBottom="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -404,6 +405,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/pager_today_riji_zishu2"
                         android:layout_alignParentBottom="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -548,6 +550,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/pager_today_riji_zishu3"
                         android:layout_alignParentBottom="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

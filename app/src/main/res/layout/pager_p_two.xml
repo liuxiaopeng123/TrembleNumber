@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="心里分析"
+            android:text="心理分析"
             android:textStyle="bold"
             android:textSize="17dp"
             android:drawableLeft="@mipmap/xinlifenxi"
@@ -35,9 +35,10 @@
             />
 
         <TextView
+            android:id="@+id/pager_xinlifenxi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="拖延只是种行为模式，背后是大脑里的自我对话·\n你想改变，确实只能靠行动去重建习惯：但与此同时，还需要有效处理大脑里的自我对话·否则，行动很难启动·\n持续进行情绪打卡·有助于全国分析你的心里状况哦！......"
+            android:text="拖延只是种行为模式，背后是大脑里的自我对话·\n你想改变，确实只能靠行动去重建习惯：但与此同时，还需要有效处理大脑里的自我对话·否则，行动很难启动·\n持续进行情绪打卡·有助于全国分析你的心理状况哦！......"
             android:textStyle="bold"
             android:textSize="15dp"
             android:padding="10dp"

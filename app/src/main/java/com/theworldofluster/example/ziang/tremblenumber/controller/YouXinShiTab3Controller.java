@@ -18,10 +18,10 @@ import com.lidroid.xutils.http.RequestParams;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.XinShi;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.ArrayList;
@@ -110,13 +110,69 @@ public class YouXinShiTab3Controller extends TabController {
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
+        new HttpGet<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<XinShi>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
                 xinShiList=response.data;
                 if (response.code==200){
                     youxinshi_lv.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    private void showConfirmDialog(final int position) {
+        dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        View view = View.inflate(mContext, R.layout.dialog_invite_pk, null);
+        TextView content = view.findViewById(R.id.content);
+        content.setText("确定删除这条心情？");
+        TextView confirm = view.findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                DelMind(position);
+            }
+        });
+        TextView cancle = view.findViewById(R.id.cancle);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
+    //删除心情
+    private void DelMind(int position) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("mindId", ""+xinShiList.get(position).getMindId());
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_del + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_del , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+                if (response.code==200){
+                    getList("");
                 }
             }
 
@@ -154,12 +210,21 @@ public class YouXinShiTab3Controller extends TabController {
             if (convertView == null) {
                 convertView = View.inflate(mContext, R.layout.item_youxinshi_tab3, null);
             }
-//            TextView content=convertView.findViewById(R.id.item_youxinshi_content);
-//            TextView username=convertView.findViewById(R.id.item_youxinshi_user_name);
-//            TextView hugnum=convertView.findViewById(R.id.item_youxinshi_hugnumber);
-//            hugnum.setText(xinShiList.get(position).getHugNumber()+" 抱抱");
-//            username.setText(xinShiList.get(position).getUserId()+"");
-//            content.setText(xinShiList.get(position).getMindContext());
+            TextView content=convertView.findViewById(R.id.item_youxinshi_content);
+            TextView del=convertView.findViewById(R.id.item_youxinshi_del);
+            TextView year=convertView.findViewById(R.id.item_youxinshi_year);
+            TextView day=convertView.findViewById(R.id.item_youxinshi_day);
+            TextView hour=convertView.findViewById(R.id.item_youxinshi_hour);
+            content.setText(xinShiList.get(position).getMindContext());
+            year.setText(xinShiList.get(position).getCreateDate().substring(0,4)+"."+xinShiList.get(position).getCreateDate().substring(5,7));
+            day.setText(xinShiList.get(position).getCreateDate().substring(8,10));
+            hour.setText(xinShiList.get(position).getCreateDate().substring(11,16));
+            del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showConfirmDialog(position);
+                }
+            });
             return convertView;
         }
     }

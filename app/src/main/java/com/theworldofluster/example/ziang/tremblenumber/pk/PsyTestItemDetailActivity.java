@@ -9,10 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -27,10 +24,8 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyResultBean;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestTiJi;
 import com.theworldofluster.example.ziang.tremblenumber.bean.Question;
-import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 
@@ -58,6 +53,7 @@ public class PsyTestItemDetailActivity extends Activity {
     SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     List<Question> questionList = null;
     MyAdapter adapter =new MyAdapter();
+    boolean flag_yijingqueren=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +77,7 @@ public class PsyTestItemDetailActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("setCode", setCode);
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_question_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<Question>>>(MouthpieceUrl.base_psy_test_question_list , this, params) {
+        new HttpGet<GsonObjModel<List<Question>>>(MouthpieceUrl.base_psy_test_question_list , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<Question>> response, String result) {
                 if (response.code==200){
@@ -135,7 +131,7 @@ public class PsyTestItemDetailActivity extends Activity {
         params.addQueryStringParameter("setCode", setCode);
         params.addQueryStringParameter("optCodes", optCodes.substring(0,optCodes.length()-1));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_result + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<PsyResultBean>>(MouthpieceUrl.base_psy_test_result , this, params) {
+        new HttpGet<GsonObjModel<PsyResultBean>>(MouthpieceUrl.base_psy_test_result , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<PsyResultBean> response, String result) {
                 Log.i("xiaopeng-----",optCodes+"--result-----"+result);
@@ -170,6 +166,9 @@ public class PsyTestItemDetailActivity extends Activity {
                 showConfirmDialog();
                 break;
             case R.id.activity_psy_test_item_detail_btn:
+//                if (flag_yijingqueren){
+//
+//                }
                 if (index!=(questionList.size())){
                     for (int i=0;i<questionList.get(index).getOptionList().size();i++){
                         if (status.get(i)==true){
@@ -197,6 +196,32 @@ public class PsyTestItemDetailActivity extends Activity {
                 }
                 break;
         }
+    }
+
+
+    private void showDialog() {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        View view = View.inflate(this, R.layout.dialog_ceshiti_queren, null);
+        TextView cancle = view.findViewById(R.id.cancle);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag_yijingqueren=false;
+                dialog.dismiss();
+            }
+        });
+        TextView confirm = view.findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag_yijingqueren=true;
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
     }
 
 

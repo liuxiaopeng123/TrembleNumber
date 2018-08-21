@@ -44,6 +44,7 @@
         android:background="@color/gray_bg_color"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -68,6 +69,7 @@
     </LinearLayout>
 
     <GridView
+        android:visibility="gone"
         android:id="@+id/main_gv"
         android:layout_width="match_parent"
         android:numColumns="4"

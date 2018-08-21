@@ -210,24 +210,35 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <TextView
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/title_coayt"
-            android:text="查看月评分"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:textColor="@color/Indigo_colorPrimary"
-            android:textSize="16sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            />
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@mipmap/title_coayt"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/pager_month_chakanpingfen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看年评分"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/Indigo_colorPrimary"
+                    android:textSize="16sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    />
+            </LinearLayout>
+
 
             <com.theworldofluster.example.ziang.tremblenumber.view.ChartView
                 android:id="@+id/chartview"
@@ -244,6 +255,83 @@
                 app:xytextsize="12sp" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/pager_month_mood_bottom_ll"
+            android:layout_alignBottom="@+id/ll"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/pager_month_mood_good"
+                android:background="@color/powderblue"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="心情好"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:background="@color/steelblue"
+                android:layout_height="20dp" />
+            <TextView
+                android:id="@+id/pager_month_mood_soso"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="心情一般"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="1dp"
+                android:background="@color/steelblue"
+                android:layout_height="20dp" />
+            <TextView
+                android:id="@+id/pager_month_mood_bad"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="心情差"
+                android:gravity="center"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pager_month_mood_center_ll"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="#00000000"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:layout_height="150dp" >
+            <TextView
+                android:id="@+id/pager_month_mood_day_acount"
+                android:textSize="50sp"
+                android:text=""
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/darkorange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/pager_month_mood_day_acount_tian"
+                android:textSize="16sp"
+                android:text=""
+                android:textColor="@color/darkorange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
 
 </LinearLayout>

@@ -18,8 +18,7 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.ArticleBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultDetailActivity;
-import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultListActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.List;
@@ -103,7 +102,7 @@ public class ConsultTab3Controller extends TabController {
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_articles + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<ArticleBean>>>(MouthpieceUrl.base_health_consult_articles , mContext, params) {
+        new HttpGet<GsonObjModel<List<ArticleBean>>>(MouthpieceUrl.base_health_consult_articles , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<ArticleBean>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);

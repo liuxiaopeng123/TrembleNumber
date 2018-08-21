@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.theworldofluster.example.ziang.tremblenumber.HomeActivity;
 import com.theworldofluster.example.ziang.tremblenumber.MainActivity;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
@@ -39,8 +41,14 @@ import com.theworldofluster.example.ziang.tremblenumber.utils.ZiangUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "xiaopeng";
     @ViewInject(R.id.activity_login_password)
     TextView activity_login_password;
 
@@ -89,6 +97,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userid="";
     String token="";
 
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    Log.i(TAG, logs);
+                    PreferenceUtil.putBool("setTagSuccess",true);
+                    // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    Log.i(TAG, logs);
+                    // 延迟 60 秒来调用 Handler 设置别名
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+                    Log.e(TAG, logs);
+            }
+            //ExampleUtil.showToast(logs, getApplicationContext());
+        }
+    };
+    private static final int MSG_SET_ALIAS = 1001;
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    Log.d(TAG, "Set alias in handler.");
+                    // 调用 JPush 接口来设置别名。
+                    JPushInterface.setAliasAndTags(getApplicationContext(),
+                            (String) msg.obj,
+                            null,
+                            mAliasCallback);
+                    break;
+                default:
+                    Log.i(TAG, "Unhandled msg - " + msg.what);
+            }
+        }
+    };
+
     public static LoginActivity loginactivity;
 
 
@@ -117,6 +169,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         base_userInfo();
 
         initWindow();
+
+        if(PreferenceUtil.getString("isLogin","").equals("")){
+        }else {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
     }
 
     private void initWindow() {
@@ -154,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         userid = jsonobject.getJSONObject("data").getString("userId");
                         token = jsonobject.getJSONObject("data").getString("token");
@@ -409,7 +467,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         time.start();
                         ToastUtil.showContent(LoginActivity.this,"验证码获取成功！");
@@ -459,11 +517,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                         PreferenceUtil.putString("token",jsonobject.getString("data"));
                         PreferenceUtil.putString("isLogin","yes");
+                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
+                        }
                         finish();
 
                     }else{

@@ -35,6 +35,7 @@
             />
 
         <TextView
+            android:id="@+id/pager_shentifenxi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="近期熬夜较多，身体体质有所下降，具体表现为，食欲不振，持续性身体乏力"

@@ -27,6 +27,7 @@
         >
 
         <ImageView
+            android:id="@+id/dialog_close"
             android:layout_gravity="right"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -178,6 +179,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/dialog_close2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@mipmap/blue_btn"

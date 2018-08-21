@@ -36,6 +36,18 @@ public class XinShi {
     private int dialyType;
     private int emojiId;
     private String updateDate;
+    /**
+     * headUrl :
+     * mindEmoji : 22
+     * mindType : 2
+     * nickName : 小鹏
+     */
+
+    private String headUrl;
+    private int mindEmoji;
+    private int mindType;
+    private String nickName;
+
 
     public String getCreateDate() {
         return createDate;
@@ -131,5 +143,37 @@ public class XinShi {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getHeadUrl() {
+        return headUrl;
+    }
+
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
+    }
+
+    public int getMindEmoji() {
+        return mindEmoji;
+    }
+
+    public void setMindEmoji(int mindEmoji) {
+        this.mindEmoji = mindEmoji;
+    }
+
+    public int getMindType() {
+        return mindType;
+    }
+
+    public void setMindType(int mindType) {
+        this.mindType = mindType;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

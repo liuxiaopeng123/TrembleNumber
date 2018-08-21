@@ -260,7 +260,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         time.start();
                         ToastUtil.showContent(FoundPasswordActivity.this,"验证码获取成功！");
@@ -304,7 +304,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         ToastUtil.showContent(FoundPasswordActivity.this,"修改密码成功！");
                         LoginActivity.loginactivity.login_username.setText(login_username.getText().toString());

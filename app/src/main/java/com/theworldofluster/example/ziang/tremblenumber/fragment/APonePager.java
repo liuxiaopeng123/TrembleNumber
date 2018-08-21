@@ -10,6 +10,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -24,6 +25,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.activity.FoldlinediagramActivity;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
+import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
 
 import java.util.ArrayList;
 
@@ -36,7 +40,11 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     View view;
 
+    WanNengBean report;
+
     private PieChart mPieChart;
+
+    private TextView pager_p_one_date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +62,8 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     private void initData() {
 
+        pager_p_one_date=view.findViewById(R.id.pager_p_one_date);
+        pager_p_one_date.setText(DateUtil.getMonday2()+"至"+DateUtil.getLastWeekSunday2());
         mPieChart = (PieChart) view.findViewById(R.id.chart1);
 
         mPieChart.setUsePercentValues(true);
@@ -87,10 +97,14 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
         //模拟数据
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        entries.add(new PieEntry(40, "身体分"));
-        entries.add(new PieEntry(20, "心里分"));
-        entries.add(new PieEntry(30, "精神分"));
-        entries.add(new PieEntry(10, "查克拉"));
+        if (report!=null){
+            entries.add(new PieEntry(report.getPsychologyScore(), "心理分"));
+            entries.add(new PieEntry(report.getPhysiologyScore(), "生理分"));
+        }else {
+            entries.add(new PieEntry(50, "心理分"));
+            entries.add(new PieEntry(50, "生理分"));
+        }
+
 
         //设置数据
         setData(entries);
@@ -150,7 +164,13 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     //绘制中心文字
     private SpannableString generateCenterSpannableText() {
-        SpannableString s = new SpannableString("439分");
+        SpannableString s;
+        if (report!=null){
+             s= new SpannableString(report.getScore()+"分");
+        }else {
+            s = new SpannableString("0分");
+        }
+
         s.setSpan(new RelativeSizeSpan(1.5f), 0, s.length(), 0);
         //s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
         s.setSpan(new ForegroundColorSpan(Color.parseColor("#28d3bd")), 0, s.length(), 0);
@@ -169,11 +189,20 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        startActivity(new Intent(getActivity(),FoldlinediagramActivity.class));
+//        startActivity(new Intent(getActivity(),FoldlinediagramActivity.class));
     }
 
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (((PersonalActivity)getContext()).reportWeek!=null){
+            report=((PersonalActivity)getContext()).reportWeek;
+            initData();
+        }
     }
 }

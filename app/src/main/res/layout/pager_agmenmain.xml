@@ -46,7 +46,7 @@
     <View
         android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/gray"
+    android:background="@color/silver"
     />
 
     <LinearLayout
@@ -297,6 +297,7 @@
     >
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/pager_agmenmain_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -433,6 +434,7 @@
 </LinearLayout>
 
     <TextView
+        android:id="@+id/my_guanyuyinsibaohu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"

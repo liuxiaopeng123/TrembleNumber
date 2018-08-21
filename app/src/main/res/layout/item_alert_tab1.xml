@@ -20,8 +20,7 @@
             android:background="@mipmap/main_icon_xinli"/>
         <TextView
             android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/item_material_name"
+            android:id="@+id/item_alert_title"
             android:layout_width="match_parent"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
@@ -30,7 +29,7 @@
             android:textColor="@color/blue_text"
             android:textSize="16sp" />
         <TextView
-            android:layout_alignParentBottom="true"
+            android:id="@+id/item_alert_date"
             android:layout_width="wrap_content"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"

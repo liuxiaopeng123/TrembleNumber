@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/home_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/activity_youxinshi_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/backblack" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:text="心事详情"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_bg_color"/>
+
+
+    <LinearLayout
+
+        android:layout_margin="10dp"
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="50dp">
+
+            <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+                android:layout_centerHorizontal="true"
+                android:layout_width="40dp"
+                android:id="@+id/detail_youxinshi_user_img"
+                android:layout_height="40dp"
+                android:src="@mipmap/expert_b"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="5dp"
+                />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/detail_youxinshi_user_name"
+                android:layout_width="match_parent"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:text="昵称"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/detail_youxinshi_hugnumber"
+                android:layout_width="80dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/button_shape_half_white_blue_2"
+                android:gravity="center"
+                android:layout_height="30dp"
+                android:text="99 抱抱"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/detail_youxinshi_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="64dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="5dp"
+            android:maxLines="3"
+            android:layout_height="wrap_content"
+            android:text="昨晚发现我两个孩子的爸爸出轨了这是我们在一起的第十五个年头十分不敢相信竟然十分冷静。"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/detail_youxinshi_have_data"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/silver"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:text="Ta们的安慰"
+                    android:textColor="@color/gray_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/detail_youxinshi_anweita"
+                    android:layout_width="80dp"
+                    android:background="@drawable/button_shape_half_white_blue_2"
+                    android:gravity="center"
+                    android:layout_height="30dp"
+                    android:text="安慰他"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ListView
+                android:divider="@null"
+                android:id="@+id/detail_youxinshi_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/detail_youxinshi_no_data"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_marginTop="60dp"
+            android:layout_width="80dp"
+            android:background="@mipmap/biaoqing_11_xijierqi"
+            android:layout_height="80dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:text="他未收到安慰"
+            />
+        <TextView
+            android:id="@+id/detail_youxinshi_anweita2"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue_text"
+            android:textSize="16sp"
+            android:text="安慰他"
+            />
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

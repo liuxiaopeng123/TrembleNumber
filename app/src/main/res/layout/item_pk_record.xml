@@ -19,6 +19,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/item_pk_record_username"
                 android:layout_width="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -28,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
             <TextView
+                android:id="@+id/item_pk_record_acount"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,6 +49,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/item_pk_record_result"
                 android:layout_width="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -56,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
             <TextView
+                android:id="@+id/item_pk_record_date"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,6 +79,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/item_pk_record_chengzhangzhi"
                 android:layout_width="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center"

@@ -53,7 +53,7 @@ public class HttpPost<T> extends RequestCallBack<String> {
      * 初始化调用的方法
      */
     public void onInit() {
-        httpUtils.send(HttpRequest.HttpMethod.GET, mUrl, mParams, this);
+        httpUtils.send(HttpRequest.HttpMethod.POST, mUrl, mParams, this);
     }
 
 

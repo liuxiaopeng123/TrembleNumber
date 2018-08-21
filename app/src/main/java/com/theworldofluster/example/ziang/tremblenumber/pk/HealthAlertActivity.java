@@ -1,19 +1,33 @@
 package com.theworldofluster.example.ziang.tremblenumber.pk;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.AleartBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.ExtrasBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.controller.AlertTab1Controller;
 import com.theworldofluster.example.ziang.tremblenumber.controller.AlertTab2Controller;
 import com.theworldofluster.example.ziang.tremblenumber.controller.AlertTab3Controller;
@@ -23,10 +37,17 @@ import com.theworldofluster.example.ziang.tremblenumber.controller.PsyTab2Contro
 import com.theworldofluster.example.ziang.tremblenumber.controller.PsyTab3Controller;
 import com.theworldofluster.example.ziang.tremblenumber.controller.PsyTab4Controller;
 import com.theworldofluster.example.ziang.tremblenumber.controller.TabController;
+import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class HealthAlertActivity extends Activity {
 
@@ -55,6 +76,8 @@ public class HealthAlertActivity extends Activity {
 
     List<TabController> list;
     public int ChoiceWhere = 0;
+
+    ExtrasBean extrasBean = new ExtrasBean();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +158,96 @@ public class HealthAlertActivity extends Activity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+    //我已阅读
+    public void readed(String read) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("remindId", extrasBean.getRemindId()+"");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_read + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_alert_read , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+                if (response.code==200){
+                }
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    //确认PK
+    public void pkConfirm(String type) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("pkId", extrasBean.getPkId()+"");
+        params.addQueryStringParameter("type", type);
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_confirm + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_pk_confirm , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+                if (response.code==200){
+                    dialog.dismiss();
+                }
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+    Dialog dialog;
+    private void showPKDialog(){
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        View view = View.inflate(this, R.layout.dialog_pk_invited, null);
+        ImageView close =view.findViewById(R.id.dialog_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button jieshou=view.findViewById(R.id.dialog_pk_invited_jieshou);
+        jieshou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pkConfirm("1");
+            }
+        });
+        Button jujue=view.findViewById(R.id.dialog_pk_invited_jujue);
+        jujue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pkConfirm("2");
+            }
+        });
+        TextView username =view.findViewById(R.id.dialog_pk_invited_username);
+        username.setText(extrasBean.getPkSourceUserNickName()+"向你发起挑战邀请");
+        SimpleDateFormat sf = new SimpleDateFormat("MM月dd日");
+        String guoqiriqi = sf.format(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+        TextView zhuyi =view.findViewById(R.id.dialog_pk_invited_zhuyi);
+        zhuyi.setText("注：该挑战将于"+guoqiriqi+extrasBean.getRemindDate().substring(11,extrasBean.getRemindDate().length())+"失效，如接收挑战，则立即进入PK状态，"+ DateUtil.getXiaZhouMonday()+"8：00可出PK结果。");
+
+        dialog.setContentView(view);
+        dialog.show();
     }
 
     @OnClick({R.id.activity_health_alert_back,R.id.alert_tab_1,R.id.alert_tab_2,R.id.alert_tab_3,R.id.alert_tab_4})
@@ -223,6 +336,32 @@ public class HealthAlertActivity extends Activity {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle bundle = getIntent().getExtras();
+            String title = null;
+            String content = null;
+            String contentType=null;
+            if(bundle!=null){
+                title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+                content = bundle.getString(JPushInterface.EXTRA_ALERT);
+                contentType=bundle.getString(JPushInterface.EXTRA_EXTRA);
+                Gson gson =new Gson();
+                if (contentType!=null){
+                    extrasBean=gson.fromJson(contentType,ExtrasBean.class);
+                    if ("2".equals(extrasBean.getContentType())){
+                        readed("1");
+                        showPKDialog();
+                    }
+                }
+                Log.i("xiaopeng-----222","title-"+title+"content-"+content+"contentType-"+contentType);
+            }
         }
     }
 }

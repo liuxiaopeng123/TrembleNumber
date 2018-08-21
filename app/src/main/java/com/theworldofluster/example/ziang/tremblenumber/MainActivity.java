@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity {
     @ViewInject(R.id.main_gv)
     GridView main_gv;
 
+    @ViewInject(R.id.activity_health_consult_back)
+    RelativeLayout activity_health_consult_back;
     @ViewInject(R.id.main_jiankangtixing)
     LinearLayout main_jiankangtixing;
     @ViewInject(R.id.main_jiankangbaogao)
@@ -62,7 +65,7 @@ public class MainActivity extends Activity {
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
-//        window.setStatusBarColor(Color.parseColor("#ffffff"));
+        window.setStatusBarColor(Color.parseColor("#ffffff"));
 
         if(PreferenceUtil.getString("isLogin","").equals("")){
             startActivity(new Intent(this, LoginActivity.class));
@@ -82,9 +85,12 @@ public class MainActivity extends Activity {
 
     }
 
-    @OnClick({R.id.main_jiankangtixing,R.id.main_jiankangbaogao,R.id.main_jiankangzixun,R.id.main_xinqingriji,R.id.main_xinliceshi,R.id.main_jiankangfenpk})
+    @OnClick({R.id.activity_health_consult_back,R.id.main_jiankangtixing,R.id.main_jiankangbaogao,R.id.main_jiankangzixun,R.id.main_xinqingriji,R.id.main_xinliceshi,R.id.main_jiankangfenpk})
     private void Onclick(View v){
         switch (v.getId()){
+            case R.id.activity_health_consult_back:
+                finish();
+                break;
             case R.id.main_jiankangtixing:
                 startActivity(new Intent(MainActivity.this, HealthAlertActivity.class));
                 break;

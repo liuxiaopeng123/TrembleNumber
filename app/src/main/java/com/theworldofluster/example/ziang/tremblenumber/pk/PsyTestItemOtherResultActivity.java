@@ -2,7 +2,6 @@ package com.theworldofluster.example.ziang.tremblenumber.pk;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +23,7 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyResultBean;
-import com.theworldofluster.example.ziang.tremblenumber.bean.Question;
-import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.List;
@@ -68,7 +65,7 @@ public class PsyTestItemOtherResultActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("setCode", setCode);
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_more_result + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_more_result , this, params) {
+        new HttpGet<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_more_result , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<PsyResultBean>> response, String result) {
                 if (response.code==200){

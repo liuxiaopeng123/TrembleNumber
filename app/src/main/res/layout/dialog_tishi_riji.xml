@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="600dp"
+    android:background="@drawable/button_shape_half_white_cricle"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提示"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="为了给你提供精准的健康分析和改善策略，请在指定时间段上传你当时的心情。也可在当天24:00点前进行补充。"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/silver"/>
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="120dp"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="35dp"
+            android:text="是"
+             />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

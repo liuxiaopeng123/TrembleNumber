@@ -41,14 +41,23 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
         <TextView
+            android:visibility="gone"
             android:id="@+id/item_youxinshi_hugnumber"
             android:layout_width="80dp"
-            android:paddingLeft="10dp"
             android:background="@drawable/button_shape_half_white_blue_2"
             android:gravity="center"
             android:layout_height="30dp"
             android:text="99 抱抱"
             android:textColor="@color/white"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/item_youxinshi_add_hug"
+            android:layout_width="80dp"
+            android:background="@drawable/button_shape_half_white_blue_2_stroke"
+            android:gravity="center"
+            android:layout_height="30dp"
+            android:text="+   抱抱"
+            android:textColor="#28D2BC"
             android:textSize="14sp" />
     </LinearLayout>
 

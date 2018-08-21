@@ -277,7 +277,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
 
                     }else{

@@ -22,7 +22,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:layout_height="wrap_content"
-        android:text="已成功向5位用户发出挑战邀请，如对方应战，好友会及时告诉你喔~请关注好友提醒!"
+        android:text="已成功向用户发出挑战邀请，如对方应战，好友会及时告诉你喔~请关注好友提醒!"
         android:textColor="@color/black"
         android:textSize="16sp" />
 

@@ -3,6 +3,7 @@ package com.theworldofluster.example.ziang.tremblenumber.controller;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -12,9 +13,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
-import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultDetailActivity;
+import com.theworldofluster.example.ziang.tremblenumber.bean.AleartBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xiaopeng
@@ -26,6 +37,7 @@ public class AlertTab2Controller extends TabController {
     ListView psytab3_lv;
 
     MyAdapter adapter = new MyAdapter();
+    List<AleartBean> aleartBeanList = new ArrayList<>();
     public AlertTab2Controller(Context context) {
         super(context);
     }
@@ -34,18 +46,18 @@ public class AlertTab2Controller extends TabController {
 
     protected View initContentView(Context context) {
         mContext = context;
-        view = View.inflate(context, R.layout.alerttab1_control, null);
+        view = View.inflate(context, R.layout.alerttab2_control, null);
         return view;
     }
 
     @Override
     public void initData() {
         psytab3_lv=view.findViewById(R.id.psytab3_lv);
-        psytab3_lv.setAdapter(adapter);
         psytab3_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showDialog();
+                showDialog(aleartBeanList.get(position).getRemindId(),aleartBeanList.get(position).getRemindTitle()
+                        , aleartBeanList.get(position).getRemindContext(),aleartBeanList.get(position).getRemindDate());
             }
         });
 
@@ -54,11 +66,17 @@ public class AlertTab2Controller extends TabController {
     }
 
     Dialog dialog;
-    private void showDialog() {
+    private void showDialog(final int remindId, String remindTitle, String remindContext, String remindDate) {
         dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
         View view = View.inflate(mContext, R.layout.dialog_alert_health, null);
+        TextView title = view.findViewById(R.id.remind_title);
+        TextView date = view.findViewById(R.id.remind_date);
+        TextView context = view.findViewById(R.id.remind_context);
+        title.setText(remindTitle);
+        date.setText(remindDate.substring(5,7)+"月"+remindDate.substring(8,10)+"日"+remindDate.substring(11,16));
+        context.setText(remindContext);
         ImageView cancle = (ImageView) view.findViewById(R.id.dialog_cancle);
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +89,9 @@ public class AlertTab2Controller extends TabController {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                mContext.startActivity(new Intent(mContext,HealthSamePersonActivity.class));
+                Intent intent = new Intent(mContext,HealthSamePersonActivity.class);
+                intent.putExtra("code",""+remindId);
+                mContext.startActivity(intent);
             }
         });
         TextView gosameperson = (TextView) view.findViewById(R.id.dialog_alert_health_gosameperson);
@@ -79,7 +99,9 @@ public class AlertTab2Controller extends TabController {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                mContext.startActivity(new Intent(mContext,HealthSamePersonActivity.class));
+                Intent intent = new Intent(mContext,HealthSamePersonActivity.class);
+                intent.putExtra("code","25");
+                mContext.startActivity(intent);
             }
         });
 
@@ -90,13 +112,40 @@ public class AlertTab2Controller extends TabController {
 
     //获取列表
     public void getList(String name) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("type", "1");
+        params.addQueryStringParameter("readed", "0");
+        params.addQueryStringParameter("pageIndex", "1");
+        params.addQueryStringParameter("pageSize", "10");
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<List<AleartBean>>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<List<AleartBean>> response, String result) {
+                if (response.code==200){
+                    aleartBeanList=response.data;
+                    psytab3_lv.setAdapter(adapter);
+                }
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
     class MyAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return 2;
+            return aleartBeanList==null?0:aleartBeanList.size();
         }
 
         @Override
@@ -114,6 +163,10 @@ public class AlertTab2Controller extends TabController {
             if (convertView == null) {
                 convertView = View.inflate(mContext, R.layout.item_alert_tab1, null);
             }
+            TextView title =convertView.findViewById(R.id.item_alert_title);
+            TextView date =convertView.findViewById(R.id.item_alert_date);
+            title.setText(aleartBeanList.get(position).getRemindTitle());
+            date.setText(aleartBeanList.get(position).getRemindDate().substring(5,7)+"月"+aleartBeanList.get(position).getRemindDate().substring(8,10)+"日");
             return convertView;
         }
     }

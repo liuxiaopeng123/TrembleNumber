@@ -20,11 +20,13 @@ public class TestActivity extends Activity {
 	        Bundle bundle = getIntent().getExtras();
             String title = null;
             String content = null;
+            String contenttype=null;
             if(bundle!=null){
                 title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
                 content = bundle.getString(JPushInterface.EXTRA_ALERT);
+                contenttype=bundle.getString(JPushInterface.EXTRA_EXTRA);
             }
-            tv.setText("Title : " + title + "  " + "Content : " + content);
+            tv.setText("Title : " + title + "  " + "Content : " + content+"contenttype:"+contenttype);
         }
         addContentView(tv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
     }

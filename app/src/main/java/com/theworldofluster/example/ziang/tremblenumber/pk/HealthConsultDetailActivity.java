@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,14 +15,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
-import com.theworldofluster.example.ziang.tremblenumber.bean.ArticleBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
-
-import java.util.List;
 
 public class HealthConsultDetailActivity extends Activity {
     @ViewInject(R.id.activity_health_consult_detail_back)
@@ -93,7 +89,7 @@ public class HealthConsultDetailActivity extends Activity {
         params.addQueryStringParameter("articleCode", articleCode);
         params.addQueryStringParameter("isCancel", collecte+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_collect + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_consult_collect , this, params) {
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_consult_collect , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);

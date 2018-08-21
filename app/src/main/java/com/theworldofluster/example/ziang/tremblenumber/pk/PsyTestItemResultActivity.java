@@ -1,34 +1,17 @@
 package com.theworldofluster.example.ziang.tremblenumber.pk;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
-import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.Question;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
-import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
-
-import java.util.List;
 
 public class PsyTestItemResultActivity extends Activity {
     @ViewInject(R.id.activity_psy_test_item_result_back)
@@ -62,7 +45,7 @@ public class PsyTestItemResultActivity extends Activity {
         percent=getIntent().getStringExtra("percent");
         setCode=getIntent().getStringExtra("setCode");
 
-        activity_psy_test_result_title.setText(descTitle);
+//        activity_psy_test_result_title.setText(descTitle);
         activity_psy_test_result_content.setText("最终测试得分:"+finalScore);
         activity_psy_test_result_content.setText(descContext);
         activity_psy_test_result_finalcode.setText("最终测试得分:"+finalScore);

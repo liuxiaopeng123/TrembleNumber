@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true" />
 
     <RadioGroup
+        android:visibility="gone"
         android:id="@+id/rg_content_fragment"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -78,18 +78,26 @@ public class MouthpieceUrl {
     //查询PK列表
     public static String base_pk_list = base_url+"pk/list";
     //查询PK统计
-    public static String base_pk_statistics = base_url+"pk/statistics";
+    public static String base_pk_statistic = base_url+"pk/statistic";
     //查询PK状态
     public static String base_pk_status = base_url+"pk/status";
     //发起PK
-    public static String base_pk_lauch = base_url+"pk/lauch";
+    public static String base_pk_launch = base_url+"pk/launch";
     //确认PK
     public static String base_pk_confirm = base_url+"pk/confirm";
+    //PK用户查询
+    public static String base_pk_user = base_url+"pk/user";
+    //PK状态查询
+    public static String base_pk_info = base_url+"pk/info";
 
     //查询心情日记
     public static String base_mood_getbyday = base_url+"mood/getByDay";
+    //查询心情日记统计
+    public static String base_mood_getMoodStatistics = base_url+"mood/getMoodStatistics";
     //上传心情
     public static String base_mood_save = base_url+"mood/save";
+    //更新心情
+    public static String base_mood_update = base_url+"mood/update";
 
     //查询心事
     public static String base_mind_list = base_url+"mind/list";
@@ -97,6 +105,35 @@ public class MouthpieceUrl {
     //添加心事
     public static String base_mind_add = base_url+"mind/add";
 
+    //删除心事
+    public static String base_mind_del = base_url+"mind/del";
+
+    //安慰列表
+    public static String base_mind_comfortList = base_url+"mind/comfortList";
+
+    //发表安慰
+    public static String base_mind_comfort = base_url+"mind/comfort";
+
+    //删除安慰
+    public static String base_mind_delComfort = base_url+"mind/delComfort";
+
+    //抱抱
+    public static String base_mind_hug = base_url+"mind/hug";
+
+    //好友列表
+    public static String base_mind_friendList = base_url+"friend/friendList";
+
+    //关注列表
+    public static String base_mind_addfouces = base_url+"friend/addFocus";
+
+    //收集数据
+    public static String base_monitor_dataGrab = base_url+"monitor/dataGrab";
+
+    //获取周健康数据
+    public static String base_health_report_week = base_url+"health/report/week";
+
+    //获取健康趋势图
+    public static String base_health_report_graph = base_url+"health/report/graph";
 
     //发布返程需求
     public static String base_adddriverbackdata = base_url+"/appApi/driverBackData/addDriverBackData";

@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.github.rey5137:material:1.2.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation files('libs/jcore-android-1.2.1.jar')
-
+    implementation 'org.xutils:xutils:3.3.36'
     implementation 'com.google.code.gson:gson:2.7'
+    implementation files('libs/commons-io-1.4.jar')
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 }

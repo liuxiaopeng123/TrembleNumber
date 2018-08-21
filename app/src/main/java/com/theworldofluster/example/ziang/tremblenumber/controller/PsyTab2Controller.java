@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.exception.HttpException;
@@ -19,7 +18,7 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.PsyTestItemActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
@@ -87,7 +86,7 @@ public class PsyTab2Controller extends TabController {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<PsyTestBean>>>(MouthpieceUrl.base_psy_test_list , mContext, params) {
+        new HttpGet<GsonObjModel<List<PsyTestBean>>>(MouthpieceUrl.base_psy_test_list , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<PsyTestBean>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);

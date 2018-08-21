@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,9 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -24,18 +23,18 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
-import com.theworldofluster.example.ziang.tremblenumber.view.CalendarView;
 import com.theworldofluster.example.ziang.tremblenumber.view.ChartView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +54,10 @@ public class CalendarTab2Controller extends TabController {
     private GridView pager_day_gv;
     private LinearLayout date_title;
     private TextView smail_year;
+    private TextView pager_month_chakanpingfen;
+
+    private LinearLayout pager_month_mood_bottom_ll,pager_month_mood_center_ll;
+    private TextView mood_good,mood_soso,mood_bad,mood_day_acount,mood_day_acount_tian;
 
     private List<String> xValue = new ArrayList<>();
     //y轴坐标对应的数据
@@ -68,7 +71,13 @@ public class CalendarTab2Controller extends TabController {
 
     private String day;
 
+    private WanNengBean moodStatistic;
 
+
+    private boolean flag_toggle_show_day_acount=false;
+    private int flag_which_status_checked=0;
+
+    private boolean flag_mouth_day_is_show=false;
 
     MyAdapter adapter = new MyAdapter();
     public CalendarTab2Controller(Context context) {
@@ -88,6 +97,16 @@ public class CalendarTab2Controller extends TabController {
         year = Utils.getyear();
         mouth = Utils.getmouth();
         day = Utils.getday();
+
+        pager_month_chakanpingfen=view.findViewById(R.id.pager_month_chakanpingfen);
+        pager_month_mood_bottom_ll=view.findViewById(R.id.pager_month_mood_bottom_ll);
+        pager_month_mood_center_ll=view.findViewById(R.id.pager_month_mood_center_ll);
+
+        mood_day_acount_tian=view.findViewById(R.id.pager_month_mood_day_acount_tian);
+        mood_day_acount=view.findViewById(R.id.pager_month_mood_day_acount);
+        mood_good=view.findViewById(R.id.pager_month_mood_good);
+        mood_soso=view.findViewById(R.id.pager_month_mood_soso);
+        mood_bad=view.findViewById(R.id.pager_month_mood_bad);
 
         calendarLeft = (ImageButton)view.findViewById(R.id.calendarLeft);
         calendarText = (TextView)view.findViewById(R.id.calendarText);
@@ -129,17 +148,23 @@ public class CalendarTab2Controller extends TabController {
         ChartView chartView = (ChartView) view.findViewById(R.id.chartview);
         chartView.setValue(value, xValue, yValue);
 
-
         pager_month_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String mouthDay=(i+1)+"";
+                pager_month_chakanpingfen.setText("查看月评分");
+                flag_mouth_day_is_show=true;
+                if (mouthDay.length()==1){
+                    mouth="0"+mouthDay;
+                }else {
+                    mouth=mouthDay;
+                }
                 pager_month_gv.setVisibility(View.GONE);
                 date_title.setVisibility(View.VISIBLE);
                 smail_year.setText(year);
                 calendarText.setText(mouthstr[i]);
-
-                if(mouth.equals(i+"")||mouth.equals("0"+i)){
+                getList("2",i);
+                if(mouth.equals(mouthDay+"")||mouth.equals("0"+mouthDay)){
                     getWeek(year+"-"+(i+1)+"-"+"01",i,0);
                 }else{
                     getWeek(year+"-"+(i+1)+"-"+"01",i,1);
@@ -150,13 +175,102 @@ public class CalendarTab2Controller extends TabController {
         smail_year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag_mouth_day_is_show=false;
+                pager_month_chakanpingfen.setText("查看年评分");
                 pager_month_gv.setVisibility(View.VISIBLE);
                 date_title.setVisibility(View.GONE);
                 smail_year.setText("");
                 calendarText.setText(year);
+                getList("1",-1);
             }
         });
 
+
+        pager_month_chakanpingfen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (flag_mouth_day_is_show){
+                    showDialog();
+                }else {
+                    showDialog();
+                }
+            }
+        });
+
+        mood_good .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag_which_status_checked=0;
+                mood_good.setTextColor(Color.BLACK);
+                mood_good.setBackgroundResource(R.color.powderblue);
+                mood_soso.setTextColor(Color.WHITE);
+                mood_soso.setBackgroundResource(R.color.colorAccent);
+                mood_bad.setTextColor(Color.WHITE);
+                mood_bad.setBackgroundResource(R.color.colorAccent);
+                updateView();
+            }
+        });
+        mood_soso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag_which_status_checked=1;
+                mood_good.setTextColor(Color.WHITE);
+                mood_good.setBackgroundResource(R.color.colorAccent);
+                mood_soso.setTextColor(Color.BLACK);
+                mood_soso.setBackgroundResource(R.color.powderblue);
+                mood_bad.setTextColor(Color.WHITE);
+                mood_bad.setBackgroundResource(R.color.colorAccent);
+                updateView();
+            }
+        });
+        mood_bad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag_which_status_checked=2;
+                mood_good.setTextColor(Color.WHITE);
+                mood_good.setBackgroundResource(R.color.colorAccent);
+                mood_soso.setTextColor(Color.WHITE);
+                mood_soso.setBackgroundResource(R.color.colorAccent);
+                mood_bad.setTextColor(Color.BLACK);
+                mood_bad.setBackgroundResource(R.color.powderblue);
+                updateView();
+            }
+        });
+
+        pager_month_mood_center_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (flag_toggle_show_day_acount){
+                    flag_toggle_show_day_acount=!flag_toggle_show_day_acount;
+                    pager_month_mood_bottom_ll.setVisibility(View.GONE);
+                    mood_day_acount_tian.setText("");
+                    mood_day_acount.setText("");
+                }else {
+                    flag_toggle_show_day_acount=!flag_toggle_show_day_acount;
+                    pager_month_mood_bottom_ll.setVisibility(View.VISIBLE);
+                    mood_day_acount_tian.setText(" 天");
+                    updateView();
+                }
+
+            }
+        });
+
+        getList("1",-1);
+
+    }
+
+    private void updateView() {
+        switch (flag_which_status_checked){
+            case 0:
+                mood_day_acount.setText(moodStatistic.getGoodDayNumber()+"");
+                break;
+            case 1:
+                mood_day_acount.setText(moodStatistic.getSosoDayNumber()+"");
+                break;
+            case 2:
+                mood_day_acount.setText(moodStatistic.getBadDayNumber()+"");
+                break;
+        }
     }
 
     private String getWeek(String pTime,int i,int type) {
@@ -220,7 +334,7 @@ public class CalendarTab2Controller extends TabController {
         dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
-        View view = View.inflate(mContext, R.layout.dialog_alert_health, null);
+        View view = View.inflate(mContext, R.layout.dialog_mood_xinqing, null);
         ImageView cancle = (ImageView) view.findViewById(R.id.dialog_cancle);
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,47 +342,37 @@ public class CalendarTab2Controller extends TabController {
                 dialog.dismiss();
             }
         });
-        TextView godetail = (TextView) view.findViewById(R.id.dialog_alert_health_godetail);
-        godetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                mContext.startActivity(new Intent(mContext,HealthSamePersonActivity.class));
-            }
-        });
-        TextView gosameperson = (TextView) view.findViewById(R.id.dialog_alert_health_gosameperson);
-        gosameperson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                mContext.startActivity(new Intent(mContext,HealthSamePersonActivity.class));
-            }
-        });
-
         dialog.setContentView(view);
         dialog.show();
     }
 
 
     //获取列表
-    public void getList(String name) {
+    public void getList(String yom,final int i) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
-        params.addQueryStringParameter("type", "1");
-        params.addQueryStringParameter("readed", "0");
-        params.addQueryStringParameter("pageIndex", "1");
-        params.addQueryStringParameter("pageSize", "10");
-        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
+        params.addQueryStringParameter("yom", yom);//1是年  2//是月
+        if ("1".equals(yom)){
+            params.addQueryStringParameter("date", year);
+        }else {
+            params.addQueryStringParameter("date", year+"-"+mouth);
+        }
+
+        Log.i("xiaopeng", "url----mood:" + MouthpieceUrl.base_mood_getMoodStatistics + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mood_getMoodStatistics , mContext, params) {
             @Override
-            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
-                Log.i("xiaopeng-----","result-----"+result);
+            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+                if (response.code==200){
+                    moodStatistic=response.data;
+                    getWeek(year+"-"+mouth+"-"+"01",i,1);
+                }
+                Log.i("xiaopeng-----mood","result-----mood"+result);
             }
 
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
-                Log.i("xiaopeng-----","result-----"+result);
+                Log.i("xiaopeng-----mood","result-----mood"+result);
             }
 
             @Override
@@ -324,11 +428,13 @@ public class CalendarTab2Controller extends TabController {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
+            String mouthDay=(i+1)+"";
+
             view = View.inflate(mContext, R.layout.date_item, null);
 
             TextView date_item_mouth = view.findViewById(R.id.date_item_mouth);
 
-            if(mouth.equals(i+"")||mouth.equals("0"+i)){
+            if(mouth.equals(mouthDay)||mouth.equals("0"+mouthDay)){
                 date_item_mouth.setBackgroundResource(R.drawable.button_stoke_white);
             }
 
@@ -427,21 +533,62 @@ public class CalendarTab2Controller extends TabController {
             }
 
             if(ty==0){
-                if(day.equals(i+"")||day.equals("0"+i)){
+                if(day.equals((i-1)+"")||day.equals("0"+(i-1))){
                     date_item_mouth.setBackgroundResource(R.drawable.button_stoke_white);
                 }
             }
+
+            if (moodStatistic!=null){
+                if (moodStatistic.getDays()!=null){
+                    for (int day=0;day<moodStatistic.getDays().size();day++){
+                        Log.i("xiaopeng----",""+moodStatistic.getDays().size());
+
+                        String nowday="";
+                        switch (daysofmonth){
+                            case "天":
+                                nowday = year+"-"+mouth+"-"+(i-5);
+                                break;
+                            case "一":
+                                nowday = year+"-"+mouth+"-"+(i+1);
+                                break;
+                            case "二":
+                                nowday = year+"-"+mouth+"-"+(i);
+                                break;
+                            case "三":
+                                nowday = year+"-"+mouth+"-"+(i-1);
+                                break;
+                            case "四":
+                                nowday = year+"-"+mouth+"-"+(i-2);
+                                break;
+                            case "五":
+                                nowday = year+"-"+mouth+"-"+(i-3);
+                                break;
+                            case "六":
+                                nowday = year+"-"+mouth+"-"+(i-4);
+                                break;
+                        }
+
+                        if (moodStatistic.getDays().get(day).equals(nowday)){
+                            date_item_mouth.setBackgroundResource(R.drawable.corners_white);
+                            date_item_mouth.setTextColor(Color.parseColor("#28d3bd"));
+                            Log.i("xiaopeng----",moodStatistic.getDays().get(day)+"记录这一天"+nowday+moodStatistic.getDays().size());
+                        }
+                    }
+                }else {
+                }
+            }
+
 
             date_item_mouth.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    if(!date_item_mouth.getText().toString().equals("")){
-
-                        date_item_mouth.setBackgroundResource(R.drawable.corners_white);
-                        date_item_mouth.setTextColor(Color.parseColor("#28d3bd"));
-
-                    }
+//                    if(!date_item_mouth.getText().toString().equals("")){
+//
+//                        date_item_mouth.setBackgroundResource(R.drawable.corners_white);
+//                        date_item_mouth.setTextColor(Color.parseColor("#28d3bd"));
+//
+//                    }
 
                 }
             });

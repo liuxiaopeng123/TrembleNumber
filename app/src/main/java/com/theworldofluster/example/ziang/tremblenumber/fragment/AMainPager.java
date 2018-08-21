@@ -1,5 +1,6 @@
 package com.theworldofluster.example.ziang.tremblenumber.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.HttpUtils;
@@ -44,11 +47,13 @@ import org.json.JSONObject;
 
 public class AMainPager extends Fragment implements View.OnClickListener {
 
-    private TextView pager_agmenmain_userdata;
+    private TextView pager_agmenmain_userdata,my_guanyuyinsibaohu;
     private TextView mian_rankcenter;
     private LinearLayout pager_agmenmain_notice,pager_agmenmain_seting,pager_agmenmain_help_feedback;
 
     private LinearLayout my_activity;
+
+    private RelativeLayout information_back;
 
     private TextView pager_agmenmain_num1,pager_agmenmain_num2,pager_agmenmain_num3;
 
@@ -81,6 +86,9 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         dia.getWindow().setDimAmount(0);
         dia.setCanceledOnTouchOutside(false);
 
+        information_back=view.findViewById(R.id.information_back);
+
+        my_guanyuyinsibaohu=view.findViewById(R.id.my_guanyuyinsibaohu);
         pager_agmenmain_userdata = view.findViewById(R.id.pager_agmenmain_userdata);
         mian_rankcenter = view.findViewById(R.id.mian_rankcenter);
         pager_agmenmain_notice = view.findViewById(R.id.pager_agmenmain_notice);
@@ -94,6 +102,8 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         pager_agmenmain_username = view.findViewById(R.id.pager_agmenmain_username);
         pager_agmenmain_sgin = view.findViewById(R.id.pager_agmenmain_sgin);
 
+        information_back.setOnClickListener(this);
+        my_guanyuyinsibaohu.setOnClickListener(this);
         pager_agmenmain_userdata.setOnClickListener(this);
         mian_rankcenter.setOnClickListener(this);
         pager_agmenmain_notice.setOnClickListener(this);
@@ -105,6 +115,13 @@ public class AMainPager extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.my_guanyuyinsibaohu:
+                showDialog();
+                break;
+
+            case R.id.information_back:
+                getActivity().finish();
+                break;
 
             case R.id.pager_agmenmain_userdata:
 
@@ -140,6 +157,23 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         }
     }
 
+    Dialog dialog;
+    private void showDialog() {
+        dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        View view = View.inflate(getContext(), R.layout.dialog_yinsibaohu, null);
+        TextView confirm = view.findViewById(R.id.dialog_confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
     private void base_useruserinfo(){
         dia.show();
 
@@ -156,7 +190,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         pager_agmenmain_num1.setText(jsonobject.getJSONObject("data").getString("fansNum"));
                         pager_agmenmain_num2.setText(jsonobject.getJSONObject("data").getString("focusNum"));

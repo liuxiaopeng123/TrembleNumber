@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.exception.HttpException;
@@ -17,10 +16,8 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.HealthConsultBean;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultListActivity;
-import com.theworldofluster.example.ziang.tremblenumber.pk.PsyTestItemActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.List;
@@ -85,7 +82,7 @@ public class ConsultTab1Controller extends TabController {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token", PreferenceUtil.getString("token",""));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<HealthConsultBean>>>(MouthpieceUrl.base_health_consult_list , mContext, params) {
+        new HttpGet<GsonObjModel<List<HealthConsultBean>>>(MouthpieceUrl.base_health_consult_list , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<HealthConsultBean>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);

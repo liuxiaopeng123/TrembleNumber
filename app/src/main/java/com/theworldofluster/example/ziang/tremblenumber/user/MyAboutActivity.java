@@ -1,99 +1,186 @@
 package com.theworldofluster.example.ziang.tremblenumber.user;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.rey.material.app.BottomSheetDialog;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.controller.MyAboutTab1Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.MyAboutTab2Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.MyAboutTab3Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.TabController;
+import com.theworldofluster.example.ziang.tremblenumber.controller.YouXinShiTab1Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.YouXinShiTab2Controller;
+import com.theworldofluster.example.ziang.tremblenumber.controller.YouXinShiTab3Controller;
+import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
-public class MyAboutActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MyAboutActivity extends Activity {
 
-    @ViewInject(R.id.lostand_found_tab_01)
-    TextView lostand_found_tab_01;
+    @ViewInject(R.id.activity_my_about_back)
+    RelativeLayout activity_my_about_back;
+    @ViewInject(R.id.user_view_pager)
+    NoAnimViewpager user_view_pager;
+    @ViewInject(R.id.youxinshi_tab_1)
+    TextView youxinshi_tab_1;
+    @ViewInject(R.id.youxinshi_tab_2)
+    TextView youxinshi_tab_2;
+    @ViewInject(R.id.youxinshi_tab_3)
+    TextView youxinshi_tab_3;
 
-    @ViewInject(R.id.lostand_found_tab_02)
-    TextView lostand_found_tab_02;
+    @ViewInject(R.id.youxinshi_line_1)
+    TextView youxinshi_line_1;
+    @ViewInject(R.id.youxinshi_line_2)
+    TextView youxinshi_line_2;
+    @ViewInject(R.id.youxinshi_line_3)
+    TextView youxinshi_line_3;
 
-    @ViewInject(R.id.lostand_found_tab_03)
-    TextView lostand_found_tab_03;
-
-    @ViewInject(R.id.activity_my_about_img)
-    ImageView activity_my_about_img;
-
-    private BottomSheetDialog bottomInterPasswordDialog;
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    List<TabController> list;
+    public int ChoiceWhere = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_my_about);
         ViewUtils.inject(this); //注入view和事件
 
-        Window window = getWindow();
-        //设置透明状态栏,这样才能让 ContentView 向上
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-        window.setStatusBarColor(Color.parseColor("#00000000"));
-
-        ViewGroup mContentView = (ViewGroup)findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
-            ViewCompat.setFitsSystemWindows(mChildView, false);
-        }
-
-        lostand_found_tab_01.setOnClickListener(this);
-        lostand_found_tab_02.setOnClickListener(this);
-        lostand_found_tab_03.setOnClickListener(this);
+        init();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.lostand_found_tab_01:
+    private void init() {
 
-                lostand_found_tab_01.setTextColor(Color.parseColor("#000000"));
-                lostand_found_tab_02.setTextColor(Color.parseColor("#9e9e9e"));
-                lostand_found_tab_03.setTextColor(Color.parseColor("#9e9e9e"));
+        list = new ArrayList<>();
+        list.add(new MyAboutTab1Controller(this));
+        list.add(new MyAboutTab2Controller(this));
+        list.add(new MyAboutTab3Controller(this));
 
-                activity_my_about_img.setImageResource(R.mipmap.jiade_a);
+        user_view_pager.setAdapter(new MessageAdapter());
+        user_view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        youxinshi_tab_1.setTextColor(Color.BLACK);
+                        youxinshi_tab_2.setTextColor(Color.GRAY);
+                        youxinshi_tab_3.setTextColor(Color.GRAY);
+                        youxinshi_line_1.setBackgroundResource(R.color.colorPrimary);
+                        youxinshi_line_2.setBackgroundResource(R.color.white);
+                        youxinshi_line_3.setBackgroundResource(R.color.white);
+                        ChoiceWhere = 0;
+                        break;
+                    case 1:
+                        youxinshi_tab_1.setTextColor(Color.GRAY);
+                        youxinshi_tab_2.setTextColor(Color.BLACK);
+                        youxinshi_tab_3.setTextColor(Color.GRAY);
+                        youxinshi_line_1.setBackgroundResource(R.color.white);
+                        youxinshi_line_2.setBackgroundResource(R.color.colorPrimary);
+                        youxinshi_line_3.setBackgroundResource(R.color.white);
+                        ChoiceWhere = 1;
+                        break;
+                    case 2:
+                        youxinshi_tab_1.setTextColor(Color.GRAY);
+                        youxinshi_tab_2.setTextColor(Color.GRAY);
+                        youxinshi_tab_3.setTextColor(Color.BLACK);
+                        youxinshi_line_1.setBackgroundResource(R.color.white);
+                        youxinshi_line_2.setBackgroundResource(R.color.white);
+                        youxinshi_line_3.setBackgroundResource(R.color.colorPrimary);
+                        ChoiceWhere = 2;
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    @OnClick({R.id.activity_my_about_back,R.id.youxinshi_tab_1,R.id.youxinshi_tab_2,R.id.youxinshi_tab_3})
+    private void Onclick(View v){
+        switch (v.getId()){
+            case R.id.activity_my_about_back:
+                finish();
                 break;
-            case R.id.lostand_found_tab_02:
-
-                lostand_found_tab_01.setTextColor(Color.parseColor("#9e9e9e"));
-                lostand_found_tab_02.setTextColor(Color.parseColor("#000000"));
-                lostand_found_tab_03.setTextColor(Color.parseColor("#9e9e9e"));
-
-                activity_my_about_img.setImageResource(R.mipmap.jiade_b);
+            case R.id.youxinshi_tab_1:
+                youxinshi_tab_1.setTextColor(Color.BLACK);
+                youxinshi_tab_2.setTextColor(Color.GRAY);
+                youxinshi_tab_3.setTextColor(Color.GRAY);
+                youxinshi_line_1.setBackgroundResource(R.color.colorPrimary);
+                youxinshi_line_2.setBackgroundResource(R.color.white);
+                youxinshi_line_3.setBackgroundResource(R.color.white);
+                ChoiceWhere = 0;
+                user_view_pager.setCurrentItem(0);
                 break;
-
-            case R.id.lostand_found_tab_03:
-
-                lostand_found_tab_01.setTextColor(Color.parseColor("#9e9e9e"));
-                lostand_found_tab_02.setTextColor(Color.parseColor("#9e9e9e"));
-                lostand_found_tab_03.setTextColor(Color.parseColor("#000000"));
-
-                activity_my_about_img.setImageResource(R.mipmap.jiade_c);
+            case R.id.youxinshi_tab_2:
+                youxinshi_tab_1.setTextColor(Color.GRAY);
+                youxinshi_tab_2.setTextColor(Color.BLACK);
+                youxinshi_tab_3.setTextColor(Color.GRAY);
+                youxinshi_line_1.setBackgroundResource(R.color.white);
+                youxinshi_line_2.setBackgroundResource(R.color.colorPrimary);
+                youxinshi_line_3.setBackgroundResource(R.color.white);
+                ChoiceWhere = 1;
+                user_view_pager.setCurrentItem(1);
                 break;
+            case R.id.youxinshi_tab_3:
+                youxinshi_tab_1.setTextColor(Color.GRAY);
+                youxinshi_tab_2.setTextColor(Color.GRAY);
+                youxinshi_tab_3.setTextColor(Color.BLACK);
+                youxinshi_line_1.setBackgroundResource(R.color.white);
+                youxinshi_line_2.setBackgroundResource(R.color.white);
+                youxinshi_line_3.setBackgroundResource(R.color.colorPrimary);
+                ChoiceWhere = 2;
+                user_view_pager.setCurrentItem(2);
+                break;
+            default:
+                break;
+        }
+    }
 
+
+    class MessageAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            TabController controller = list.get(position);
+            // 获得数据
+            View view = controller.getRootView();
+            container.addView(view);
+            // 加载数据
+            controller.initData();
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
         }
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
@@ -28,6 +29,9 @@ public class RankCenterActivity extends AppCompatActivity implements View.OnClic
 
     @ViewInject(R.id.activity_rank_center_upgrades)
     public TextView activity_rank_center_upgrades;
+    @ViewInject(R.id.information_back)
+    public RelativeLayout information_back;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -55,15 +59,18 @@ public class RankCenterActivity extends AppCompatActivity implements View.OnClic
         }
 
         activity_rank_center_upgrades.setOnClickListener(this);
+        information_back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.activity_rank_center_upgrades:
-
                 startActivity(new Intent(RankCenterActivity.this,UpgradesActivity.class));
+                break;
 
+            case R.id.information_back:
+                finish();
                 break;
         }
     }

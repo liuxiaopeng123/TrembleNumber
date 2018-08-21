@@ -5,6 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.theworldofluster.example.ziang.tremblenumber.bean.ExtrasBean;
+import com.theworldofluster.example.ziang.tremblenumber.pk.HealthAlertActivity;
+import com.theworldofluster.example.ziang.tremblenumber.pk.HealthIntegralTableActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,11 +53,23 @@ public class MyReceiver extends BroadcastReceiver {
 				Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
 				//打开自定义的Activity
-				Intent i = new Intent(context, TestActivity.class);
-				i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);
+//				Intent i = new Intent(context, TestActivity.class);
+				Log.i("xiaopeng----","contentTpye1"+bundle.getString(JPushInterface.EXTRA_MESSAGE)+"contentTpye2"+bundle.getString(JPushInterface.ACTION_MESSAGE_RECEIVED)+bundle.getString(JPushInterface.EXTRA_EXTRA)+bundle.getString(JPushInterface.EXTRA_EXTRA));
+				String extrasString = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				Gson gson = new Gson();
+				ExtrasBean extrasBean = gson.fromJson(extrasString, ExtrasBean.class);
+				if ("1".equals(extrasBean.getContentType())){
+					Intent i = new Intent(context, HealthAlertActivity.class);
+					i.putExtras(bundle);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+					context.startActivity(i);
+				}else {
+					Intent i = new Intent(context, HealthAlertActivity.class);
+					i.putExtras(bundle);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+					context.startActivity(i);
+				}
+
 
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

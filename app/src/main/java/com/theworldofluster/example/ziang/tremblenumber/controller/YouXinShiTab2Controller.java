@@ -18,10 +18,11 @@ import com.lidroid.xutils.http.RequestParams;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.XinShi;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.pk.YouXinShiDetailActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class YouXinShiTab2Controller extends TabController {
 
     protected View initContentView(Context context) {
         mContext = context;
-        view = View.inflate(context, R.layout.youxinshitab2_control, null);
+        view = View.inflate(context, R.layout.youxinshitab1_control, null);
         return view;
     }
 
@@ -57,7 +58,13 @@ public class YouXinShiTab2Controller extends TabController {
         youxinshi_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showDialog();
+                Intent intent = new Intent(mContext, YouXinShiDetailActivity.class);
+                intent.putExtra("mindId",xinShiList.get(position).getMindId()+"");
+                intent.putExtra("hugNumber",xinShiList.get(position).getHugNumber()+"");
+                intent.putExtra("mindContext",xinShiList.get(position).getMindContext()+"");
+                intent.putExtra("nickName",xinShiList.get(position).getNickName()+"");
+                intent.putExtra("headUrl",xinShiList.get(position).getHeadUrl()+"");
+                mContext.startActivity(intent);
             }
         });
 
@@ -110,13 +117,42 @@ public class YouXinShiTab2Controller extends TabController {
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
+        new HttpGet<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<XinShi>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);
                 xinShiList=response.data;
                 if (response.code==200){
                     youxinshi_lv.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+    }
+
+    //添加抱抱
+    private void addMindHug(int mindId,boolean positive) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("mindId", ""+mindId);
+        params.addQueryStringParameter("positive", ""+positive);
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_hug + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_hug , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+                if (response.code==200){
+                    getList("");
                 }
             }
 
@@ -157,10 +193,26 @@ public class YouXinShiTab2Controller extends TabController {
             TextView content=convertView.findViewById(R.id.item_youxinshi_content);
             TextView username=convertView.findViewById(R.id.item_youxinshi_user_name);
             TextView hugnum=convertView.findViewById(R.id.item_youxinshi_hugnumber);
+            TextView addhug=convertView.findViewById(R.id.item_youxinshi_add_hug);
+            if (xinShiList.get(position).isHasHug()){
+                addhug.setVisibility(View.GONE);
+                hugnum.setVisibility(View.VISIBLE);
+            }else {
+                addhug.setVisibility(View.VISIBLE);
+                hugnum.setVisibility(View.GONE);
+            }
+            addhug.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addMindHug(xinShiList.get(position).getMindId(),!xinShiList.get(position).isHasHug());
+                }
+            });
             hugnum.setText(xinShiList.get(position).getHugNumber()+" 抱抱");
-            username.setText(xinShiList.get(position).getUserId()+"");
+            username.setText(xinShiList.get(position).getNickName()+"");
             content.setText(xinShiList.get(position).getMindContext());
             return convertView;
         }
     }
+
+
 }

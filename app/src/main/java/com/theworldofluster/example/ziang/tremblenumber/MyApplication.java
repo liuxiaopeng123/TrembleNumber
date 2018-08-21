@@ -11,6 +11,8 @@ import android.os.StrictMode;
 
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        x.Ext.init(this);
+        x.Ext.setDebug(false);
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         context = getApplicationContext();
 

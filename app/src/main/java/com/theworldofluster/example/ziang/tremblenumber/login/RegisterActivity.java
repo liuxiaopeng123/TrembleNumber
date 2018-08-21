@@ -256,7 +256,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
 
                           LoginActivity.loginactivity.login_username.setText(userphone);
@@ -305,7 +305,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         register_lla.setVisibility(View.GONE);
                         activity_login_password_v.setVisibility(View.INVISIBLE);
@@ -464,7 +464,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
-                    if ("SUCCESS".equals(jsonobject.getString("code"))) {
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         time.start();
                         ToastUtil.showContent(RegisterActivity.this,"验证码获取成功！");

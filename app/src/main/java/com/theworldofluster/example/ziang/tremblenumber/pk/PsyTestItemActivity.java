@@ -23,10 +23,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestTiJi;
-import com.theworldofluster.example.ziang.tremblenumber.controller.PsyTab1Controller;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.List;
@@ -69,7 +67,7 @@ public class PsyTestItemActivity extends Activity {
         params.addQueryStringParameter("cateCode", cateCode);
         params.addHeader("token",PreferenceUtil.getString("token",""));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_tiji + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<PsyTestTiJi>>>(MouthpieceUrl.base_psy_test_tiji , this, params) {
+        new HttpGet<GsonObjModel<List<PsyTestTiJi>>>(MouthpieceUrl.base_psy_test_tiji , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<PsyTestTiJi>> response, String result) {
                 Log.i("xiaopeng-----","result-----"+result);

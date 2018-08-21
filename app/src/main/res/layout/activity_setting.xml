@@ -138,11 +138,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:layout_marginLeft="30dp"
             android:background="@color/gray_bg_color"
             />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/pager_agmenmain_help_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

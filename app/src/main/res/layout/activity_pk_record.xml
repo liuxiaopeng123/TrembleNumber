@@ -61,7 +61,7 @@
 
         <TextView
             android:id="@+id/activity_pk_record_type_select"
-            android:text="被动PK "
+            android:text="全部PK "
             android:drawableRight="@mipmap/blackdown"
             android:gravity="center"
             android:textSize="18sp"
@@ -111,6 +111,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/pk_record_acount_jieshou"
                 android:layout_width="65dp"
                 android:layout_height="18dp"
                 android:textColor="@color/black"
@@ -133,6 +134,7 @@
                 android:layout_alignParentBottom="true"/>
 
             <CheckBox
+                android:id="@+id/pk_record_status_cb_1"
                 android:background="@drawable/selector_pk_bg"
                 android:button="@null"
                 android:layout_margin="5dp"
@@ -157,6 +159,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/pk_record_acount_jujue"
                 android:layout_width="65dp"
                 android:layout_height="18dp"
                 android:textColor="@color/black"
@@ -178,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
             <CheckBox
+                android:id="@+id/pk_record_status_cb_2"
                 android:layout_margin="5dp"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -200,6 +204,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/pk_record_acount_shibai"
                 android:layout_width="65dp"
                 android:layout_height="18dp"
                 android:textColor="@color/black"
@@ -221,6 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
             <CheckBox
+                android:id="@+id/pk_record_status_cb_3"
                 android:layout_margin="5dp"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -247,6 +253,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/pk_record_acount_sheng"
                     android:layout_width="65dp"
                     android:layout_height="18dp"
                     android:textColor="@color/white"
@@ -268,6 +275,7 @@
                     android:layout_alignParentBottom="true"/>
 
                 <CheckBox
+                    android:id="@+id/pk_record_result_cb_1"
                     android:layout_margin="5dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -290,6 +298,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/pk_record_acount_ping"
                     android:layout_width="65dp"
                     android:layout_height="18dp"
                     android:textColor="@color/white"
@@ -306,10 +315,11 @@
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
-                    android:text="【败】"
+                    android:text="【平】"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
                 <CheckBox
+                    android:id="@+id/pk_record_result_cb_2"
                     android:layout_margin="5dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -332,6 +342,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/pk_record_acount_bai"
                     android:layout_width="65dp"
                     android:layout_height="18dp"
                     android:textColor="@color/white"
@@ -348,11 +359,12 @@
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
-                    android:text="【平】"
+                    android:text="【败】"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"/>
 
                 <CheckBox
+                    android:id="@+id/pk_record_result_cb_3"
                     android:layout_margin="5dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

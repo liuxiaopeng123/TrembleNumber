@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.activity.CalendarActivity;
 import com.theworldofluster.example.ziang.tremblenumber.activity.FoldlinediagramActivity;
+import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
 
 import org.w3c.dom.Text;
 
@@ -23,7 +24,7 @@ public class APtwoPager extends Fragment implements View.OnClickListener {
 
     View view;
 
-    TextView pager_p_two_go;
+    TextView pager_p_two_go,pager_xinlifenxi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +42,8 @@ public class APtwoPager extends Fragment implements View.OnClickListener {
 
     private void initData() {
         pager_p_two_go = view.findViewById(R.id.pager_p_two_go);
+        pager_xinlifenxi=view.findViewById(R.id.pager_xinlifenxi);
+
 
         pager_p_two_go.setOnClickListener(this);
     }
@@ -55,6 +58,14 @@ public class APtwoPager extends Fragment implements View.OnClickListener {
 
                 break;
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (((PersonalActivity)getContext()).reportWeek!=null){
+            pager_xinlifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPhysiologyDesc());
         }
     }
 }

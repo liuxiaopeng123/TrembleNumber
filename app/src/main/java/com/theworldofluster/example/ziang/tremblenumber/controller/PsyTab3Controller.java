@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,10 +19,8 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyResultBean;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
-import com.theworldofluster.example.ziang.tremblenumber.pk.PsyTestItemActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.PsyTestItemDetailActivity;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.List;
@@ -73,7 +70,7 @@ public class PsyTab3Controller extends TabController {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_completed + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_completed , mContext, params) {
+        new HttpGet<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_completed , mContext, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<PsyResultBean>> response, String result) {
                 if (response.code==200){

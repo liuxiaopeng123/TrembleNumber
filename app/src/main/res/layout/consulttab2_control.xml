@@ -6,7 +6,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
                 <View
@@ -36,9 +37,9 @@
                     android:id="@+id/psytab1_gv1"
                     android:layout_width="match_parent"
                     android:numColumns="4"
-                    android:horizontalSpacing="15dp"
+                    android:horizontalSpacing="10dp"
                     android:verticalSpacing="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     >
 
                 </GridView>
@@ -47,7 +48,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
                 <View
@@ -78,9 +80,9 @@
                     android:id="@+id/psytab1_gv2"
                     android:layout_width="match_parent"
                     android:numColumns="4"
-                    android:horizontalSpacing="15dp"
+                    android:horizontalSpacing="10dp"
                     android:verticalSpacing="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     >
 
                 </GridView>

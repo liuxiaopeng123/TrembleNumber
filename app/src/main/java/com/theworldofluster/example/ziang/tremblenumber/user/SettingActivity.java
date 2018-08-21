@@ -39,6 +39,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @ViewInject(R.id.activity_setting_exit)
     public TextView activity_setting_exit;
 
+    @ViewInject(R.id.information_back)
+    public RelativeLayout information_back;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

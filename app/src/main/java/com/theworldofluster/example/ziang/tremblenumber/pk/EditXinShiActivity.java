@@ -16,9 +16,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
-import com.theworldofluster.example.ziang.tremblenumber.utils.HttpPost;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 
@@ -66,7 +65,7 @@ public class EditXinShiActivity extends Activity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("mindContext", edit_xinshi.getText().toString().trim());
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_add + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpPost<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_add , this, params) {
+        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_add , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
                 if (response.code==200){

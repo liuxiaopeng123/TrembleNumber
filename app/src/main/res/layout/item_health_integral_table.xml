@@ -28,6 +28,7 @@
 
 
 <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+    android:id="@+id/pk_record_img"
     android:layout_centerHorizontal="true"
     android:layout_width="45dp"
     android:layout_height="45dp"
@@ -41,6 +42,7 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
     <TextView
+        android:id="@+id/pk_record_name"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:text="昵称"
@@ -52,6 +54,7 @@
 </LinearLayout>
 
 <TextView
+    android:id="@+id/pk_record_score"
     android:gravity="center"
     android:layout_width="wrap_content"
     android:text="599↑"

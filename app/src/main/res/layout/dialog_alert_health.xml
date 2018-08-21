@@ -38,7 +38,7 @@
             android:background="@mipmap/dialog_cancle"/>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/remind_title"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
         <TextView
             android:layout_alignParentBottom="true"
-            android:id="@+id/date"
+            android:id="@+id/remind_date"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,6 +80,7 @@
 
 
                 <TextView
+                    android:id="@+id/remind_context"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
