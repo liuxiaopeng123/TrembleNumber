@@ -139,7 +139,7 @@
                 android:id="@+id/home_activity_paobuji"
                 android:layout_width="668dp"
                 android:layout_height="451dp"
-                android:background="@drawable/paobuji_baitian"
+                android:src="@drawable/paobuji_baitian"
                 />
             <pl.droidsonroids.gif.GifImageView
                 android:layout_height="wrap_content"

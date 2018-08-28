@@ -37,6 +37,13 @@ public class MouthpieceUrl {
 
     //小鹏的接口
 
+    //查询用户设置
+    public static String base_list_user_setting=base_url+"user/listUserSetting";
+    //更新用户设置
+    public static String base_update_user_setting=base_url+"user/updateUserSetting";
+    //等级权限接口
+    public static String base_level=base_url+"growthLevel/userLevelInfo";
+
     //获取测试列表
     public static String base_psy_test_list = base_url+"test/cate";
     //获取测试题集

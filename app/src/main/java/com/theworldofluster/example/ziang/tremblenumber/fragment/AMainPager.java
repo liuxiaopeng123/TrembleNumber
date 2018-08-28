@@ -23,6 +23,9 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
+import com.theworldofluster.example.ziang.tremblenumber.bean.LevelBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
 import com.theworldofluster.example.ziang.tremblenumber.user.EditActivity;
@@ -32,6 +35,7 @@ import com.theworldofluster.example.ziang.tremblenumber.user.MyActivity;
 import com.theworldofluster.example.ziang.tremblenumber.user.NoticeActivity;
 import com.theworldofluster.example.ziang.tremblenumber.user.RankCenterActivity;
 import com.theworldofluster.example.ziang.tremblenumber.user.SettingActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
@@ -74,6 +78,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
             initData();
 
             base_useruserinfo();
+            getLevel();
         }
 
 
@@ -129,8 +134,9 @@ public class AMainPager extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.mian_rankcenter:
-
-                startActivity(new Intent(getActivity(),RankCenterActivity.class));
+                Intent intent = new Intent(getActivity(),RankCenterActivity.class);
+                intent.putExtra("level",""+levelBean.getLevelInfoVo().getLevel());
+                startActivity(intent);
 
                 break;
             case R.id.pager_agmenmain_notice:
@@ -172,6 +178,33 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         });
         dialog.setContentView(view);
         dialog.show();
+    }
+
+    LevelBean levelBean;
+    private void getLevel() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_level + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<LevelBean>>(MouthpieceUrl.base_level , getContext(), params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<LevelBean> response, String result) {
+                if (response.code==200){
+                    levelBean=response.data;
+                }
+                Log.i("xiaopeng-----6","result6-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----6","result6-----"+result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
     private void base_useruserinfo(){

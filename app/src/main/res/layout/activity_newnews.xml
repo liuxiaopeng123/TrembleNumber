@@ -81,6 +81,7 @@
                 />
 
             <ImageView
+                android:id="@+id/setting_jingzituijian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -125,6 +126,7 @@
                 />
 
             <ImageView
+                android:id="@+id/setting_jingzitixing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -169,10 +171,11 @@
                 />
 
             <ImageView
+                android:id="@+id/setting_guanzhu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@mipmap/open_mure"
+                android:background="@mipmap/close_mure"
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical"
                 />
@@ -213,6 +216,7 @@
                 />
 
             <ImageView
+                android:id="@+id/setting_sixin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

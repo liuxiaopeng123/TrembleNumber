@@ -81,6 +81,7 @@
                 />
 
             <ImageView
+                android:id="@+id/yinsi_im1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -125,6 +126,7 @@
                 />
 
             <ImageView
+                android:id="@+id/yinsi_im2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -168,6 +170,7 @@
                 />
 
             <ImageView
+                android:id="@+id/yinsi_im3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -212,6 +215,7 @@
                 />
 
             <ImageView
+                android:id="@+id/yinsi_im4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
