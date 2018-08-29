@@ -254,6 +254,8 @@
         <activity android:name=".pk.EditXinShiActivity"/>
         <activity android:name=".pk.YouXinShiDetailActivity"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".user.UseActivity"/>
+        <activity android:name=".login.FoundPwdUesOldPwdActivity"/>
 
         <service android:name=".services.PostDataService" >
         </service>

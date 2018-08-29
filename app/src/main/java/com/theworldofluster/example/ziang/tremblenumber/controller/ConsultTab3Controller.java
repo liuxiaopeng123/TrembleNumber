@@ -60,7 +60,7 @@ public class ConsultTab3Controller extends TabController {
                 consult_type_1.setBackgroundResource(R.drawable.button_shape_half_white_blue_2);
                 consult_type_2.setTextColor(Color.GRAY);
                 consult_type_2.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
-                getList("1");
+                getList("2");
 
             }
         });
@@ -71,7 +71,7 @@ public class ConsultTab3Controller extends TabController {
                 consult_type_2.setBackgroundResource(R.drawable.button_shape_half_white_blue_2);
                 consult_type_1.setTextColor(Color.GRAY);
                 consult_type_1.setBackgroundResource(R.drawable.button_shape_half_white_cricle);
-                getList("2");
+                getList("1");
             }
         });
         consulttab3_lv=view.findViewById(R.id.consulttab3_lv);
@@ -88,7 +88,7 @@ public class ConsultTab3Controller extends TabController {
             }
         });
 
-        getList("1");
+        getList("2");
 
     }
 

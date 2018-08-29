@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.theworldofluster.example.ziang.tremblenumber.R;
+import com.theworldofluster.example.ziang.tremblenumber.login.FoundPwdUesOldPwdActivity;
 
 /**
  *
@@ -25,8 +27,12 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 
 public class SecurityandprivacyActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @ViewInject(R.id.activity_setting_securityandprivacy)
+    public LinearLayout activity_setting_securityandprivacy;
     @ViewInject(R.id.activity_securityandprivacy_privacysettings)
     public LinearLayout activity_securityandprivacy_privacysettings;
+    @ViewInject(R.id.information_back)
+    RelativeLayout information_back;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -52,7 +58,9 @@ public class SecurityandprivacyActivity extends AppCompatActivity implements Vie
             ViewCompat.setFitsSystemWindows(mChildView, false);
         }
 
+        activity_setting_securityandprivacy.setOnClickListener(this);
         activity_securityandprivacy_privacysettings.setOnClickListener(this);
+        information_back.setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +70,14 @@ public class SecurityandprivacyActivity extends AppCompatActivity implements Vie
 
                 startActivity(new Intent(SecurityandprivacyActivity.this,PrivacysettingsActivity.class));
 
+                break;
+
+            case R.id.activity_setting_securityandprivacy:
+                startActivity(new Intent(SecurityandprivacyActivity.this,FoundPwdUesOldPwdActivity.class));
+                break;
+
+            case R.id.information_back:
+                finish();
                 break;
         }
     }

@@ -37,6 +37,9 @@ public class MouthpieceUrl {
 
     //小鹏的接口
 
+    //验证码修改密码
+    public static String base_updatepwduseoldpwd = base_url+"account/resetPwd/oldPwd";
+
     //查询用户设置
     public static String base_list_user_setting=base_url+"user/listUserSetting";
     //更新用户设置

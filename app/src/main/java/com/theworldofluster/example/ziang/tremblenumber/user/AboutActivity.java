@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 
 /**
@@ -45,6 +46,19 @@ public class AboutActivity extends AppCompatActivity {
         if (mChildView != null) {
             //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
             ViewCompat.setFitsSystemWindows(mChildView, false);
+        }
+    }
+
+
+    @OnClick({R.id.information_back})
+    private void Onclick(View v){
+        switch (v.getId()){
+            case R.id.information_back:
+                finish();
+                break;
+
+            default:
+                break;
         }
     }
 }

@@ -525,7 +525,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         loopView.setTextSize(20);//设置字体大小
 
         ArrayList<String> list = new ArrayList();
-        for (int i = 1; i < 121; i++) {
+        for (int i = 2; i < 121; i++) {
             list.add(i+"");
         }
 

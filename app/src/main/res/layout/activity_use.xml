@@ -32,6 +32,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/use_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/black"
@@ -51,40 +52,21 @@
         android:background="@color/silver"
         />
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@mipmap/logo"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="抖擞 1.0"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/use_content"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="透过抖擞看见一个真实的自我"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
         android:textColor="@color/black"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="不断修正自我，成为完美的你"
-        android:textSize="15sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        />
+    </ScrollView>
 </LinearLayout>

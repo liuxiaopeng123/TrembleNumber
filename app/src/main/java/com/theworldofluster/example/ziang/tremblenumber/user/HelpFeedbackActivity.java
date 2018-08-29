@@ -1,5 +1,6 @@
 package com.theworldofluster.example.ziang.tremblenumber.user;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 
 /**
@@ -43,6 +45,32 @@ public class HelpFeedbackActivity extends AppCompatActivity {
         if (mChildView != null) {
             //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
             ViewCompat.setFitsSystemWindows(mChildView, false);
+        }
+    }
+
+    @OnClick({R.id.information_back,R.id.pager_agmenmain_notice,R.id.pager_agmenmain_seting,R.id.pager_agmenmain_help_feedback})
+    private void Onclick(View v){
+        Intent intent = new Intent(this,UseActivity.class);
+        switch (v.getId()){
+
+            case R.id.information_back:
+                finish();
+                break;
+            case R.id.pager_agmenmain_notice:
+                intent.putExtra("position","1");
+                startActivity(intent);
+                break;
+            case R.id.pager_agmenmain_seting:
+                intent.putExtra("position","2");
+                startActivity(intent);
+                break;
+            case R.id.pager_agmenmain_help_feedback:
+                intent.putExtra("position","3");
+                startActivity(intent);
+                break;
+
+            default:
+                break;
         }
     }
 }
