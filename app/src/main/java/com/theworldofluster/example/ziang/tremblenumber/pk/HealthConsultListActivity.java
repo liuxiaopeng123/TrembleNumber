@@ -23,6 +23,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.ArticleBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class HealthConsultListActivity extends Activity {
         params.addQueryStringParameter("firstCateCode", "");
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_articles + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<ArticleBean>>>(MouthpieceUrl.base_health_consult_articles , this, params) {
             @Override

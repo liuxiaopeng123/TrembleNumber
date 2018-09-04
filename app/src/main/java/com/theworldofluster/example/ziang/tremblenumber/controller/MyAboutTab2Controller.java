@@ -23,6 +23,7 @@ import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActiv
 import com.theworldofluster.example.ziang.tremblenumber.pk.YouXinShiDetailActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,7 @@ public class MyAboutTab2Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_addfouces + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_addfouces , mContext, params) {
             @Override

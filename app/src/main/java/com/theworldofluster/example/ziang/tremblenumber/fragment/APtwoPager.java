@@ -65,7 +65,7 @@ public class APtwoPager extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         if (((PersonalActivity)getContext()).reportWeek!=null){
-            pager_xinlifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPhysiologyDesc());
+            pager_xinlifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPhysiologyAnalysis());
         }
     }
 }

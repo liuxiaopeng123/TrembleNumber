@@ -208,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.i("xiaopeng---","我爱你123"+responseInfo.result);
-                Log.e("ZiangS---初始化",responseInfo.result);
+                Log.e("xiaopengS---初始化",responseInfo.result);
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
@@ -235,7 +235,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(HttpException error, String msg) {
                 Log.i("xiaopeng---","我爱你123"+msg);
-                Log.e("ZiangF-初始化",msg);
+                Log.e("xiaopengF-初始化",msg);
                 dia.dismiss();
             }
         });
@@ -362,7 +362,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     return;
                 }
 
-                base_updatemembertonickname();
+                if(logintype==0){
+                    base_updatemembertonickname();
+                }else{
+                    base_updatemembertonickname2();
+                }
+
 
                 break;
             case R.id.activity_login_foundpassword:
@@ -455,15 +460,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         params.addQueryStringParameter("userId",userid);
         params.addQueryStringParameter("phone",login_username.getText().toString());
 
-        Log.e("Ziang",userid);
-        Log.e("Ziang",login_username.getText().toString());
+        Log.e("xiaopeng",userid);
+        Log.e("xiaopeng",login_username.getText().toString());
 
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_code, params, new RequestCallBack<String>() {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("ZiangS---获取验证码",responseInfo.result);
+                Log.e("xiaopengS---获取验证码",responseInfo.result);
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
@@ -487,7 +492,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(HttpException error, String msg) {
-                Log.e("ZiangF-获取验证码",msg);
+                Log.e("xiaopengF-获取验证码",msg);
                 dia.dismiss();
             }
         });
@@ -513,7 +518,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("ZiangS---登录",responseInfo.result);
+                Log.i("xiaopengS---登录",responseInfo.result);
                 try {
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
@@ -542,7 +547,57 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(HttpException error, String msg) {
-                Log.e("ZiangF-登录",msg);
+                Log.i("xiaopengF-登录",msg);
+                dia.dismiss();
+            }
+        });
+    }
+
+    private void base_updatemembertonickname2(){
+        dia.show();
+
+        RequestParams params = new RequestParams();
+        params.addHeader("token",token);
+//        params.addQueryStringParameter("userId",userid);
+        params.addQueryStringParameter("phone",login_username.getText().toString());
+        params.addQueryStringParameter("verify",login_password.getText().toString());
+
+        HttpUtils http = new HttpUtils();
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_login_by_vertify + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_login_by_vertify, params, new RequestCallBack<String>() {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.i("xiaopengS---登录",responseInfo.result);
+                try {
+                    JSONObject jsonobject = new JSONObject(responseInfo.result);
+
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
+
+                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                        PreferenceUtil.putString("token",jsonobject.getString("data"));
+                        PreferenceUtil.putString("isLogin","yes");
+                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
+                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
+                        }
+                        finish();
+
+                    }else{
+
+                        ToastUtil.showContent(LoginActivity.this,jsonobject.getString("message"));
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                dia.dismiss();
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                Log.i("xiaopengF-登录",msg);
                 dia.dismiss();
             }
         });

@@ -37,6 +37,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.XinShi;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.ButtomDialogView;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
@@ -56,6 +57,7 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
 
     List<XinShi> xinShiList =new ArrayList<>();
 
+    String dialyId1,dialyId2,dialyId3;
     private int selected_icon=-1;
     ImageView pager_today_img1,pager_today_dialy_date_img1,pager_today_img2,pager_today_dialy_date_img2,pager_today_img3,pager_today_dialy_date_img3;
     TextView pager_today_xinqing_tv1,pager_today_dialy_date1,pager_today_xinqing_tv2,pager_today_dialy_date2,pager_today_xinqing_tv3,pager_today_dialy_date3,pager_today_commit1,pager_today_commit2,pager_today_commit3,pager_today_riji_zishu1,pager_today_riji_zishu2,pager_today_riji_zishu3;
@@ -473,7 +475,6 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
     private void showEditDialog(final String type) {
         View view = View.inflate(mContext, R.layout.bottom_pop_edit, null);
         buttomDialogView = new ButtomDialogView(mContext,view,true,true);
-        final String diandenayige =type;
         final TextView pop_cancle=view.findViewById(R.id.bootom_pop_edit_cancle);
         final ImageView checked_img =view.findViewById(R.id.pop_edit_checked_img);
         final EditText editText = view.findViewById(R.id.pop_edit_et);
@@ -519,7 +520,11 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                         }
 
                         buttomDialogView.dismiss();
-                        commitxinqing(type,editText.getText().toString().trim());
+                        if ("更新表情".equals(pager_today_commit1.getText().toString())||"更新表情".equals(pager_today_commit2.getText().toString())||"更新表情".equals(pager_today_commit3.getText().toString())){
+                            updatexinqing(type,editText.getText().toString().trim());
+                        }else {
+                            commitxinqing(type,editText.getText().toString().trim());
+                        }
                     }
                     return true;
                 }
@@ -579,6 +584,48 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
 
     }
 
+    //更新心情
+    private void updatexinqing(String type,String dialyContext) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        switch (type){
+            case "1":
+                params.addQueryStringParameter("dialyId", dialyId1);
+                break;
+            case "2":
+                params.addQueryStringParameter("dialyId", dialyId2);
+                break;
+            case "3":
+                params.addQueryStringParameter("dialyId", dialyId3);
+                break;
+        }
+        params.addQueryStringParameter("emojiId", commitIconCode+"");
+
+        params.addQueryStringParameter("dialyContext", dialyContext);
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mood_update + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_mood_update , mContext, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+                if (response.code==200){
+                    getList("");
+                }
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
+
+    }
+
 
     //获取列表
     public void getList(String name) {
@@ -586,6 +633,7 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("dialyDay", sf3.format(new Date(System.currentTimeMillis())));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mood_getbyday + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mood_getbyday , mContext, params) {
             @Override
@@ -636,6 +684,8 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
             switch (xinShiList.get(i).getDialyType()){
                 case 1:
                     pager_today_commit1.setText("更新表情");
+                    commitIconCode=xinShiList.get(i).getEmojiId();
+                    dialyId1=xinShiList.get(i).getDialyId()+"";
                     pager_today_dialy_date1.setText(xinShiList.get(i).getUpdateDate().substring(11,16));
                     pager_today_xinqing_tv1.setText(xinShiList.get(i).getDialyContext());
                     pager_today_riji_zishu1.setText(xinShiList.get(i).getDialyContext().length()+" / 50");
@@ -657,6 +707,8 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                     break;
                 case 2:
                     pager_today_commit2.setText("更新表情");
+                    dialyId2=xinShiList.get(i).getDialyId()+"";
+                    commitIconCode=xinShiList.get(i).getEmojiId();
                     pager_today_dialy_date2.setText(xinShiList.get(i).getUpdateDate().substring(11,16));
                     pager_today_xinqing_tv2.setText(xinShiList.get(i).getDialyContext());
                     pager_today_riji_zishu2.setText(xinShiList.get(i).getDialyContext().length()+" / 50");
@@ -678,6 +730,8 @@ public class CalendarTab1Controller extends TabController implements View.OnClic
                     break;
                 case 3:
                     pager_today_commit3.setText("更新表情");
+                    dialyId3=xinShiList.get(i).getDialyId()+"";
+                    commitIconCode=xinShiList.get(i).getEmojiId();
                     pager_today_dialy_date3.setText(xinShiList.get(i).getUpdateDate().substring(11,16));
                     pager_today_xinqing_tv3.setText(xinShiList.get(i).getDialyContext());
                     pager_today_riji_zishu3.setText(xinShiList.get(i).getDialyContext().length()+" / 50");

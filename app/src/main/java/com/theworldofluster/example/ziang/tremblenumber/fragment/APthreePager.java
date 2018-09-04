@@ -110,7 +110,7 @@ public class APthreePager extends Fragment implements View.OnClickListener {
             pager_p_three_go.setVisibility(View.VISIBLE);
         }
         if (((PersonalActivity)getContext()).reportWeek!=null){
-            pager_shentifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPsychologyDesc());
+            pager_shentifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPsychologyAnalysis());
         }
     }
 }

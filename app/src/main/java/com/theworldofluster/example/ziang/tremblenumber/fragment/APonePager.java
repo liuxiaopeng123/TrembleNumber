@@ -189,7 +189,7 @@ public class APonePager extends Fragment implements View.OnClickListener, OnChar
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-//        startActivity(new Intent(getActivity(),FoldlinediagramActivity.class));
+        startActivity(new Intent(getActivity(),FoldlinediagramActivity.class));
     }
 
     @Override

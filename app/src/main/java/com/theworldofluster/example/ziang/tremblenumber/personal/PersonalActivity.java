@@ -46,6 +46,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.AleartBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.ExtrasBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.OptData;
+import com.theworldofluster.example.ziang.tremblenumber.bean.RankBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.APonePager;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.APthreePager;
@@ -57,6 +58,7 @@ import com.theworldofluster.example.ziang.tremblenumber.user.MyActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
 
 import java.text.SimpleDateFormat;
@@ -230,41 +232,19 @@ public class PersonalActivity extends AppCompatActivity {
         activity_personal_userdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PersonalActivity.this,MyActivity.class));
+                if (rankBeanMySelf!=null){
+                    switch (rankBeanMySelf.getRanking()){
+
+                    }
+                }
+
+//                startActivity(new Intent(PersonalActivity.this,MyActivity.class));
             }
         });
 
 
 
 
-//        mSensroMgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-//
-//        //步数传感器
-//        Sensor mStepCount = mSensroMgr.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-//        //单次有效计步
-//        Sensor mStepDetector = mSensroMgr.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
-//        mSensroMgr.registerListener(this, mStepCount, SensorManager.SENSOR_DELAY_FASTEST);
-//        mSensroMgr.registerListener(this, mStepDetector, SensorManager.SENSOR_DELAY_FASTEST);
-
-        //选取加速度感应器
-//        sensor = mSensroMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-//        SensorEventListener lsn = new SensorEventListener() {
-//            public void onSensorChanged(SensorEvent e) {
-//                X_lateral = e.values[SensorManager.DATA_X];
-//                Y_longitudinal = e.values[SensorManager.DATA_Y];
-//                Z_vertical = e.values[SensorManager.DATA_Z];
-//
-////                Log.e("ZiangX",X_lateral+"");
-////                Log.e("ZiangY",Y_longitudinal+"");
-////                Log.e("ZiangZ",Z_vertical+"");
-//            }
-//            public void onAccuracyChanged(Sensor s, int accuracy) {
-//            }
-//        };
-        // 注册listener，第三个参数是检测的精确度
-//        mSensroMgr.registerListener(lsn, sensor, SensorManager.SENSOR_DELAY_GAME);
         init();
 //        postData();
         getReportWeek();
@@ -273,6 +253,40 @@ public class PersonalActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PostDataService.class);
         startService(intent);
         Log.i("xiaopeng---","启动了一个服务");
+
+        Utils.BJSloadImg(this,PreferenceUtil.getString("userheadUrl",""),activity_personal_userdata);
+        getRankSelf("1");
+    }
+
+
+    RankBean rankBeanMySelf;
+    private void getRankSelf(String type) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("period", DateUtil.getSunday());
+        Log.i("xiaopeng", "url----1:" + MouthpieceUrl.base_pk_recored_rank_self + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        new HttpGet<GsonObjModel<RankBean>>(MouthpieceUrl.base_pk_recored_rank_self , this, params) {
+            @Override
+            public void onParseSuccess(GsonObjModel<RankBean> response, String result) {
+                if (response.code==200){
+                    rankBeanMySelf=response.data;
+                }
+
+                Log.i("xiaopeng-----","result1-----"+result);
+            }
+
+            @Override
+            public void onParseError(GsonObjModel<String> response, String result) {
+                Log.i("xiaopeng-----","result1-----"+result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                super.onFailure(e, s);
+            }
+        };
     }
 
     Dialog dialog;
@@ -420,6 +434,7 @@ public class PersonalActivity extends AppCompatActivity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("pkId", extrasBean.getPkId()+"");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_pk_info + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_pk_info , this, params) {
             @Override

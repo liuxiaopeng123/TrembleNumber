@@ -84,11 +84,11 @@ public class WanNengBean {
     private int avgScore;
     private int healthRanking;
     private String latterUserHeadUrl;
-    private String physiologyDesc;
+    private String physiologyAnalysis;
     private int physiologyScore;
     private String previousUserHeadUrl;
     private int previousUserId;
-    private String psychologyDesc;
+    private String psychologyAnalysis;
     private int psychologyScore;
     private int score;
     private int scoreTrend;
@@ -115,6 +115,13 @@ public class WanNengBean {
     private String pkTargetUserHeadUrl;
     private int pkTargetUserId;
     private String pkTargetUserNickName;
+    /**
+     * periodBegin : 2018-07-23
+     * periodEnd : 2018-07-29
+     */
+
+    private String periodBegin;
+    private String periodEnd;
 
 
     public String getCreateDate() {
@@ -301,12 +308,12 @@ public class WanNengBean {
         this.latterUserHeadUrl = latterUserHeadUrl;
     }
 
-    public String getPhysiologyDesc() {
-        return physiologyDesc;
+    public String getPhysiologyAnalysis() {
+        return physiologyAnalysis;
     }
 
-    public void setPhysiologyDesc(String physiologyDesc) {
-        this.physiologyDesc = physiologyDesc;
+    public void setPhysiologyAnalysis(String physiologyAnalysis) {
+        this.physiologyAnalysis = physiologyAnalysis;
     }
 
     public int getPhysiologyScore() {
@@ -333,12 +340,12 @@ public class WanNengBean {
         this.previousUserId = previousUserId;
     }
 
-    public String getPsychologyDesc() {
-        return psychologyDesc;
+    public String getPsychologyAnalysis() {
+        return psychologyAnalysis;
     }
 
-    public void setPsychologyDesc(String psychologyDesc) {
-        this.psychologyDesc = psychologyDesc;
+    public void setPsychologyAnalysis(String psychologyAnalysis) {
+        this.psychologyAnalysis = psychologyAnalysis;
     }
 
     public int getPsychologyScore() {
@@ -443,5 +450,21 @@ public class WanNengBean {
 
     public void setPkTargetUserNickName(String pkTargetUserNickName) {
         this.pkTargetUserNickName = pkTargetUserNickName;
+    }
+
+    public String getPeriodBegin() {
+        return periodBegin;
+    }
+
+    public void setPeriodBegin(String periodBegin) {
+        this.periodBegin = periodBegin;
+    }
+
+    public String getPeriodEnd() {
+        return periodEnd;
+    }
+
+    public void setPeriodEnd(String periodEnd) {
+        this.periodEnd = periodEnd;
     }
 }

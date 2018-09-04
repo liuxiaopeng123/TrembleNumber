@@ -25,6 +25,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.PsyResultBean;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class PsyTestItemOtherResultActivity extends Activity {
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("setCode", setCode);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_more_result + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_more_result , this, params) {
             @Override
@@ -146,7 +148,7 @@ public class PsyTestItemOtherResultActivity extends Activity {
             TextView title = convertView.findViewById(R.id.item_other_result_title);
             TextView content = convertView.findViewById(R.id.item_other_result_content);
             title.setText(psyResultBeanList.get(position).getDescTitle());
-            content.setText(psyResultBeanList.get(position).getDescContext());
+            content.setText("有"+psyResultBeanList.get(position).getPercent()+"%的测试用户是这个测试结果");
             return convertView;
         }
     }

@@ -22,6 +22,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +108,7 @@ public class PsyTab4Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_analysis + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<WanNengBean>>>(MouthpieceUrl.base_psy_test_analysis , mContext, params) {
             @Override

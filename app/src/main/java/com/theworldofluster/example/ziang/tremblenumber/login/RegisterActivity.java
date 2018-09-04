@@ -154,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if(register==0){
 
-                    if(activity_register2_nameuser.getText().toString().length()!=11){
+                    if(activity_register2_nameuser.getText().toString().length()!=13){
 
                         ToastUtil.showContent(RegisterActivity.this,"请按要求输入手机号");
 
@@ -210,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.activity_register2_getcode:
 
-                if(activity_register2_nameuser.getText().toString().length()!=11){
+                if(activity_register2_nameuser.getText().toString().length()!=13){
 
                     ToastUtil.showContent(RegisterActivity.this,"请按要求输入手机号");
 
@@ -243,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("sex",sex+"");
-        params.addQueryStringParameter("age","2");
+        params.addQueryStringParameter("age",register_age.getText().toString());
         params.addQueryStringParameter("nickName",register_nickname.getText().toString());
         params.addQueryStringParameter("signature","");
 
@@ -261,6 +261,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                           LoginActivity.loginactivity.login_username.setText(userphone);
                           LoginActivity.loginactivity.login_password.setText(password);
+                          PreferenceUtil.putString("userAge",register_age.getText().toString());
+                          PreferenceUtil.putString("userSex",sex+"");
                           finish();
 
                     }else{
@@ -291,7 +293,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         RequestParams params = new RequestParams();
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
-        params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString());
+        params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString().replace(" ",""));
         params.addQueryStringParameter("password",activity_register2_newpassword.getText().toString());
         params.addQueryStringParameter("verify",activity_register2_password.getText().toString());
 
@@ -314,7 +316,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         register_btn.setText("完成");
                         register = 2;
 
-                        userphone = activity_register2_nameuser.getText().toString();
+                        userphone = activity_register2_nameuser.getText().toString().replace(" ","");
                         password = activity_register2_password.getText().toString();
                     }else{
 
@@ -338,33 +340,42 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setLisenner() {
-        activity_register2_nameuser.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(activity_register2_nameuser.getText().toString().length()==11&&!activity_register2_password.getText().toString().equals("")&&!activity_register2_newpassword.getText().toString().equals("")){
-                    register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
-
-                    register_btn.setClickable(true);
-                }else{
-                    register_btn.setBackgroundColor(Color.parseColor("#bff1eb"));
-
-                    register_btn.setClickable(false);
-                }
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        activity_register2_nameuser.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                String content = activity_register2_nameuser.getText().toString().trim();
+//                if(activity_register2_nameuser.getText().toString().length()==11&&activity_register2_password.getText().toString().length()>6&&activity_register2_newpassword.getText().toString().length()>6){
+//                    register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
+//
+//                    register_btn.setClickable(true);
+//                }else{
+//                    register_btn.setBackgroundColor(Color.parseColor("#bff1eb"));
+//
+//                    register_btn.setClickable(false);
+//                }
+//
+//                if (content.trim().length()<4){
+//                }else if (content.trim().length()<8){
+//                    activity_register2_nameuser.setText(content.trim().substring(0,3)+" "+content.trim().substring(3,content.trim().length()));
+//                }else if (content.trim().length()<=11){
+//                    activity_register2_nameuser.setText(content.trim().substring(0,3)+" "+content.trim().substring(3,7)+" "+content.trim().substring(8,content.trim().length()));
+//                }
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
         activity_register2_password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -375,7 +386,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(activity_register2_nameuser.getText().toString().length()==11&&!activity_register2_password.getText().toString().equals("")&&!activity_register2_newpassword.getText().toString().equals("")){
+                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>7){
                     register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     register_btn.setClickable(true);
@@ -402,7 +413,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(activity_register2_nameuser.getText().toString().length()==11&&!activity_register2_password.getText().toString().equals("")&&!activity_register2_newpassword.getText().toString().equals("")){
+                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>7){
                     register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     register_btn.setClickable(true);
@@ -453,7 +464,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         RequestParams params = new RequestParams();
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
-        params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString());
+        params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString().replace(" ",""));
 
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_code, params, new RequestCallBack<String>() {
@@ -492,7 +503,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void showBottomDialog(String title) {
 
-        items = 1;
+        items = 18;
 
         View  ad = View.inflate(RegisterActivity.this,R.layout.dialog_select_individual,null);
 
@@ -525,7 +536,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         loopView.setTextSize(20);//设置字体大小
 
         ArrayList<String> list = new ArrayList();
-        for (int i = 2; i < 121; i++) {
+        for (int i = 18; i < 29; i++) {
             list.add(i+"");
         }
 
@@ -534,7 +545,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         loopView.setListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                items = index + 1;
+                items = index + 18;
             }
         });
 

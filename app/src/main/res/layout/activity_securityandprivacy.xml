@@ -143,6 +143,7 @@
             />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/pager_agmenmain_help_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

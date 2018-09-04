@@ -85,6 +85,7 @@ public class PsyTab2Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<PsyTestBean>>>(MouthpieceUrl.base_psy_test_list , mContext, params) {
             @Override

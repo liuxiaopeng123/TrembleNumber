@@ -35,7 +35,13 @@ public class MouthpieceUrl {
     //补充用户信息
     public static String base_edituser = base_url+"/user/editUser";
 
-    //小鹏的接口
+    //小鹏的接口user/comment
+
+    //验证码修改密码
+    public static String base_user_comment= base_url+"user/comment";
+
+    //验证码修改密码
+    public static String base_login_by_vertify= base_url+"account/loginWithVerify";
 
     //验证码修改密码
     public static String base_updatepwduseoldpwd = base_url+"account/resetPwd/oldPwd";

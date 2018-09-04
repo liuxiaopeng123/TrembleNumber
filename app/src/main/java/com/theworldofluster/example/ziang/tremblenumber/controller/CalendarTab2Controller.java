@@ -124,7 +124,44 @@ public class CalendarTab2Controller extends TabController {
 
             @Override
             public void onClick(View v) {
-                //点击上一月 同样返回年月
+                //点击上一月
+                if (flag_mouth_day_is_show){
+                    if ("0".equals(mouth.substring(0,1))){
+                        if ("00".equals(mouth)){
+                            mouth="00";
+                        }else {
+                            mouth="0"+(Integer.parseInt(mouth.substring(1,2))-1);
+                        }
+                    }else {
+                        mouth=(Integer.parseInt(mouth)-1)+"";
+                    }
+                    pager_month_gv.setVisibility(View.GONE);
+                    date_title.setVisibility(View.VISIBLE);
+                    smail_year.setText(year);
+                    int position=-1;
+                    for (int i =0;i<mouthstr.length;i++){
+                        if (calendarText.getText().toString().equals(mouthstr[i])){
+                            position=i;
+                            break;
+                        }
+                    }
+                    if (position>0){
+                        int rightpos=position-1;
+                        calendarText.setText(mouthstr[rightpos]);
+                        getList("2",position);
+                        getWeek(year+"-"+(rightpos+1)+"-"+"01",rightpos,1);
+                    }
+                }else {
+                    year=(Integer.parseInt(year)-1)+"";
+
+                    flag_mouth_day_is_show=false;
+                    pager_month_chakanpingfen.setText("查看年评分");
+                    pager_month_gv.setVisibility(View.VISIBLE);
+                    date_title.setVisibility(View.GONE);
+                    smail_year.setText("");
+                    calendarText.setText(year);
+                    getList("1",-1);
+                }
             }
         });
 
@@ -133,6 +170,46 @@ public class CalendarTab2Controller extends TabController {
             @Override
             public void onClick(View v) {
                 //点击下一月
+                if (flag_mouth_day_is_show){
+                    if ("0".equals(mouth.substring(0,1))){
+                        if ("09".equals(mouth)){
+                            mouth="10";
+                        }else {
+                            mouth="0"+(Integer.parseInt(mouth.substring(1,2))+1);
+                        }
+
+                    }else {
+                        mouth=(Integer.parseInt(mouth)+1)+"";
+                    }
+                    pager_month_gv.setVisibility(View.GONE);
+                    date_title.setVisibility(View.VISIBLE);
+                    smail_year.setText(year);
+                    int position=-1;
+                    for (int i =0;i<mouthstr.length;i++){
+                        if (calendarText.getText().toString().equals(mouthstr[i])){
+                            position=i;
+                            break;
+                        }
+                    }
+                    if (position<11){
+                        int rightpos=position+1;
+                        calendarText.setText(mouthstr[rightpos]);
+                        getList("2",position);
+                        getWeek(year+"-"+(rightpos+1)+"-"+"01",rightpos,1);
+                    }
+
+
+                }else {
+                    year=(Integer.parseInt(year)+1)+"";
+
+                    flag_mouth_day_is_show=false;
+                    pager_month_chakanpingfen.setText("查看年评分");
+                    pager_month_gv.setVisibility(View.VISIBLE);
+                    date_title.setVisibility(View.GONE);
+                    smail_year.setText("");
+                    calendarText.setText(year);
+                    getList("1",-1);
+                }
             }
         });
 
@@ -260,16 +337,18 @@ public class CalendarTab2Controller extends TabController {
     }
 
     private void updateView() {
-        switch (flag_which_status_checked){
-            case 0:
-                mood_day_acount.setText(moodStatistic.getGoodDayNumber()+"");
-                break;
-            case 1:
-                mood_day_acount.setText(moodStatistic.getSosoDayNumber()+"");
-                break;
-            case 2:
-                mood_day_acount.setText(moodStatistic.getBadDayNumber()+"");
-                break;
+        if (moodStatistic!=null) {
+            switch (flag_which_status_checked) {
+                case 0:
+                    mood_day_acount.setText(moodStatistic.getGoodDayNumber() + "");
+                    break;
+                case 1:
+                    mood_day_acount.setText(moodStatistic.getSosoDayNumber() + "");
+                    break;
+                case 2:
+                    mood_day_acount.setText(moodStatistic.getBadDayNumber() + "");
+                    break;
+            }
         }
     }
 
@@ -352,6 +431,7 @@ public class CalendarTab2Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         params.addQueryStringParameter("yom", yom);//1是年  2//是月
         if ("1".equals(yom)){
             params.addQueryStringParameter("date", year);

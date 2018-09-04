@@ -22,6 +22,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.PsyResultBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.PsyTestItemDetailActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class PsyTab3Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_completed + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<PsyResultBean>>>(MouthpieceUrl.base_psy_test_completed , mContext, params) {
             @Override

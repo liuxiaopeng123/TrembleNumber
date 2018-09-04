@@ -24,6 +24,8 @@ import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActiv
 import com.theworldofluster.example.ziang.tremblenumber.pk.YouXinShiDetailActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
+import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +118,7 @@ public class YouXinShiTab1Controller extends TabController {
         params.addQueryStringParameter("isMine", "false");
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<XinShi>>>(MouthpieceUrl.base_mind_list , mContext, params) {
             @Override
@@ -190,6 +193,9 @@ public class YouXinShiTab1Controller extends TabController {
             if (convertView == null) {
                 convertView = View.inflate(mContext, R.layout.item_youxinshi_tab1, null);
             }
+            CircularImage item_youxinshi_user_img = convertView.findViewById(R.id.item_youxinshi_user_img);
+            Utils.BJSloadImg(mContext,MouthpieceUrl.base_loading_img+xinShiList.get(position).getHeadUrl(),item_youxinshi_user_img);
+
             TextView content=convertView.findViewById(R.id.item_youxinshi_content);
             TextView username=convertView.findViewById(R.id.item_youxinshi_user_name);
             TextView hugnum=convertView.findViewById(R.id.item_youxinshi_hugnumber);
@@ -202,6 +208,12 @@ public class YouXinShiTab1Controller extends TabController {
                 hugnum.setVisibility(View.GONE);
             }
             addhug.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addMindHug(xinShiList.get(position).getMindId(),!xinShiList.get(position).isHasHug());
+                }
+            });
+            hugnum.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     addMindHug(xinShiList.get(position).getMindId(),!xinShiList.get(position).isHasHug());

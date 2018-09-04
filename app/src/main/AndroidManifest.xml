@@ -256,6 +256,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".user.UseActivity"/>
         <activity android:name=".login.FoundPwdUesOldPwdActivity"/>
+        <activity android:name=".user.PingJiaActivity"/>
 
         <service android:name=".services.PostDataService" >
         </service>

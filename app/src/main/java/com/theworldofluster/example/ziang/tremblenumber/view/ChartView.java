@@ -167,7 +167,7 @@ public class ChartView extends View {
             width = getWidth();
             height = getHeight();
             //Y轴文本最大宽度
-            float textYWdith = getTextBounds("000", xyTextPaint).width();
+            float textYWdith = getTextBounds("0000", xyTextPaint).width();
             for (int i = 0; i < yValue.size(); i++) {//求取y轴文本最大的宽度
                 float temp = getTextBounds(yValue.get(i) + "", xyTextPaint).width();
                 if (temp > textYWdith)
@@ -367,7 +367,7 @@ public class ChartView extends View {
                 if (i == selectIndex - 1) {
                     xyTextPaint.setColor(linecolor);
                     canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
-                    canvas.drawRoundRect(x - xValueRect.width() / 2 - dpToPx(3), yOri + xylinewidth + dpToPx(1), x + xValueRect.width() / 2 + dpToPx(3), yOri + xylinewidth + dpToPx(2) + xValueRect.height() + dpToPx(2), dpToPx(2), dpToPx(2), xyTextPaint);
+//                    canvas.drawRoundRect(x - xValueRect.width() / 2 - dpToPx(3), yOri + xylinewidth + dpToPx(1), x + xValueRect.width() / 2 + dpToPx(3), yOri + xylinewidth + dpToPx(2) + xValueRect.height() + dpToPx(2), dpToPx(2), dpToPx(2), xyTextPaint);
                 } else {
                     canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
                 }

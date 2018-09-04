@@ -12,13 +12,18 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -32,6 +37,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
+import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
+import com.theworldofluster.example.ziang.tremblenumber.login.RegisterActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Bimp;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
@@ -53,6 +60,12 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     @ViewInject(R.id.user_updata_headimg_rl)
     private RelativeLayout user_updata_headimg_rl;
+
+    @ViewInject(R.id.activity_proposal_content)
+    EditText activity_proposal_content;
+
+    @ViewInject(R.id.edit_activity_zishu)
+    TextView edit_activity_zishu;
 
     @ViewInject(R.id.user_data_headpic_img)
     private CircularImage user_data_headpic_img;
@@ -103,6 +116,29 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         activity_edit_back.setOnClickListener(this);
         user_updata_headimg_rl.setOnClickListener(this);
+
+        activity_proposal_content.setText(getIntent().getStringExtra("qianming"));
+
+        activity_proposal_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                edit_activity_zishu.setText((60-activity_proposal_content.getText().toString().length())+"");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
+
+        Utils.BJSloadImg(this,PreferenceUtil.getString("userheadUrl",""),user_data_headpic_img);
+
     }
 
 
@@ -110,36 +146,86 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.activity_edit_back:
+                if (getIntent().getStringExtra("qianming").equals(activity_proposal_content.getText().toString().trim())){
+                    finish();
+                }else {
+                    base_edituser();
+                }
 
-                finish();
+//
 
                 break;
 
             case R.id.user_updata_headimg_rl:
 
-                actionSheetDialog = new ActionSheetDialog(this).builder();
-                actionSheetDialog.setCancelable(true);
-                actionSheetDialog.setCanceledOnTouchOutside(true);
-
-                actionSheetDialog.addSheetItem("相机", ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which) {
-                                camera();
-                            }
-                        });
-                actionSheetDialog.addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which) {
+//                actionSheetDialog = new ActionSheetDialog(this).builder();
+//                actionSheetDialog.setCancelable(true);
+//                actionSheetDialog.setCanceledOnTouchOutside(true);
+//
+//                actionSheetDialog.addSheetItem("相机", ActionSheetDialog.SheetItemColor.Blue,
+//                        new ActionSheetDialog.OnSheetItemClickListener() {
+//                            @Override
+//                            public void onClick(int which) {
+//                                camera();
+//                            }
+//                        });
+//                actionSheetDialog.addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue,
+//                        new ActionSheetDialog.OnSheetItemClickListener() {
+//                            @Override
+//                            public void onClick(int which) {
                                 gallery();
-                            }
-                        });
-                actionSheetDialog.show();
+//                            }
+//                        });
+//                actionSheetDialog.show();
 
                 break;
         }
     }
+
+    private void base_edituser(){
+        dia.show();
+
+        RequestParams params = new RequestParams();
+        params.addHeader("token", PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("sex",PreferenceUtil.getString("userSex","0"));
+        params.addQueryStringParameter("age",PreferenceUtil.getString("userSex","2"));
+        params.addQueryStringParameter("nickName",getIntent().getStringExtra("nickName"));
+        params.addQueryStringParameter("signature",activity_proposal_content.getText().toString().trim());
+
+        HttpUtils http = new HttpUtils();
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_edituser + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+        http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_edituser, params, new RequestCallBack<String>() {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("ZiangS---更新用户信息",responseInfo.result);
+                try {
+                    JSONObject jsonobject = new JSONObject(responseInfo.result);
+
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
+                        finish();
+                    }else{
+
+                        ToastUtil.showContent(EditActivity.this,jsonobject.getString("message"));
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                dia.dismiss();
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                Log.e("ZiangF-更新用户信息",msg);
+                dia.dismiss();
+            }
+        });
+    }
+
 
     /*
      * 从相机获取
@@ -264,11 +350,12 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addBodyParameter("userId",PreferenceUtil.getString("userId",""));
         try {
-            params.addBodyParameter("MultipartFile", Bimp.saveFile(headbitmap, sdcardPathName, Utils.getstringrandom() + Utils.getstringrandom() + Utils.getstringrandom() + Utils.getstringrandom()+".jpg"));
+            params.addBodyParameter("fileHead", Bimp.saveFile(headbitmap, sdcardPathName, Utils.getstringrandom() + Utils.getstringrandom() + Utils.getstringrandom() + Utils.getstringrandom()+".jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
+        Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_obtaininformations );
         http.send(HttpRequest.HttpMethod.POST, MouthpieceUrl.base_obtaininformations, params, new RequestCallBack<String>() {
 
             @Override

@@ -23,6 +23,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
 import com.theworldofluster.example.ziang.tremblenumber.bean.SettingBean;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +153,7 @@ public class PrivacysettingsActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_list_user_setting + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<SettingBean>>>(MouthpieceUrl.base_list_user_setting , this, params) {
             @Override
@@ -182,6 +184,7 @@ public class PrivacysettingsActivity extends AppCompatActivity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("type", type);
         params.addQueryStringParameter("onOff", !flag+"");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_update_user_setting + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<SettingBean>>(MouthpieceUrl.base_update_user_setting , this, params) {
             @Override

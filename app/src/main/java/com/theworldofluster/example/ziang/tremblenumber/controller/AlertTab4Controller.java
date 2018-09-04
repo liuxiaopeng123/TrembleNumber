@@ -27,6 +27,7 @@ import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActiv
 import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -192,6 +193,7 @@ public class AlertTab4Controller extends TabController {
             public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
                 if (response.code==200){
                     dialog.dismiss();
+                    getList("");
                 }
                 Log.i("xiaopeng-----","result-----"+result);
             }
@@ -217,6 +219,7 @@ public class AlertTab4Controller extends TabController {
         params.addQueryStringParameter("readed", "0");
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<ExtrasBean>>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
             @Override

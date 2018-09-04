@@ -65,6 +65,8 @@ public class AMainPager extends Fragment implements View.OnClickListener {
 
     private CircularImage pager_agmenmain_headurl;
 
+    private String qianming="",nickName;
+
     View view;
 
     HttpDialog dia;
@@ -130,7 +132,10 @@ public class AMainPager extends Fragment implements View.OnClickListener {
 
             case R.id.pager_agmenmain_userdata:
 
-                startActivity(new Intent(getActivity(),EditActivity.class));
+                Intent intent2 =new Intent(getActivity(),EditActivity.class);
+                intent2.putExtra("qianming",qianming);
+                intent2.putExtra("nickName",nickName);
+                startActivityForResult(intent2,0,null);
 
                 break;
             case R.id.mian_rankcenter:
@@ -213,6 +218,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         RequestParams params = new RequestParams();
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
 
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_useruserinfo, params, new RequestCallBack<String>() {
@@ -229,14 +235,17 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                         pager_agmenmain_num2.setText(jsonobject.getJSONObject("data").getString("focusNum"));
                         pager_agmenmain_num3.setText(jsonobject.getJSONObject("data").getString("friendNum"));
 
-                        Utils.BJSloadImg(getActivity(),jsonobject.getJSONObject("data").getString("headUrl"),pager_agmenmain_headurl);
+                        PreferenceUtil.putString("userheadUrl",MouthpieceUrl.base_loading_img+jsonobject.getJSONObject("data").getString("headUrl"));
+                        Utils.BJSloadImg(getActivity(),PreferenceUtil.getString("userheadUrl",""),pager_agmenmain_headurl);
 
+                        nickName=jsonobject.getJSONObject("data").getString("nickName");
                         if(jsonobject.getJSONObject("data").getString("nickName").equals("")){
                             pager_agmenmain_username.setText("未命名");
                         }else{
                             pager_agmenmain_username.setText(jsonobject.getJSONObject("data").getString("nickName"));
                         }
 
+                        qianming=jsonobject.getJSONObject("data").getString("signature");
                         if(jsonobject.getJSONObject("data").getString("signature").equals("")){
                             pager_agmenmain_sgin.setText("这位用户很懒，什么都没留下—");
                         }else{
@@ -264,4 +273,10 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         });
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        base_useruserinfo();
+    }
 }

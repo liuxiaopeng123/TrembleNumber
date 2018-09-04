@@ -80,33 +80,33 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
     }
 
     private void setLisenner() {
-        login_username.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
-                    login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
-
-                    login_btn.setClickable(true);
-                }else{
-                    login_btn.setBackgroundColor(Color.parseColor("#bff1eb"));
-
-                    login_btn.setClickable(false);
-                }
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        login_username.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+//                    login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
+//
+//                    login_btn.setClickable(true);
+//                }else{
+//                    login_btn.setBackgroundColor(Color.parseColor("#bff1eb"));
+//
+//                    login_btn.setClickable(false);
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
         login_password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,7 +117,7 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+                if(!login_password.getText().toString().equals("")&&login_newpassword.getText().toString().length()>6){
                     login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     login_btn.setClickable(true);
@@ -144,7 +144,7 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+                if(!login_password.getText().toString().equals("")&&login_newpassword.getText().toString().length()>=6){
                     login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     login_btn.setClickable(true);
@@ -175,14 +175,14 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
         switch (view.getId()){
             case R.id.register_getcode:
 
-                if(login_username.getText().toString().length()!=11){
-
-                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请按要求输入手机号");
-
-                    return;
-                }
-
-                base_code();
+//                if(login_username.getText().toString().length()!=11){
+//
+//                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请按要求输入手机号");
+//
+//                    return;
+//                }
+//
+//                base_code();
 
                 break;
             case R.id.login_back:
@@ -192,12 +192,12 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
                 break;
             case R.id.login_btn:
 
-                if(login_username.getText().toString().length()!=11){
-
-                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请按要求输入手机号");
-
-                    return;
-                }
+//                if(login_username.getText().toString().length()!=11){
+//
+//                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请按要求输入手机号");
+//
+//                    return;
+//                }
 
                 if(login_password.getText().toString().equals("")){
 
@@ -305,10 +305,13 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
 
                     if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
-                        ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"修改密码成功！");
-                        LoginActivity.loginactivity.login_username.setText(login_username.getText().toString());
+                        if (jsonobject.getBoolean("data")){
+                            ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"修改密码成功！");
+                            finish();
+                        }else {
+                            ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请填写正确旧密码");
+                        }
 
-                        finish();
 
                     }else{
 

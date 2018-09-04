@@ -222,6 +222,7 @@ public class HealthIntegralTableActivity extends Activity {
             public void onParseSuccess(GsonObjModel<RankBean> response, String result) {
                 if (response.code==200){
                     rankBeanMySelf=response.data;
+                    Utils.BJSloadImg(getApplicationContext(),PreferenceUtil.getString("userheadUrl",""),rank_myself_user_img);
                     rank_myself_total_score.setText(response.data.getTotalScore()+"↑");
                     rank_myself_ranking.setText(""+response.data.getRanking());
                     rank_myself_dabaiduishou.setText("打败了"+response.data.getPercent()+"%的对手");
@@ -278,12 +279,15 @@ public class HealthIntegralTableActivity extends Activity {
         for (int i=0;i<rankBeanTop.size();i++){
             switch (rankBeanTop.get(i).getRanking()){
                 case 1:
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top1_img);
                     rank_top1_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
                     break;
                 case 2:
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top2_img);
                     rank_top2_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
                     break;
                 case 3:
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top3_img);
                     rank_top3_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
                     break;
             }
@@ -698,7 +702,8 @@ public class HealthIntegralTableActivity extends Activity {
 //            });
             TextView pk_record_num = convertView.findViewById(R.id.pk_record_num);
             TextView pk_record_name =convertView.findViewById(R.id.pk_record_name);
-            CircularImage pk_record_img =convertView.findViewById(R.id.pk_record_img);
+            CircularImage  pk_record_img=convertView.findViewById(R.id.pk_record_img);
+            Utils.BJSloadImg(getApplicationContext(),MouthpieceUrl.base_loading_img+rankBeanTotal.getListRank().get(position).getHeadUrl(),pk_record_img);
             TextView pk_record_score =convertView.findViewById(R.id.pk_record_score);
             pk_record_num.setText(""+rankBeanTotal.getListRank().get(position).getRanking());
             pk_record_name.setText(""+rankBeanTotal.getListRank().get(position).getNickName());

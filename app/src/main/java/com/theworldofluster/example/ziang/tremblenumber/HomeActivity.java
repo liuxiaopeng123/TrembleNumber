@@ -11,10 +11,12 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -48,8 +50,8 @@ public class HomeActivity extends Activity {
     ImageView home_activity_my;
     @ViewInject(R.id.home_activity_my_health)
     ImageView home_activity_my_health;
-
-
+    @ViewInject(R.id.home_activity_yizi)
+    ImageView home_activity_yizi;
 
     GifImageView home_activity_pao,home_activity_zuozhe,home_activity_shuijiao,home_activity_taili,home_activity_zhanzhe,home_activity_wenjianjia,home_activity_diannao,home_activity_feibiao,home_activity_guahua,home_activity_mofaqiu;
     GifDrawable paoDrawable,zuozheDrawable,shuijiaoDrawable,tailiDrawable,zhanzheDrawable,jiaxueDrawable,diannaoDrawable,feibiaoDrawable,guahuaDrawable,mofaqiuDrawable;
@@ -59,6 +61,37 @@ public class HomeActivity extends Activity {
     private LocationManager locationManager;
     String provider; //位置提供器
     private int flag_jiazai=5;
+
+    public int screenHeight ;
+
+    public int screenWidth ;
+
+    private void initWindow() {
+
+        DisplayMetrics dm = new DisplayMetrics();
+        //取得窗口属性
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        //窗口的宽度
+        screenWidth = dm.widthPixels;
+
+        //窗口高度
+        screenHeight = dm.heightPixels;
+
+        RelativeLayout.LayoutParams lp;
+
+//        //坐着的人
+//        lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        lp.setMargins(screenWidth/32*10, 0, 0, 0);
+//        home_activity_zuozhe.setLayoutParams(lp);
+
+        //椅子
+//        lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        lp.setMargins(screenWidth/32*1, screenHeight/80*8, 0, 0);
+//        home_activity_yizi.setLayoutParams(lp);
+
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +107,7 @@ public class HomeActivity extends Activity {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-
         initView();
-
 
         // 获取系统LocationManager服务
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -103,6 +134,7 @@ public class HomeActivity extends Activity {
 
         locationManager.requestLocationUpdates(provider, 6000, 10, locationListener);
 
+        initWindow();
     }
 
     private void initView() {
@@ -131,7 +163,7 @@ public class HomeActivity extends Activity {
         }else if (nowHour>22||nowHour<6){
             userShuijiao();
         }else {
-            userZuozhe();
+        userZuozhe();
         }
         guahuaDrawable=(GifDrawable) home_activity_guahua.getDrawable();
         guahuaDrawable.setLoopCount(1);

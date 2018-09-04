@@ -34,6 +34,7 @@ import com.theworldofluster.example.ziang.tremblenumber.controller.YouXinShiTab2
 import com.theworldofluster.example.ziang.tremblenumber.controller.YouXinShiTab3Controller;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
 import com.theworldofluster.example.ziang.tremblenumber.view.DataPickerDialog;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
@@ -104,6 +105,7 @@ public class YouXinShiDetailActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("mindId", mindId);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_comfortList + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<ComfortBean>>>(MouthpieceUrl.base_mind_comfortList , this, params) {
             @Override

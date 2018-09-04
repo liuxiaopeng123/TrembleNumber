@@ -19,6 +19,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.HealthConsultBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthConsultListActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.List;
 
@@ -81,6 +82,7 @@ public class ConsultTab1Controller extends TabController {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token", PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<HealthConsultBean>>>(MouthpieceUrl.base_health_consult_list , mContext, params) {
             @Override

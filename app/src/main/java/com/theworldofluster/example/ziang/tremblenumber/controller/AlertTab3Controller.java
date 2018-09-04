@@ -23,6 +23,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthSamePersonActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,7 @@ public class AlertTab3Controller extends TabController {
         params.addQueryStringParameter("readed", "0");
         params.addQueryStringParameter("pageIndex", "1");
         params.addQueryStringParameter("pageSize", "10");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<AleartBean>>>(MouthpieceUrl.base_health_alert_list , mContext, params) {
             @Override

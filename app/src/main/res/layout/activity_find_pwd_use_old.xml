@@ -39,6 +39,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -76,7 +77,6 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="textPassword"
             android:padding="15dp"
             android:hint="旧密码"
             />
@@ -124,7 +124,6 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="textPassword"
             android:padding="15dp"
             android:hint="新密码"
             />

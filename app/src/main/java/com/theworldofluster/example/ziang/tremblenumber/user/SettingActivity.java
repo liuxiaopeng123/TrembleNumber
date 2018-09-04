@@ -33,6 +33,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @ViewInject(R.id.pager_agmenmain_newnews)
     public LinearLayout pager_agmenmain_newnews;
 
+    @ViewInject(R.id.pingjiawomen)
+    public LinearLayout pingjiawomen;
+
     @ViewInject(R.id.activity_setting_back)
     public RelativeLayout activity_setting_back;
 
@@ -65,6 +68,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             ViewCompat.setFitsSystemWindows(mChildView, false);
         }
 
+        pingjiawomen.setOnClickListener(this);
         activity_setting_about.setOnClickListener(this);
         activity_setting_securityandprivacy.setOnClickListener(this);
         pager_agmenmain_newnews.setOnClickListener(this);
@@ -76,6 +80,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.pingjiawomen:
+
+                startActivity(new Intent(SettingActivity.this,PingJiaActivity.class));
+
+                break;
             case R.id.activity_setting_about:
 
                 startActivity(new Intent(SettingActivity.this,AboutActivity.class));

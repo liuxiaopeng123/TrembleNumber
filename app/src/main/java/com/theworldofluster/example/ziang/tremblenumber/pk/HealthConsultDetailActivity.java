@@ -20,6 +20,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 public class HealthConsultDetailActivity extends Activity {
     @ViewInject(R.id.activity_health_consult_detail_back)
@@ -88,6 +89,7 @@ public class HealthConsultDetailActivity extends Activity {
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("articleCode", articleCode);
         params.addQueryStringParameter("isCancel", collecte+"");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_collect + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_consult_collect , this, params) {
             @Override
