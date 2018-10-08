@@ -15,9 +15,9 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,8 +34,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.PsyTestBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.RankBean;
+import com.theworldofluster.example.ziang.tremblenumber.bean.RankTopBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
@@ -44,18 +44,15 @@ import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
-import com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.JPushMessage;
 
 public class HealthIntegralTableActivity extends Activity {
 
@@ -64,28 +61,32 @@ public class HealthIntegralTableActivity extends Activity {
     boolean flag_button_click=false;
 
     MyAdapter adapter =null;
-
-    @ViewInject(R.id.rank_top1_img)
+    @ViewInject(R.id.huadongdingbuline)
+    View huadongdingbuline;
+    @ViewInject(R.id.activity_health_lv)
+    ListView activity_health_lv;
+//    @ViewInject(R.id.health_scrollView)
+//    ScrollView health_scrollView;
+//    @ViewInject(R.id.rank_top1_img)
     CircularImage rank_top1_img;
-    @ViewInject(R.id.rank_top2_img)
+//    @ViewInject(R.id.rank_top2_img)
     CircularImage rank_top2_img;
-    @ViewInject(R.id.rank_top3_img)
+//    @ViewInject(R.id.rank_top3_img)
     CircularImage rank_top3_img;
-    @ViewInject(R.id.rank_top1_name_score)
+//    @ViewInject(R.id.rank_top1_name_score)
     TextView rank_top1_name_score;
-    @ViewInject(R.id.rank_top2_name_score)
+//    @ViewInject(R.id.rank_top2_name_score)
     TextView rank_top2_name_score;
-    @ViewInject(R.id.rank_top3_name_score)
+//    @ViewInject(R.id.rank_top3_name_score)
     TextView rank_top3_name_score;
 
     @ViewInject(R.id.health_integral_table_back)
     RelativeLayout health_integral_table_back;
     @ViewInject(R.id.pk_rules)
     RelativeLayout pk_rules;
-    @ViewInject(R.id.pk_record)
+//    @ViewInject(R.id.pk_record)
     TextView pk_record;
-    @ViewInject(R.id.activity_health_lv)
-    NoScrollListView activity_health_lv;
+
     @ViewInject(R.id.health_integral_table_invite_pk)
     Button health_integral_table_invite_pk;
     @ViewInject(R.id.activity_pk_record_type_select)
@@ -93,27 +94,29 @@ public class HealthIntegralTableActivity extends Activity {
     @ViewInject(R.id.health_integral_table_pk_tab)
     TextView health_integral_table_pk_tab;
 
-    @ViewInject(R.id.rank_myself_user_img)
+//    @ViewInject(R.id.rank_myself_user_img)
     CircularImage rank_myself_user_img;
-    @ViewInject(R.id.rank_myself_nickname)
+//    @ViewInject(R.id.rank_myself_nickname)
     TextView rank_myself_nickname;
-    @ViewInject(R.id.rank_myself_dabaiduishou)
+//    @ViewInject(R.id.rank_myself_dabaiduishou)
     TextView rank_myself_dabaiduishou;
-    @ViewInject(R.id.rank_myself_ranking)
+//    @ViewInject(R.id.rank_myself_ranking)
     TextView rank_myself_ranking;
-    @ViewInject(R.id.rank_myself_total_score)
+//    @ViewInject(R.id.rank_myself_total_score)
     TextView rank_myself_total_score;
 
     private String flag_type="1";
 
     SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
-    List<RankBean> rankBeanTop=new ArrayList<>();
+    List<RankTopBean> rankBeanTop=new ArrayList<>();
     WanNengBean rankBeanTotal = new WanNengBean();
     List<Boolean> status =new ArrayList<>();
     private int flag_count_select_person=0;
     private String commit_pk_ids="";
     List<RankBean> rankBeanList=new ArrayList<>();
+
+    private int flag_my_position=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,17 +147,44 @@ public class HealthIntegralTableActivity extends Activity {
         health_integral_table_back.setFocusableInTouchMode(true);
         health_integral_table_back.requestFocus();
         adapter = new MyAdapter();
+        View view = View.inflate(this,R.layout.head_view,null);
+        pk_record = view.findViewById(R.id.pk_record);
+        pk_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HealthIntegralTableActivity.this,PKRecordActivity.class));
+            }
+        });
+        rank_top1_img=view.findViewById(R.id.rank_top1_img);
+        rank_top2_img=view.findViewById(R.id.rank_top2_img);
+        rank_top3_img=view.findViewById(R.id.rank_top3_img);
+        rank_top1_name_score=view.findViewById(R.id.rank_top1_name_score);
+        rank_top2_name_score=view.findViewById(R.id.rank_top2_name_score);
+        rank_top3_name_score=view.findViewById(R.id.rank_top3_name_score);
 
+        rank_myself_user_img=view.findViewById(R.id.rank_myself_user_img);
+        rank_myself_nickname=view.findViewById(R.id.rank_myself_nickname);
+        rank_myself_dabaiduishou=view.findViewById(R.id.rank_myself_dabaiduishou);
+        rank_myself_ranking=view.findViewById(R.id.rank_myself_ranking);
+        rank_myself_total_score=view.findViewById(R.id.rank_myself_total_score);
+        activity_health_lv.addHeaderView(view);
         activity_health_lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                Log.i("xiaopeng","--------"+scrollState);
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Log.i("xiaopeng","--------"+firstVisibleItem+"---"+visibleItemCount);
+                if (firstVisibleItem<flag_my_position-10){
+                    health_integral_table_pk_tab.setText("比我强");
+                    health_integral_table_pk_tab.setBackgroundResource(R.color.colorPrimary);
+                }else if (firstVisibleItem>=flag_my_position-10&&firstVisibleItem<=flag_my_position+10){
+                    health_integral_table_pk_tab.setText("旗鼓相当");
+                    health_integral_table_pk_tab.setBackgroundResource(R.color.lightsalmon);
+                }else {
+                    health_integral_table_pk_tab.setText("比我差");
+                    health_integral_table_pk_tab.setBackgroundResource(R.color.crimson);
+                }
+                Log.i("xiaopeng","--------"+firstVisibleItem+"---"+visibleItemCount+"---"+totalItemCount);
             }
         });
 
@@ -220,15 +250,27 @@ public class HealthIntegralTableActivity extends Activity {
         new HttpGet<GsonObjModel<RankBean>>(MouthpieceUrl.base_pk_recored_rank_self , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<RankBean> response, String result) {
+                Log.i("xiaopeng-----","result1-----"+result);
                 if (response.code==200){
                     rankBeanMySelf=response.data;
                     Utils.BJSloadImg(getApplicationContext(),PreferenceUtil.getString("userheadUrl",""),rank_myself_user_img);
-                    rank_myself_total_score.setText(response.data.getTotalScore()+"↑");
+                    if (response.data.getTrend()==1){
+                        rank_myself_total_score.setText((int)response.data.getTotalScore()+"↑");
+                    }else if (response.data.getTrend()==-1){
+                        rank_myself_total_score.setText((int)response.data.getTotalScore()+"↓");
+                    }else {
+                        rank_myself_total_score.setText((int)response.data.getTotalScore()+"");
+                    }
                     rank_myself_ranking.setText(""+response.data.getRanking());
-                    rank_myself_dabaiduishou.setText("打败了"+response.data.getPercent()+"%的对手");
+                    if (response.data.getPercent()>0){
+                        rank_myself_dabaiduishou.setText("打败了"+response.data.getPercent()+"%的对手");
+                    }else {
+                        rank_myself_dabaiduishou.setVisibility(View.GONE);
+                    }
+                    rank_myself_dabaiduishou.setVisibility(View.GONE);
                 }
 
-                Log.i("xiaopeng-----","result1-----"+result);
+
             }
 
             @Override
@@ -250,17 +292,17 @@ public class HealthIntegralTableActivity extends Activity {
         params.addQueryStringParameter("type", type);
         params.addQueryStringParameter("period", DateUtil.getSunday());
         Log.i("xiaopeng", "url----2:" + MouthpieceUrl.base_pk_recored_rank_top + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpGet<GsonObjModel<List<RankBean>>>(MouthpieceUrl.base_pk_recored_rank_top , this, params) {
+        new HttpGet<GsonObjModel<List<RankTopBean>>>(MouthpieceUrl.base_pk_recored_rank_top , this, params) {
             @Override
-            public void onParseSuccess(GsonObjModel<List<RankBean>> response, String result) {
+            public void onParseSuccess(GsonObjModel<List<RankTopBean>> response, String result) {
+                Log.i("xiaopeng-----","result2-----"+result);
                 if (response.code==200){
                     rankBeanTop =response.data;
                     if (rankBeanTop!=null){
                         initTopData();
                     }
-
                 }
-                Log.i("xiaopeng-----","result2-----"+result);
+
             }
 
             @Override
@@ -280,15 +322,15 @@ public class HealthIntegralTableActivity extends Activity {
             switch (rankBeanTop.get(i).getRanking()){
                 case 1:
                     Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top1_img);
-                    rank_top1_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
+                    rank_top1_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+((int)rankBeanTop.get(i).getTotalScore()));
                     break;
                 case 2:
                     Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top2_img);
-                    rank_top2_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
+                    rank_top2_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+((int)rankBeanTop.get(i).getTotalScore()));
                     break;
                 case 3:
                     Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+rankBeanTop.get(i).getHeadUrl(),rank_top3_img);
-                    rank_top3_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+rankBeanTop.get(i).getTotalScore());
+                    rank_top3_name_score.setText(rankBeanTop.get(i).getNickName()+"|"+((int)rankBeanTop.get(i).getTotalScore()));
                     break;
             }
             Log.i("xiaopeng-----","rank"+rankBeanTop.get(i).getRanking());
@@ -304,7 +346,7 @@ public class HealthIntegralTableActivity extends Activity {
         params.addQueryStringParameter("type", type);
         params.addQueryStringParameter("period", DateUtil.getSunday());
         params.addQueryStringParameter("pageIndex","1");
-        params.addQueryStringParameter("pageSize", "11");
+        params.addQueryStringParameter("pageSize", "103");
         Log.i("xiaopeng", "url----3:" + MouthpieceUrl.base_pk_recored_rank_total + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_pk_recored_rank_total , this, params) {
             @Override
@@ -315,6 +357,9 @@ public class HealthIntegralTableActivity extends Activity {
                         if (rankBeanTotal.getListRank()!=null){
                             for (int i=0 ;i<rankBeanTotal.getListRank().size();i++){
                                 status.add(false);
+                                if (PreferenceUtil.getString("userId","").equals(rankBeanTotal.getListRank().get(i).getUserId()+"")){
+                                    flag_my_position=i;
+                                }
                             }
                             activity_health_lv.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
@@ -327,33 +372,6 @@ public class HealthIntegralTableActivity extends Activity {
             @Override
             public void onParseError(GsonObjModel<String> response, String result) {
                 Log.i("xiaopeng-----","result3333-----"+result);
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                super.onFailure(e, s);
-            }
-        };
-    }
-
-    private void getRankList(String type) {
-        RequestParams params = new RequestParams();
-        params.addHeader("token",PreferenceUtil.getString("token",""));
-        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
-        params.addQueryStringParameter("type", type);
-        params.addQueryStringParameter("period", DateUtil.getSunday());
-        params.addQueryStringParameter("pageIndex","1");
-        params.addQueryStringParameter("pageSize", "10");
-        Log.i("xiaopeng", "url----4:" + MouthpieceUrl.base_pk_recored_rank_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpGet<GsonObjModel<PsyTestBean>>(MouthpieceUrl.base_pk_recored_rank_list , this, params) {
-            @Override
-            public void onParseSuccess(GsonObjModel<PsyTestBean> response, String result) {
-                Log.i("xiaopeng-----4","result4-----"+result);
-            }
-
-            @Override
-            public void onParseError(GsonObjModel<String> response, String result) {
-                Log.i("xiaopeng-----4","result4-----"+result);
             }
 
             @Override
@@ -409,7 +427,7 @@ public class HealthIntegralTableActivity extends Activity {
                 startActivity(new Intent(HealthIntegralTableActivity.this,PKRecordActivity.class));
                 break;
             case R.id.activity_pk_record_type_select:
-                showPopWindow();
+//                showPopWindow();
                 break;
             case R.id.health_integral_table_invite_pk:
                 if (PreferenceUtil.getBool("isNotFirstPK",false)){
@@ -625,9 +643,12 @@ public class HealthIntegralTableActivity extends Activity {
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_health_integral_table, null);
             }
+//            if (rankBeanMySelf.getUserId().equals(rankBeanTotal.getListRank().get(position).getUserId())){
+//                flag_my_position=position;
+//            }
             final CheckBox item_health_check_box = convertView.findViewById(R.id.item_health_check_box);
             if (flag_button_click){
-                if (rankBeanMySelf.getUserId().equals(rankBeanTotal.getListRank().get(position).getUserId())){
+                if (rankBeanMySelf.getRanking()<=rankBeanTotal.getListRank().get(position).getRanking()){
                     item_health_check_box.setVisibility(View.INVISIBLE);
                 }else {
                     item_health_check_box.setVisibility(View.VISIBLE);
@@ -710,13 +731,13 @@ public class HealthIntegralTableActivity extends Activity {
 
             switch (rankBeanTotal.getListRank().get(position).getTrend()){
                 case -1:
-                    pk_record_score.setText(rankBeanTotal.getListRank().get(position).getTotalScore()+"↓");
+                    pk_record_score.setText((int)rankBeanTotal.getListRank().get(position).getTotalScore()+"↓");
                     break;
                 case 0:
-                    pk_record_score.setText(rankBeanTotal.getListRank().get(position).getTotalScore()+" ");
+                    pk_record_score.setText((int)rankBeanTotal.getListRank().get(position).getTotalScore()+" ");
                     break;
                 case 1:
-                    pk_record_score.setText(rankBeanTotal.getListRank().get(position).getTotalScore()+"↑");
+                    pk_record_score.setText((int)rankBeanTotal.getListRank().get(position).getTotalScore()+"↑");
                     break;
             }
             return convertView;

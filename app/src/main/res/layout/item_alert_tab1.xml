@@ -21,8 +21,10 @@
         <TextView
             android:layout_weight="1"
             android:id="@+id/item_alert_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:paddingLeft="10dp"
+            android:drawableLeft="@mipmap/xiaohongdian"
+            android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:layout_height="match_parent"
             android:text="今天的你有点不开心啊"

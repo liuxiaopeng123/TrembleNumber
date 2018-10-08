@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
@@ -24,10 +23,8 @@ import com.theworldofluster.example.ziang.tremblenumber.controller.CalendarTab1C
 import com.theworldofluster.example.ziang.tremblenumber.controller.CalendarTab2Controller;
 import com.theworldofluster.example.ziang.tremblenumber.controller.TabController;
 import com.theworldofluster.example.ziang.tremblenumber.pk.YouXinShiActivity;
-import com.theworldofluster.example.ziang.tremblenumber.view.CalendarView;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

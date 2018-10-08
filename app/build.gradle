@@ -1,11 +1,43 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "27d50916e4f3b"
+    appSecret "d6e50c6953467038bdc01fdf8a0dfd01"
+
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+//            SinaWeibo {
+//                appKey "568898243"
+//                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
+//                shareByAppClient false
+//            }
+            Wechat {
+                appId "wx542f8ac423dd9a3a"
+                appSecret "472b11aeb26b2cbe669ff9de5516dc26"
+            }
+//            QQ {
+//                appId "101508034"
+//                appKey "b76c4f62217df81d645506e451ccfd23"
+//                shareByAppClient true
+//            }
+//            Facebook {
+//                appKey "1412473428822331"
+//                appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+//                callbackUri "https://mob.com"
+//            }
+        }
+    }
+
+}
 
 android {
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.theworldofluster.example.ziang.tremblenumber"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -48,4 +80,7 @@ dependencies {
     implementation files('libs/commons-io-1.4.jar')
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+
+    implementation 'com.github.AndroidMsky:WeekChooseDailog:v1.0'
+
 }

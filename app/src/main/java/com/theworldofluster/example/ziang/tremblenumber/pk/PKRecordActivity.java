@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.PKBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.StatisticBean;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView;
 
 import java.util.ArrayList;
@@ -68,8 +70,12 @@ public class PKRecordActivity extends Activity {
     TextView pk_record_acount_jujue;
     @ViewInject(R.id.pk_record_acount_shibai)
     TextView pk_record_acount_shibai;
+    @ViewInject(R.id.pk_record_sheng_ll)
+    LinearLayout pk_record_sheng_ll;
 
     MyAdapter adapter =new MyAdapter();
+    private int pageNum = 1;
+    private boolean haveMore = false;
 
     List<Boolean> flag_status=new ArrayList<>();
     List<Boolean> flag_result=new ArrayList<>();
@@ -118,18 +124,35 @@ public class PKRecordActivity extends Activity {
         params.addQueryStringParameter("active", active);
         params.addQueryStringParameter("status", status);
         params.addQueryStringParameter("result", result);
-        params.addQueryStringParameter("pageIndex", "1");
-        params.addQueryStringParameter("pageSize", "12");
+        params.addQueryStringParameter("pageIndex", ""+pageNum);
+        params.addQueryStringParameter("pageSize", "200");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----111:" + MouthpieceUrl.base_pk_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<PKBean>>>(MouthpieceUrl.base_pk_list , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<List<PKBean>> response, String result) {
+                Log.i("xiaopeng-----","result-----"+result);
                 if (response.code==200){
                     pkBeanList=response.data;
-                    activity_pk_record_lv.setAdapter(adapter);
+//                    if (response.data!=null){
+//
+//                        if (response.data.size() < 10) {
+//                            haveMore = false;
+//                        } else {
+//                            haveMore = true;
+//                        }
+//                        if (pageNum==1){
+//                            pkBeanList=new ArrayList<>();
+//                            pkBeanList.addAll(response.data);
+//                        }else {
+//                            pkBeanList.addAll(response.data);
+//                        }
+//
+//                    }else {
+//                        haveMore = false;
+//                    }
                     adapter.notifyDataSetChanged();
                 }
-                Log.i("xiaopeng-----","result-----111"+result);
             }
 
             @Override
@@ -149,6 +172,7 @@ public class PKRecordActivity extends Activity {
         RequestParams params = new RequestParams();
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----222:" + MouthpieceUrl.base_pk_statistic + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<StatisticBean>>(MouthpieceUrl.base_pk_statistic , this, params) {
             @Override
@@ -221,6 +245,7 @@ public class PKRecordActivity extends Activity {
                 showPopWindow();
                 break;
             case R.id.pk_record_status_cb_1:
+                pk_record_sheng_ll.setVisibility(View.VISIBLE);
                 flag_status.set(0,true);
                 flag_status.set(1,false);
                 flag_status.set(2,false);
@@ -228,6 +253,7 @@ public class PKRecordActivity extends Activity {
                 initFlagView();
                 break;
             case R.id.pk_record_status_cb_2:
+                pk_record_sheng_ll.setVisibility(View.GONE);
                 flag_status.set(0,false);
                 flag_status.set(1,true);
                 flag_status.set(2,false);
@@ -235,6 +261,7 @@ public class PKRecordActivity extends Activity {
                 initFlagView();
                 break;
             case R.id.pk_record_status_cb_3:
+                pk_record_sheng_ll.setVisibility(View.GONE);
                 flag_status.set(0,false);
                 flag_status.set(1,false);
                 flag_status.set(2,true);
@@ -278,6 +305,35 @@ public class PKRecordActivity extends Activity {
         pk_record_result_cb_3.setChecked(flag_result.get(2));
 
         initStatisticView();
+        activity_pk_record_lv.setAdapter(adapter);
+        activity_pk_record_lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                switch (scrollState) {
+                    //用户抬起手指
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+                        break;
+                    //滑动停止
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+                        if (activity_pk_record_lv.getLastVisiblePosition() == pkBeanList.size() - 1) {
+                            if (haveMore) {
+                                pageNum++;
+                                getList(flag_active,flag_status_check,flag_result_check);
+                            }
+                        }
+                        break;
+                    //滚动时
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                        break;
+                }
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+            }
+        });
         getList(flag_active,flag_status_check,flag_result_check);
     }
 
@@ -364,31 +420,92 @@ public class PKRecordActivity extends Activity {
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_pk_record, null);
             }
+            LinearLayout jujueshibaibuxianshi = convertView.findViewById(R.id.jujueshibaibuxianshi);
+            TextView jiangli = convertView.findViewById(R.id.text_jiangli);
             TextView username = convertView.findViewById(R.id.item_pk_record_username);
             TextView date = convertView.findViewById(R.id.item_pk_record_date);
             TextView acount = convertView.findViewById(R.id.item_pk_record_acount);
             TextView chengzhangzhi = convertView.findViewById(R.id.item_pk_record_chengzhangzhi);
             TextView result = convertView.findViewById(R.id.item_pk_record_result);
-            if ("1".equals(flag_active)){
-                username.setText("向"+pkBeanList.get(position).getTargetUserNickName()+"挑战");
-                date.setText(""+pkBeanList.get(position).getInvitedDate().substring(0,10));
-                chengzhangzhi.setText("+30(假)");
-                acount.setText("100次(假)");
-                switch (pkBeanList.get(position).getConfirmed()){
-                    case 1:
-                        result.setText("胜");
-                        break;
-                    case 0:
-                        result.setText("平");
-                        break;
-                    case -1:
-                        result.setText("败");
-                        break;
-                    case 2:
-                        result.setText("失败");
-                        break;
+
+            if ("1".equals(flag_status_check)){
+                jujueshibaibuxianshi.setVisibility(View.VISIBLE);
+                date.setText(""+pkBeanList.get(position).getInvitedDate().substring(11,pkBeanList.get(position).getInvitedDate().length()));
+                acount.setText(""+pkBeanList.get(position).getInvitedDate().substring(0,10));
+                if (PreferenceUtil.getString("userId","").equals(pkBeanList.get(position).getSourceUserId()+"")){
+                    switch (pkBeanList.get(position).getSourceUserResult()){
+                        case 1:
+                            result.setText("胜");
+                            chengzhangzhi.setText(pkBeanList.get(position).getSourceUserAddScore()+"成长值");
+                            jiangli.setText("奖励");
+                            break;
+                        case 0:
+                            result.setText("平");
+                            chengzhangzhi.setText(pkBeanList.get(position).getSourceUserAddScore()+"成长值");
+                            jiangli.setText("奖励");
+                            break;
+                        case -1:
+                            result.setText("败");
+                            chengzhangzhi.setText(pkBeanList.get(position).getSourceUserAddScore()+"成长值");
+                            jiangli.setText("惩罚");
+                            break;
+                        case 2:
+                            result.setText("失败");
+                            chengzhangzhi.setText(pkBeanList.get(position).getSourceUserAddScore()+"成长值");
+                            jiangli.setText("惩罚");
+                            break;
+                    }
+                }else {
+                    switch (pkBeanList.get(position).getTargetUserResult()){
+                        case 1:
+                            result.setText("胜");
+                            chengzhangzhi.setText((int)pkBeanList.get(position).getTargetUserAddScore()+"成长值");
+                            jiangli.setText("奖励");
+                            break;
+                        case 0:
+                            result.setText("平");
+                            chengzhangzhi.setText((int)pkBeanList.get(position).getTargetUserAddScore()+"成长值");
+                            jiangli.setText("奖励");
+                            break;
+                        case -1:
+                            result.setText("败");
+                            chengzhangzhi.setText((int)pkBeanList.get(position).getTargetUserAddScore()+"成长值");
+                            jiangli.setText("惩罚");
+                            break;
+                        case 2:
+                            result.setText("失败");
+                            chengzhangzhi.setText((int)pkBeanList.get(position).getTargetUserAddScore()+"成长值");
+                            jiangli.setText("惩罚");
+                            break;
+                    }
                 }
+
+            }else if ("-1".equals(flag_status_check)){
+                jujueshibaibuxianshi.setVisibility(View.GONE);
+                date.setText(""+pkBeanList.get(position).getInvitedDate().substring(11,pkBeanList.get(position).getInvitedDate().length()));
+                acount.setText(""+pkBeanList.get(position).getInvitedDate().substring(0,10));
+                chengzhangzhi.setText("");
+                jiangli.setText("");
+                result.setText("拒绝");
+
+            }else if ("2".equals(flag_status_check)){
+                jujueshibaibuxianshi.setVisibility(View.GONE);
+                date.setText(""+pkBeanList.get(position).getInvitedDate().substring(11,pkBeanList.get(position).getInvitedDate().length()));
+                acount.setText(""+pkBeanList.get(position).getInvitedDate().substring(0,10));
+                chengzhangzhi.setText("");
+                result.setText("失效");
+                jiangli.setText("");
             }
+
+
+            if (PreferenceUtil.getString("userId","").equals(pkBeanList.get(position).getSourceUserId()+"")){
+                username.setText("向"+pkBeanList.get(position).getTargetUserNickName()+"挑战");
+            }else {
+                username.setText(""+pkBeanList.get(position).getSourceUserNickName()+"向你挑战");
+            }
+
+            Log.i("xiaopeng---userId",""+PreferenceUtil.getString("userId","")+"---"+pkBeanList.get(position).getSourceUserId());
+
 
             return convertView;
         }

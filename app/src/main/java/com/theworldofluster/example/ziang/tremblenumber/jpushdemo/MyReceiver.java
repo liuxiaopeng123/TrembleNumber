@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.theworldofluster.example.ziang.tremblenumber.bean.ExtrasBean;
+import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthAlertActivity;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthIntegralTableActivity;
 
@@ -63,11 +64,18 @@ public class MyReceiver extends BroadcastReceiver {
 					i.putExtras(bundle);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 					context.startActivity(i);
-				}else {
+				}else if ("2".equals(extrasBean.getContentType())){
 					Intent i = new Intent(context, HealthAlertActivity.class);
 					i.putExtras(bundle);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 					context.startActivity(i);
+				}else if ("3".equals(extrasBean.getContentType())){
+					Intent i = new Intent(context, PersonalActivity.class);
+					i.putExtras(bundle);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+					context.startActivity(i);
+				}else {
+
 				}
 
 

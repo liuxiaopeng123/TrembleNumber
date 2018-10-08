@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_width="100dp"
+        android:background="@drawable/register_finish_img"
+        android:layout_height="100dp" />
+    <TextView
+        android:layout_width="240dp"
+        android:layout_marginTop="1dp"
+        android:text="完成注册"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/activity_register_finish_go"
+        android:layout_width="240dp"
+        android:layout_marginTop="15dp"
+        android:text="GO"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_shape_half_white_blue_2"
+        android:layout_height="40dp" />
+
+
+
+</LinearLayout>

@@ -28,6 +28,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.Question;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class PsyTestItemDetailActivity extends Activity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("setCode", setCode);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_psy_test_question_list + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<Question>>>(MouthpieceUrl.base_psy_test_question_list , this, params) {
             @Override
@@ -112,6 +114,30 @@ public class PsyTestItemDetailActivity extends Activity {
     private void initQuestion() {
         activity_psy_test_question_title.setText(questionList.get(index).getQuestionTitle());
         status = new ArrayList<>();
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
+        status.add(false);
         status.add(false);
         status.add(false);
         status.add(false);

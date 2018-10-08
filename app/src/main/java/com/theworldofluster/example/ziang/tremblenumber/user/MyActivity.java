@@ -1,5 +1,6 @@
 package com.theworldofluster.example.ziang.tremblenumber.user;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -20,6 +21,7 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.adapter.MyFragmentPagerAdapter;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.AMainPager;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.AUserPager;
+import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
 import com.theworldofluster.example.ziang.tremblenumber.view.CounterRadioButton;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
@@ -123,6 +125,12 @@ public class MyActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 }

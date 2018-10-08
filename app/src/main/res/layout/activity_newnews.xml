@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
-                android:text="镜子的推荐"
+                android:text="抖擞的推荐"
                 android:textColor="@color/black"
                 />
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
-                android:text="镜子的提醒"
+                android:text="抖擞的提醒"
                 android:textColor="@color/black"
                 />
 

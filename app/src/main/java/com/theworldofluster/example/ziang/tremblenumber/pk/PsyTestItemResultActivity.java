@@ -45,7 +45,7 @@ public class PsyTestItemResultActivity extends Activity {
         percent=getIntent().getStringExtra("percent");
         setCode=getIntent().getStringExtra("setCode");
 
-//        activity_psy_test_result_title.setText(descTitle);
+        activity_psy_test_result_title.setText(descTitle);
         activity_psy_test_result_content.setText("最终测试得分:"+finalScore);
         activity_psy_test_result_content.setText(descContext);
         activity_psy_test_result_finalcode.setText("最终测试得分:"+finalScore);

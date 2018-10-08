@@ -116,6 +116,6 @@ public class HttpGet<T> extends RequestCallBack<String> {
 
     @Override
     public void onFailure(HttpException e, String s) {
-        ToastUtil.showContent(mContext, "网络不好，请稍后重试");
+//        ToastUtil.showContent(mContext, "网络不好，请稍后重试");
     }
 }

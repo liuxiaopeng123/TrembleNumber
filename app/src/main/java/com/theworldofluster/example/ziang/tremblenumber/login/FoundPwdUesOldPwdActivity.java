@@ -28,6 +28,7 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PwdCheckUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 
 import org.json.JSONException;
@@ -199,19 +200,21 @@ public class FoundPwdUesOldPwdActivity extends AppCompatActivity implements View
 //                    return;
 //                }
 
-                if(login_password.getText().toString().equals("")){
 
-                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请输入旧密码");
+                if(!PwdCheckUtil.isLetterDigit(login_password.getText().toString())||login_password.getText().toString().length()<8){
+
+                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请符合要求输入新密码");
+
+                    return;
+                }
+
+                if(!PwdCheckUtil.isLetterDigit(login_newpassword.getText().toString())||login_newpassword.getText().toString().length()<8){
+
+                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请符合要求输入新密码");
 
                     return;
                 }
 
-                if(login_newpassword.getText().toString().equals("")){
-
-                    ToastUtil.showContent(FoundPwdUesOldPwdActivity.this,"请输入新密码");
-
-                    return;
-                }
 
                 base_perfectmemberinformation();
 

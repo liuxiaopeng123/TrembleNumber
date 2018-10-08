@@ -33,19 +33,21 @@
             android:textColor="@color/blue_text"
             android:drawablePadding="10dp"
             />
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <TextView
             android:id="@+id/pager_shentifenxi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="近期熬夜较多，身体体质有所下降，具体表现为，食欲不振，持续性身体乏力"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:padding="10dp"
+            android:text="暂无身体分析~"
+            android:textSize="14sp"
+            android:padding="5dp"
             android:textColor="@color/black"
             android:drawablePadding="10dp"
             android:lineSpacingExtra="5dp"
             />
+        </ScrollView>
 
     </LinearLayout>
 

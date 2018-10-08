@@ -5,7 +5,7 @@
         android:bottomLeftRadius="10dp"
         android:bottomRightRadius="10dp"  />
     <!-- 矩形的填充色 -->
-    <solid android:color="#bb00a0e9" />
+    <solid android:color="@color/colorPrimary" />
 
     <!-- 矩形的边框的宽度,每段虚线的长度，和两段虚线之间的颜色和颜色 -->
 </shape>

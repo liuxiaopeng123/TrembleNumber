@@ -40,6 +40,7 @@ import com.theworldofluster.example.ziang.tremblenumber.controller.TabController
 import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.NoAnimViewpager;
 
 import java.text.SimpleDateFormat;
@@ -165,6 +166,7 @@ public class HealthAlertActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("remindId", extrasBean.getRemindId()+"");
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_alert_read + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_alert_read , this, params) {
             @Override
@@ -192,6 +194,7 @@ public class HealthAlertActivity extends Activity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("pkId", extrasBean.getPkId()+"");
         params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_pk_confirm + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_pk_confirm , this, params) {
             @Override
@@ -244,7 +247,11 @@ public class HealthAlertActivity extends Activity {
         SimpleDateFormat sf = new SimpleDateFormat("MM月dd日");
         String guoqiriqi = sf.format(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
         TextView zhuyi =view.findViewById(R.id.dialog_pk_invited_zhuyi);
-        zhuyi.setText("注：该挑战将于"+guoqiriqi+extrasBean.getRemindDate().substring(11,extrasBean.getRemindDate().length())+"失效，如接收挑战，则立即进入PK状态，"+ DateUtil.getXiaZhouMonday()+"8：00可出PK结果。");
+        if (extrasBean.getRemindDate().length()>10){
+            zhuyi.setText("注：该挑战将于"+guoqiriqi+extrasBean.getRemindDate().substring(11,extrasBean.getRemindDate().length())+"失效，如接收挑战，则立即进入PK状态，"+ DateUtil.getXiaZhouMonday()+"8：00可出PK结果。");
+        }else {
+            zhuyi.setText("注：如接收挑战，则立即进入PK状态，"+ DateUtil.getXiaZhouMonday()+"8：00可出PK结果。");
+        }
 
         dialog.setContentView(view);
         dialog.show();
@@ -356,7 +363,7 @@ public class HealthAlertActivity extends Activity {
                 if (contentType!=null){
                     extrasBean=gson.fromJson(contentType,ExtrasBean.class);
                     if ("2".equals(extrasBean.getContentType())){
-                        readed("1");
+//                        readed("1");
                         showPKDialog();
                     }
                 }

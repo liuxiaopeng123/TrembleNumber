@@ -31,16 +31,15 @@
             android:id="@+id/pager_p_one_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="03月19日-03月20日"
+            android:text="2018年03月19日-03月20日"
             android:textStyle="bold"
-            android:textSize="15sp"
-            android:padding="10dp"
+            android:textSize="14sp"
+            android:padding="5dp"
             android:drawableLeft="@mipmap/rili"
             android:textColor="@color/blue_text"
             android:drawableRight="@mipmap/bluemore"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:drawablePadding="5dp"
+            android:drawablePadding="2dp"
             />
 
         <com.github.mikephil.charting.charts.PieChart

@@ -15,9 +15,10 @@
         android:layout_height="80dp">
 
         <com.theworldofluster.example.ziang.tremblenumber.view.CircularImage
+            android:id="@+id/item_same_person_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@mipmap/main_icon_xinli"/>
+            />
 
         <LinearLayout
             android:orientation="vertical"
@@ -28,7 +29,7 @@
             <TextView
                 android:layout_weight="1"
                 android:layout_alignParentBottom="true"
-                android:id="@+id/item_material_name"
+                android:id="@+id/item_same_person_name"
                 android:layout_width="match_parent"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
@@ -37,6 +38,7 @@
                 android:textColor="@color/blue_text"
                 android:textSize="16sp" />
             <TextView
+                android:id="@+id/item_same_person_sign"
                 android:layout_marginTop="5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
@@ -50,18 +52,21 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/item_same_person_score"
             android:layout_width="wrap_content"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:layout_height="match_parent"
             android:text="388分"
             android:textColor="@color/blue_text"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <ImageView
+            android:id="@+id/item_same_person_trend"
             android:layout_width="10dp"
             android:layout_height="25dp"
-            android:background="@drawable/ic_launcher"/>
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/jiantou_up"/>
 
     </LinearLayout>
 

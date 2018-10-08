@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -59,11 +61,15 @@ public class AMainPager extends Fragment implements View.OnClickListener {
 
     private RelativeLayout information_back;
 
-    private TextView pager_agmenmain_num1,pager_agmenmain_num2,pager_agmenmain_num3;
+    private ProgressBar pager_level_progressbar;
+
+    private TextView pager_agmenmain_num1,pager_agmenmain_num2,pager_agmenmain_num3,pager_level_growth,pager_level_max_growth;
 
     private TextView pager_agmenmain_username,pager_agmenmain_sgin;
 
     private CircularImage pager_agmenmain_headurl;
+
+    private ImageView pager_level_img;
 
     private String qianming="",nickName;
 
@@ -79,8 +85,6 @@ public class AMainPager extends Fragment implements View.OnClickListener {
             view = inflater.inflate(R.layout.pager_agmenmain, container, false);
             initData();
 
-            base_useruserinfo();
-            getLevel();
         }
 
 
@@ -109,6 +113,11 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         pager_agmenmain_username = view.findViewById(R.id.pager_agmenmain_username);
         pager_agmenmain_sgin = view.findViewById(R.id.pager_agmenmain_sgin);
 
+        pager_level_growth=view.findViewById(R.id.pager_level_growth);
+        pager_level_max_growth=view.findViewById(R.id.pager_level_max_growth);
+        pager_level_progressbar =view.findViewById(R.id.pager_level_progressbar);
+        pager_level_img=view.findViewById(R.id.pager_level_img);
+
         information_back.setOnClickListener(this);
         my_guanyuyinsibaohu.setOnClickListener(this);
         pager_agmenmain_userdata.setOnClickListener(this);
@@ -117,6 +126,10 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         pager_agmenmain_seting.setOnClickListener(this);
         pager_agmenmain_help_feedback.setOnClickListener(this);
         my_activity.setOnClickListener(this);
+
+
+        base_useruserinfo();
+        getLevel();
     }
 
     @Override
@@ -140,7 +153,9 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mian_rankcenter:
                 Intent intent = new Intent(getActivity(),RankCenterActivity.class);
-                intent.putExtra("level",""+levelBean.getLevelInfoVo().getLevel());
+                if (levelBean!=null){
+                    intent.putExtra("level",""+levelBean.getLevelInfoVo().getLevel());
+                }
                 startActivity(intent);
 
                 break;
@@ -151,7 +166,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                 break;
             case R.id.pager_agmenmain_seting:
 
-                startActivity(new Intent(getActivity(),SettingActivity.class));
+                startActivityForResult(new Intent(getActivity(),SettingActivity.class),0);
 
                 break;
             case R.id.pager_agmenmain_help_feedback:
@@ -161,7 +176,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                 break;
             case R.id.my_activity:
 
-                startActivity(new Intent(getActivity(),MyAboutActivity.class));
+//                startActivity(new Intent(getActivity(),MyAboutActivity.class));
 
                 break;
 
@@ -190,12 +205,15 @@ public class AMainPager extends Fragment implements View.OnClickListener {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_level + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<LevelBean>>(MouthpieceUrl.base_level , getContext(), params) {
             @Override
             public void onParseSuccess(GsonObjModel<LevelBean> response, String result) {
                 if (response.code==200){
                     levelBean=response.data;
+                    updateLevelView();
+
                 }
                 Log.i("xiaopeng-----6","result6-----"+result);
             }
@@ -208,8 +226,42 @@ public class AMainPager extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(HttpException e, String s) {
                 super.onFailure(e, s);
+                updateLevelView();
             }
         };
+    }
+
+    private void updateLevelView() {
+
+        if (levelBean==null){
+            return;
+        }
+        if (levelBean.getLevelInfoVo().getGrowthMax()>=levelBean.getGrowthValue()){
+            if (levelBean.getGrowthValue()!=-1&&levelBean.getGrowthValue()!=-1){
+                pager_level_progressbar.setMax(levelBean.getLevelInfoVo().getGrowthMax());
+                pager_level_progressbar.setProgress(levelBean.getGrowthValue());
+            }
+        }
+        pager_level_growth.setText(levelBean.getGrowthValue()+"");
+        if (levelBean.getLevelInfoVo().getLevel()==0){
+            pager_level_max_growth.setText(" 成长值");
+        }else {
+            pager_level_max_growth.setText("/"+levelBean.getLevelInfoVo().getGrowthMax()+" 成长值");
+        }
+        switch (levelBean.getLevelInfoVo().getLevel()){
+            case 0:
+//                pager_level_img.setBackgroundResource(R.mipmap.v1);
+                break;
+            case 1:
+                pager_level_img.setBackgroundResource(R.mipmap.v1);
+                break;
+            case 2:
+                pager_level_img.setBackgroundResource(R.mipmap.v2);
+                break;
+            case 3:
+                pager_level_img.setBackgroundResource(R.mipmap.v3);
+                break;
+        }
     }
 
     private void base_useruserinfo(){
@@ -239,6 +291,8 @@ public class AMainPager extends Fragment implements View.OnClickListener {
                         Utils.BJSloadImg(getActivity(),PreferenceUtil.getString("userheadUrl",""),pager_agmenmain_headurl);
 
                         nickName=jsonobject.getJSONObject("data").getString("nickName");
+                        PreferenceUtil.putString("userNickName",jsonobject.getJSONObject("data").getString("nickName"));
+
                         if(jsonobject.getJSONObject("data").getString("nickName").equals("")){
                             pager_agmenmain_username.setText("未命名");
                         }else{
@@ -254,7 +308,7 @@ public class AMainPager extends Fragment implements View.OnClickListener {
 
                     }else{
 
-                        ToastUtil.showContent(getActivity(),jsonobject.getString("message"));
+//                        ToastUtil.showContent(getActivity(),jsonobject.getString("message"));
 
                     }
 
@@ -278,5 +332,14 @@ public class AMainPager extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         base_useruserinfo();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==111){
+            getActivity().finish();
+            startActivity(new Intent(getContext(), LoginActivity.class));
+        }
     }
 }

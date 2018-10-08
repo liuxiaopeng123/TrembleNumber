@@ -109,7 +109,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                 PreferenceUtil.putString("isLogin","");
 
-                startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                setResult(111);
+
 
                 finish();
 

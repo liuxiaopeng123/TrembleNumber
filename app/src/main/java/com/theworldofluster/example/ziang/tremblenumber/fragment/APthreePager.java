@@ -22,6 +22,7 @@ import com.theworldofluster.example.ziang.tremblenumber.activity.JurisdictionAct
 import com.theworldofluster.example.ziang.tremblenumber.bean.OptData;
 import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
 import com.theworldofluster.example.ziang.tremblenumber.services.PostDataService;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,7 +101,12 @@ public class APthreePager extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
+    public void update(){
+        if (pager_shentifenxi!=null){
+            pager_shentifenxi.setText(PreferenceUtil.getString("shentifenxi","暂无身体分析~"));
+        }
+        Log.i("xiaopeng----resume","显示身体分析");
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -109,8 +115,6 @@ public class APthreePager extends Fragment implements View.OnClickListener {
         }else {
             pager_p_three_go.setVisibility(View.VISIBLE);
         }
-        if (((PersonalActivity)getContext()).reportWeek!=null){
-            pager_shentifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPsychologyAnalysis());
-        }
+
     }
 }

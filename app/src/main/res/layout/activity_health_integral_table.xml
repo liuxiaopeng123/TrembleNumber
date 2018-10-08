@@ -59,10 +59,14 @@
         android:layout_height="1dp"
         android:background="@color/gray_bg_color"/>
 
-    <ScrollView
-        android:layout_below="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:id="@+id/health_scrollView"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:focusable="true"-->
+        <!--android:layout_below="@+id/line"-->
+        <!--android:fillViewport="true"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
 
     <LinearLayout
@@ -73,6 +77,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         >
@@ -80,7 +85,6 @@
         <TextView
             android:id="@+id/activity_pk_record_type_select"
             android:text="全网排名 "
-            android:drawableRight="@mipmap/blackdown"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="@color/black"
@@ -107,6 +111,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:background="@color/darkslategray"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -238,6 +243,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
@@ -301,24 +307,30 @@
 
 
     <View
+        android:visibility="gone"
+        android:layout_marginTop="45dp"
+        android:id="@+id/huadongdingbuline"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@color/gray_bg_color"/>
-        <com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView
+        <ListView
+            android:layout_marginTop="45dp"
             android:id="@+id/activity_health_lv"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:layout_marginBottom="45dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </com.theworldofluster.example.ziang.tremblenumber.view.NoScrollListView>
+        </ListView>
     </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <TextView
         android:id="@+id/health_integral_table_pk_tab"
         android:layout_width="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="120dp"
         android:ems="1"
         android:textColor="@color/white"
         android:background="@color/lightsalmon"

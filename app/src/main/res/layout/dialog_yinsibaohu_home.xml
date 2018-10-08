@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:background="@drawable/button_shape_half_white_cricle_10"
+        >
+
+
+            <LinearLayout
+                android:padding="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                    android:id="@+id/dialog_psy_test_result_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="【抖擞】将在你的授权范围内获取相关数据。"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:drawablePadding="10dp"
+                    />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="【抖擞】将按法律法规，建立完备的信息安全体系。"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="【抖擞】将为你提供个性化隐私设置功能，你可自行决定个人信息的可见范围及内容，所有可见信息均以您在平台昵称的名义展示。"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="可进入【我】—【设置】—【隐私设置】关闭对外可见信息"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/dialog_confirm"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="了解"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape_half_2_blue"/>
+
+</LinearLayout>
+
+</LinearLayout>

@@ -12,16 +12,16 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
 
     <!-- Required -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> -->
     <!-- Required -->
     <uses-permission android:name="com.fat_factory.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_CONTACTS" /> -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -29,17 +29,17 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- <uses-permission android:name="android.permission.GET_TASKS" /> -->
+    <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -59,7 +59,6 @@
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.theworldofluster.example.ziang.tremblenumber.permission.JPUSH_MESSAGE" />
-
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <application
@@ -70,14 +69,18 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginActivity">
+        <activity
+            android:name=".HomeActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".login.FoundPasswordActivity" />
         <activity android:name=".personal.PersonalActivity" />
         <activity android:name=".user.MyActivity" />
@@ -95,7 +98,9 @@
         <activity android:name=".activity.FoldlinediagramActivity" />
         <activity android:name=".activity.CalendarActivity" />
         <activity android:name=".activity.JurisdictionActivity" />
-        <activity android:name=".login.RegisterActivity" />
+        <activity
+            android:name=".login.RegisterActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".login.AgreementActivity" />
         <activity android:name=".jpushdemo.MainActivity" />
 
@@ -235,34 +240,39 @@
         <activity android:name=".pk.HealthIntegralTableActivity" />
         <activity android:name=".pk.PKRecordActivity" />
         <activity android:name=".pk.PsychologicalTestActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".pk.PsyTestItemActivity"></activity>
-        <activity android:name=".pk.PsyTestItemDetailActivity"></activity>
-        <activity android:name=".pk.PsyTestItemResultActivity"></activity>
-        <activity android:name=".pk.PsyTestItemOtherResultActivity"></activity>
-        <activity android:name=".pk.HealthConsultActivity"/>
-        <activity android:name=".pk.HealthConsultListActivity"/>
-        <activity android:name=".pk.HealthConsultDetailActivity"/>
-        <activity android:name=".pk.HealthAlertActivity"/>
-        <activity android:name=".pk.HealthSamePersonActivity"/>
-        <activity android:name=".pk.YouXinShiActivity"/>
-        <activity android:name=".pk.EditXinShiActivity"/>
-        <activity android:name=".pk.YouXinShiDetailActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".user.UseActivity"/>
-        <activity android:name=".login.FoundPwdUesOldPwdActivity"/>
-        <activity android:name=".user.PingJiaActivity"/>
+        <activity android:name=".pk.PsyTestItemActivity" />
+        <activity android:name=".pk.PsyTestItemDetailActivity" />
+        <activity android:name=".pk.PsyTestItemResultActivity" />
+        <activity android:name=".pk.PsyTestItemOtherResultActivity" />
+        <activity android:name=".pk.HealthConsultActivity" />
+        <activity android:name=".pk.HealthConsultListActivity" />
+        <activity android:name=".pk.HealthConsultDetailActivity" />
+        <activity android:name=".pk.HealthAlertActivity" />
+        <activity android:name=".pk.HealthSamePersonActivity" />
+        <activity android:name=".pk.YouXinShiActivity" />
+        <activity android:name=".pk.EditXinShiActivity" />
+        <activity android:name=".pk.YouXinShiDetailActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".user.UseActivity" />
+        <activity android:name=".login.FoundPwdUesOldPwdActivity" />
+        <activity android:name=".user.PingJiaActivity" />
+        <activity android:name=".user.EditNickNameActivity" />
 
-        <service android:name=".services.PostDataService" >
-        </service>
-        <receiver android:name=".services.AlarmReceiver" >
-        </receiver>
+        <service android:name=".services.PostDataService" />
 
+        <receiver android:name=".services.AlarmReceiver" />
+
+        <activity android:name=".login.RegisterFinishActivity" />
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".WeekSelectActivity"></activity>
     </application>
 
 </manifest>

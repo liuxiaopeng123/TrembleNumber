@@ -147,6 +147,7 @@ public class YouXinShiDetailActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("comfortId", comfortId);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_delComfort + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_delComfort , this, params) {
             @Override
@@ -176,6 +177,7 @@ public class YouXinShiDetailActivity extends Activity {
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("mindId", mindId);
         params.addQueryStringParameter("comfortContext", context);
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_comfort + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_comfort , this, params) {
             @Override
@@ -260,6 +262,43 @@ public class YouXinShiDetailActivity extends Activity {
             TextView name=convertView.findViewById(R.id.item_youxinshi_detail_name);
             content.setText("“"+comfortBeanList.get(position).getComfortContext()+"”");
             name.setText(comfortBeanList.get(position).getNickName()+"说");
+            if (position%9==0){
+                content.setBackgroundColor(Color.parseColor("#ACFFEEEE"));
+                content.setTextColor(Color.parseColor("#FFD89494"));
+                name.setTextColor(Color.parseColor("#FFD89494"));
+            }else if (position%9==1){
+                content.setBackgroundColor(Color.parseColor("#DAFFEDDE"));
+                content.setTextColor(Color.parseColor("#FFC07D50"));
+                name.setTextColor(Color.parseColor("#FFC07D50"));
+            }else if (position%9==2){
+                content.setBackgroundColor(Color.parseColor("#FFFFFEE5"));
+                content.setTextColor(Color.parseColor("#FF8C8B54"));
+                name.setTextColor(Color.parseColor("#FF8C8B54"));
+            }else if (position%9==3){
+                content.setBackgroundColor(Color.parseColor("#96D8ECFF"));
+                content.setTextColor(Color.parseColor("#FF5D9CC5"));
+                name.setTextColor(Color.parseColor("#FF5D9CC5"));
+            }else if (position%9==4){
+                content.setBackgroundColor(Color.parseColor("#C4E8EEDE"));
+                content.setTextColor(Color.parseColor("#FF65833B"));
+                name.setTextColor(Color.parseColor("#FF65833B"));
+            }else if (position%9==5){
+                content.setBackgroundColor(Color.parseColor("#E3EEEEEE"));
+                content.setTextColor(Color.parseColor("#FF666666"));
+                name.setTextColor(Color.parseColor("#FF666666"));
+            }else if (position%9==6){
+                content.setBackgroundColor(Color.parseColor("#CEE7F5F0"));
+                content.setTextColor(Color.parseColor("#FF538875"));
+                name.setTextColor(Color.parseColor("#FF538875"));
+            }else if (position%9==7){
+                content.setBackgroundColor(Color.parseColor("#FFEBEBFF"));
+                content.setTextColor(Color.parseColor("#FF7471B0"));
+                name.setTextColor(Color.parseColor("#FF7471B0"));
+            }else if (position%9==8){
+                content.setBackgroundColor(Color.parseColor("#FFE3EDED"));
+                content.setTextColor(Color.parseColor("#FF4F8383"));
+                name.setTextColor(Color.parseColor("#FF4F8383"));
+            }
             if (comfortBeanList.get(position).isFlag_open()){
                 del_toggle_ll.setVisibility(View.VISIBLE);
             }else {
@@ -268,8 +307,10 @@ public class YouXinShiDetailActivity extends Activity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    comfortBeanList.get(position).setFlag_open(!comfortBeanList.get(position).isFlag_open());
-                    adapter.notifyDataSetChanged();
+                    if (PreferenceUtil.getString("userId","").equals(comfortBeanList.get(position).getUserId()+"")){
+                        comfortBeanList.get(position).setFlag_open(!comfortBeanList.get(position).isFlag_open());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             });
             del.setOnClickListener(new View.OnClickListener() {
@@ -281,8 +322,10 @@ public class YouXinShiDetailActivity extends Activity {
             delCancle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    comfortBeanList.get(position).setFlag_open(!comfortBeanList.get(position).isFlag_open());
-                    adapter.notifyDataSetChanged();
+                    if (PreferenceUtil.getString("userId","").equals(comfortBeanList.get(position).getUserId()+"")){
+                        comfortBeanList.get(position).setFlag_open(!comfortBeanList.get(position).isFlag_open());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             });
             return convertView;

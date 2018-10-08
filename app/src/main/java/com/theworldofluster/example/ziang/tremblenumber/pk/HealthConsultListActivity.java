@@ -75,7 +75,7 @@ public class HealthConsultListActivity extends Activity {
         params.addQueryStringParameter("cateCode", cateCode);
         params.addQueryStringParameter("firstCateCode", "");
         params.addQueryStringParameter("pageIndex", "1");
-        params.addQueryStringParameter("pageSize", "10");
+        params.addQueryStringParameter("pageSize", "200");
         params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_health_consult_articles + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<List<ArticleBean>>>(MouthpieceUrl.base_health_consult_articles , this, params) {

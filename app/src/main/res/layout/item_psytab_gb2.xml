@@ -3,27 +3,30 @@
     android:layout_width="120dp"
     android:layout_height="90dp"
     android:gravity="center"
-    android:background="@color/mistyrose"
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/item_psytab_gb_bg"
         android:layout_width="120dp"
         android:orientation="vertical"
         android:gravity="center"
+        android:background="@color/mistyrose"
         android:layout_height="90dp">
 
 
 
     <TextView
-        android:layout_marginTop="3dp"
+        android:padding="5dp"
+        android:gravity="center"
         android:id="@+id/tv_homeitem_name"
         android:textColor="@color/deeppink"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="手机防盗"/>
 
     <TextView
+        android:visibility="gone"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="15dip"
         android:id="@+id/tv_homeitem_num"

@@ -54,6 +54,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:background="@null"
+            android:maxLength="13"
             android:inputType="number"
             android:padding="15dp"
             android:hint="手机号"
@@ -76,7 +77,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="textPassword"
+            android:inputType="number"
+            android:maxLength="6"
             android:padding="15dp"
             android:hint="验证码"
             />
@@ -123,6 +125,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:maxLength="20"
             android:inputType="textPassword"
             android:padding="15dp"
             android:hint="新密码"
@@ -142,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="密码请控制在8-20个字符，要求数字，字母或符号组合."
+            android:text="密码请控制在6-20个字符，要求数字，字母或符号组合."
             />
 
 

@@ -77,7 +77,7 @@ public class MouthpieceUrl {
 
     //健康提醒列表
     public static String base_health_alert_list = base_url+"remind/list";
-    //健康提醒列表
+    //已阅读
     public static String base_health_alert_read = base_url+"remind/read";
     //相同病症人群
     public static String base_health_alert_symptom = base_url+"remind/symptom";

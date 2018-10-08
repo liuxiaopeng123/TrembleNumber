@@ -1,5 +1,6 @@
 package com.theworldofluster.example.ziang.tremblenumber.login;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,7 +36,10 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PwdCheckUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
+import com.theworldofluster.example.ziang.tremblenumber.utils.ZiangUtils;
 import com.theworldofluster.example.ziang.tremblenumber.view.LoopView;
 import com.theworldofluster.example.ziang.tremblenumber.view.OnItemSelectedListener;
 
@@ -80,6 +86,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @ViewInject(R.id.activity_login_phonecode_v)
     View activity_login_phonecode_v;
 
+    @ViewInject(R.id.yijingyouzhanghao)
+    TextView yijingyouzhanghao;
+
     @ViewInject(R.id.rg_content_fragment)
     RadioGroup rg_content_fragment;
 
@@ -99,6 +108,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     String userphone;
     String password;
+
+    public int screenHeight ;
+
+    public int screenWidth ;
 
     int sex = 0;
 
@@ -122,12 +135,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //设置状态栏颜色
         window.setStatusBarColor(Color.parseColor("#ffffff"));
 
+        DisplayMetrics dm = new DisplayMetrics();
+        //取得窗口属性
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        //窗口的宽度
+        screenWidth = dm.widthPixels;
+
+        //窗口高度
+        screenHeight = dm.heightPixels;
+
+        base_userInfo();
+
         setLisenner();
 
         register2_back.setOnClickListener(this);
         register_btn.setOnClickListener(this);
         register_agreement.setOnClickListener(this);
         register_age.setOnClickListener(this);
+        yijingyouzhanghao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                finish();
+            }
+        });
 
         rg_content_fragment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -141,12 +173,63 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private void base_userInfo(){
+
+        Log.i("xiaopeng---","我爱你123");
+        dia.show();
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("imsi", ZiangUtils.getIMSI(RegisterActivity.this));
+        params.addQueryStringParameter("imei",  ZiangUtils.getIMEI(RegisterActivity.this));
+
+//        params.addQueryStringParameter("imsi", "460004306794886");
+//        params.addQueryStringParameter("imei",  "865901030381860");
+
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_device, params, new RequestCallBack<String>() {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.i("xiaopeng---","我爱你123"+responseInfo.result);
+                Log.e("xiaopengS---初始化",responseInfo.result);
+                try {
+                    JSONObject jsonobject = new JSONObject(responseInfo.result);
+
+                    if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
+
+
+                        PreferenceUtil.putString("userId",jsonobject.getJSONObject("data").getString("userId"));
+                        PreferenceUtil.putString("token",jsonobject.getJSONObject("data").getString("token"));
+
+                    }else{
+                        ToastUtil.showContent(RegisterActivity.this,"信息初始化失败，请重试！");
+                    }
+
+                } catch (JSONException e) {
+                    Log.i("xiaopeng---","我爱你123"+e);
+                    e.printStackTrace();
+                }
+
+                dia.dismiss();
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                Log.i("xiaopeng---","我爱你123"+msg);
+                Log.e("xiaopengF-初始化",msg);
+                dia.dismiss();
+            }
+        });
+
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+
             case R.id.register2_back:
 
-                finish();
+                showConfirmDialog();
 
                 break;
 
@@ -168,9 +251,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         return;
                     }
 
-                    if(activity_register2_newpassword.getText().toString().equals("")){
+                    if(!PwdCheckUtil.isLetterDigit(activity_register2_newpassword.getText().toString())||activity_register2_newpassword.getText().toString().length()<6){
 
-                        ToastUtil.showContent(RegisterActivity.this,"请输入新密码");
+                        ToastUtil.showContent(RegisterActivity.this,"请按要求输入密码");
+
+                        return;
+                    }
+                    if(activity_register2_newpassword.getText().toString().contains("_")||activity_register2_newpassword.getText().toString().contains("-")){
+
+                        ToastUtil.showContent(RegisterActivity.this,"密码不能包含“-”或“_”");
 
                         return;
                     }
@@ -246,7 +335,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.addQueryStringParameter("age",register_age.getText().toString());
         params.addQueryStringParameter("nickName",register_nickname.getText().toString());
         params.addQueryStringParameter("signature","");
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_edituser, params, new RequestCallBack<String>() {
 
@@ -257,12 +346,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
                     if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
-
-
-                          LoginActivity.loginactivity.login_username.setText(userphone);
-                          LoginActivity.loginactivity.login_password.setText(password);
                           PreferenceUtil.putString("userAge",register_age.getText().toString());
                           PreferenceUtil.putString("userSex",sex+"");
+                          PreferenceUtil.putString("userNickName",register_nickname.getText().toString());
+//                          PreferenceUtil.putString("finishRegister","yes");
+                          startActivity(new Intent(RegisterActivity.this,RegisterFinishActivity.class));
                           finish();
 
                     }else{
@@ -296,7 +384,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString().replace(" ",""));
         params.addQueryStringParameter("password",activity_register2_newpassword.getText().toString());
         params.addQueryStringParameter("verify",activity_register2_password.getText().toString());
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_login_mobilenotecode + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_login_mobilenotecode, params, new RequestCallBack<String>() {
@@ -319,7 +407,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         userphone = activity_register2_nameuser.getText().toString().replace(" ","");
                         password = activity_register2_password.getText().toString();
                     }else{
-
+//                        ToastUtil.showContent(RegisterActivity.this,"验证码错误");
                         ToastUtil.showContent(RegisterActivity.this,jsonobject.getString("message"));
 
                     }
@@ -386,7 +474,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>7){
+                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>=6){
                     register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     register_btn.setClickable(true);
@@ -413,7 +501,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>7){
+                if(activity_register2_nameuser.getText().toString().length()==13&&activity_register2_password.getText().toString().length()==6&&activity_register2_newpassword.getText().toString().length()>=6){
                     register_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     register_btn.setClickable(true);
@@ -465,7 +553,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("phone",activity_register2_nameuser.getText().toString().replace(" ",""));
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_code, params, new RequestCallBack<String>() {
 
@@ -551,13 +639,52 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         bottomInterPasswordDialog = new BottomSheetDialog(RegisterActivity.this);
         bottomInterPasswordDialog
-                .heightParam(LoginActivity.loginactivity.screenHeight/3)
+                .heightParam(screenHeight/3)
                 .contentView(ad)
                 .inDuration(200)
                 .outDuration(200)
                 .cancelable(false)
                 .show();
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showConfirmDialog();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    Dialog dialog;
+    private void showConfirmDialog() {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        View view = View.inflate(this, R.layout.dialog_invite_pk, null);
+        TextView content = view.findViewById(R.id.content);
+        content.setText("是否退出注册？");
+        TextView confirm = view.findViewById(R.id.confirm);
+        confirm.setText("退出注册");
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dialog.dismiss();
+            }
+        });
+        TextView cancle = view.findViewById(R.id.cancle);
+        cancle.setText("取消");
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
     }
 
 }

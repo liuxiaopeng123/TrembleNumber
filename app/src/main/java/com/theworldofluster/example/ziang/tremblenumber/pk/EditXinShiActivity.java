@@ -20,6 +20,7 @@ import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 public class EditXinShiActivity extends Activity {
     @ViewInject(R.id.activity_edit_xinshi_back)
@@ -64,12 +65,14 @@ public class EditXinShiActivity extends Activity {
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("mindContext", edit_xinshi.getText().toString().trim());
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----:" + MouthpieceUrl.base_mind_add + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_mind_add , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
                 if (response.code==200){
                     ToastUtil.showContent(getApplicationContext(),"发表心情成功~");
+                    setResult(0);
                     finish();
                 }else {
                     ToastUtil.showContent(getApplicationContext(),response.message);

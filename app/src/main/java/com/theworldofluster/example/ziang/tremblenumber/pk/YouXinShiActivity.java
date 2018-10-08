@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -123,7 +124,8 @@ public class YouXinShiActivity extends Activity {
                 finish();
                 break;
             case R.id.activity_youxinshi_shangchuan:
-                startActivity(new Intent(YouXinShiActivity.this,EditXinShiActivity.class));
+                Intent intent = new Intent(YouXinShiActivity.this,EditXinShiActivity.class);
+                startActivityForResult(intent,0);
                 break;
             case R.id.youxinshi_tab_1:
                 youxinshi_tab_1.setTextColor(Color.BLACK);
@@ -187,6 +189,19 @@ public class YouXinShiActivity extends Activity {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==0){
+            ((YouXinShiTab1Controller)list.get(0)).getList("");
+            ((YouXinShiTab2Controller)list.get(1)).getList("");
+            YouXinShiTab3Controller youXinShiTab3Controller = (YouXinShiTab3Controller) list.get(2);
+            if (youXinShiTab3Controller!=null){
+                ((YouXinShiTab3Controller)list.get(2)).getList("");
+            }
         }
     }
 }

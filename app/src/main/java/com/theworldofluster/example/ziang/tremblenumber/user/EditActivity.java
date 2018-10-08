@@ -1,6 +1,8 @@
 package com.theworldofluster.example.ziang.tremblenumber.user;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,6 +11,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,9 +41,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
+import com.theworldofluster.example.ziang.tremblenumber.jpushdemo.MainActivity;
 import com.theworldofluster.example.ziang.tremblenumber.login.LoginActivity;
 import com.theworldofluster.example.ziang.tremblenumber.login.RegisterActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Bimp;
+import com.theworldofluster.example.ziang.tremblenumber.utils.FileUtils;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
@@ -52,6 +58,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Random;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -158,25 +166,38 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.user_updata_headimg_rl:
 
-//                actionSheetDialog = new ActionSheetDialog(this).builder();
-//                actionSheetDialog.setCancelable(true);
-//                actionSheetDialog.setCanceledOnTouchOutside(true);
-//
-//                actionSheetDialog.addSheetItem("相机", ActionSheetDialog.SheetItemColor.Blue,
-//                        new ActionSheetDialog.OnSheetItemClickListener() {
-//                            @Override
-//                            public void onClick(int which) {
-//                                camera();
-//                            }
-//                        });
-//                actionSheetDialog.addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue,
-//                        new ActionSheetDialog.OnSheetItemClickListener() {
-//                            @Override
-//                            public void onClick(int which) {
-                                gallery();
-//                            }
-//                        });
-//                actionSheetDialog.show();
+                actionSheetDialog = new ActionSheetDialog(this).builder();
+                actionSheetDialog.setCancelable(true);
+                actionSheetDialog.setCanceledOnTouchOutside(true);
+
+                actionSheetDialog.addSheetItem("相机", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                if (ActivityCompat.checkSelfPermission(EditActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                                    ActivityCompat.requestPermissions(EditActivity.this,
+                                            new String[]{Manifest.permission.CAMERA}, 100);
+                                }else {
+                                    camera();
+                                }
+
+                            }
+                        });
+                actionSheetDialog.addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                if (ActivityCompat.checkSelfPermission(EditActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+                                        ActivityCompat.checkSelfPermission(EditActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                                    ActivityCompat.requestPermissions(EditActivity.this,
+                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+                                }else {
+                                    gallery();
+                                }
+
+                            }
+                        });
+                actionSheetDialog.show();
 
                 break;
         }
@@ -204,6 +225,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject jsonobject = new JSONObject(responseInfo.result);
 
                     if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
+                        PreferenceUtil.putString("qianming",activity_proposal_content.getText().toString().trim());
                         finish();
                     }else{
 
@@ -238,7 +260,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         // 激活相机
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 
-        imageFile = new File(sdcardPathName, "head.jpg");
+        imageFile = new File(sdcardPathName, Utils.getrandom()+"head.jpg");
 
         // 从文件中创建uri
         Uri uri = Uri.fromFile(imageFile);
@@ -254,8 +276,12 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void gallery() {
 
         // 激活系统图库，选择一张图片android.intent.action.GET_CONTENT
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT) ;
+//        intent.addCategory(Intent. CATEGORY_OPENABLE);
+//        intent.setType("image/*");
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*");
         // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
         startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
     }
@@ -289,6 +315,14 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 if (data != null) {
                     // 得到图片的全路径
                     Uri uri = data.getData();
+                    // Get the path
+                    String path = null;
+                    try {
+                        path = FileUtils.getPath(getApplicationContext(), uri);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("xiaopeng----", "File Path: " + path);
                     crop(uri);
                 }
 

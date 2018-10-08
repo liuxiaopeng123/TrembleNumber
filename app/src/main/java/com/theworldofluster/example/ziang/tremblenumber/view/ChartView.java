@@ -72,7 +72,7 @@ public class ChartView extends View {
     //折线对应的数据
     private Map<String, Integer> value = new HashMap<>();
     //点击的点对应的X轴的第几个点，默认1
-    private int selectIndex = 1;
+    private int selectIndex = -1;
     //X轴刻度文本对应的最大矩形，为了选中时，在x轴文本画的框框大小一致
     private Rect xValueRect;
     //速度检测器

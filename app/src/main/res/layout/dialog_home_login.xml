@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="600dp"
+    android:background="@drawable/button_shape_half_white_cricle"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/title"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提示"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/content"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="240dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:text="亲爱的用户你尚未登录，无法为你提供精准的【健康资讯】、【心理测试】以及【健康报告】的专属健康改善方案和服务，请及时登录"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/cancle"
+            android:layout_width="120dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/black_overlay"
+            android:layout_height="35dp"
+            android:text="继续浏览"
+            />
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="120dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/black_overlay"
+            android:layout_height="35dp"
+            android:text="去登录"
+             />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

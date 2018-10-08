@@ -72,6 +72,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/jujueshibaibuxianshi"
             android:padding="10dp"
             android:layout_width="0dp"
             android:orientation="vertical"
@@ -89,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"/>
             <TextView
+                android:id="@+id/text_jiangli"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

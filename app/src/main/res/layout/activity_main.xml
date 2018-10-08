@@ -27,6 +27,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/main_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/black"
@@ -44,7 +45,7 @@
         android:background="@color/gray_bg_color"/>
 
     <LinearLayout
-        android:visibility="gone"
+        android:id="@+id/main_bianji_ll"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -59,6 +60,7 @@
             android:layout_weight="1"/>
 
         <Button
+            android:id="@+id/main_bianji_start"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:gravity="center"
@@ -68,8 +70,39 @@
 
     </LinearLayout>
 
-    <GridView
+    <RelativeLayout
         android:visibility="gone"
+        android:id="@+id/main_bianji_rl"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:visibility="gone"
+            android:textSize="15sp"
+            android:id="@+id/main_bianji_cancle"
+            android:layout_alignParentLeft="true"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="取消"
+            />
+
+        <TextView
+            android:textSize="15sp"
+            android:id="@+id/main_bianji_finish"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="完成"
+            />
+
+    </RelativeLayout>
+
+    <GridView
         android:id="@+id/main_gv"
         android:layout_width="match_parent"
         android:numColumns="4"
@@ -142,14 +175,26 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_tixing"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_tixing"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_1"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_marginTop="3dp"
@@ -170,14 +215,27 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_baogao"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_baogao"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_2"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="3dp"
@@ -197,14 +255,27 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_jiankangzixun"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_jiankangzixun"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_3"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="3dp"
@@ -248,6 +319,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginRight="20dp"
             android:id="@+id/main_xinqingriji"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -255,14 +327,27 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_riji"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_riji"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_4"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="3dp"
@@ -275,6 +360,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:layout_marginLeft="20dp"
             android:id="@+id/main_xinliceshi"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -282,14 +368,28 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_xinli"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_xinli"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_5"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="3dp"
@@ -339,26 +439,37 @@
         android:paddingRight="50dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/main_jiankangfenpk"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <ImageView
-                android:background="@mipmap/main_bt_bg"
-                android:src="@mipmap/main_icon_pk"
-                android:padding="5dp"
-                android:layout_marginTop="10dip"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:background="@mipmap/main_bt_bg"
+                    android:src="@mipmap/main_icon_pk"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/main_edit_check_6"
+                    android:layout_marginLeft="32dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/tongbu_on"/>
+            </RelativeLayout>
             <TextView
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="15dip"

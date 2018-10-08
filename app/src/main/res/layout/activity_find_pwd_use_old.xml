@@ -75,6 +75,7 @@
             android:id="@+id/login_password"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:maxLength="20"
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="15dp"
@@ -122,6 +123,7 @@
             android:id="@+id/login_newpassword"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:maxLength="20"
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="15dp"
@@ -142,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="密码请控制在8-20个字符，要求数字，字母或符号组合."
+            android:text="密码请控制在6-20个字符，要求数字，字母或符号组合."
             />
 
 

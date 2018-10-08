@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.HttpUtils;
@@ -36,6 +37,7 @@ import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ZiangUtils;
 
 import org.json.JSONException;
@@ -81,6 +83,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @ViewInject(R.id.activity_login_register)
     TextView activity_login_register;
+
+    @ViewInject(R.id.login_back)
+    RelativeLayout login_back;
 
     public int screenHeight ;
 
@@ -244,6 +249,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initview() {
 
+        login_back.setOnClickListener(this);
         activity_login_password.setOnClickListener(this);
         activity_login_phonecode.setOnClickListener(this);
         activity_login_isshowpassword.setOnClickListener(this);
@@ -328,6 +334,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.login_back:
+
+                finish();
+
+                break;
             case R.id.activity_login_getcode:
 
 
@@ -347,6 +358,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(login_username.getText().toString().length()!=11){
 
                     ToastUtil.showContent(LoginActivity.this,"请按要求输入手机号");
+
+                    return;
+                }
+
+                if(login_password.getText().toString().length()<6){
+
+                    ToastUtil.showContent(LoginActivity.this,"请输入正确密码");
 
                     return;
                 }
@@ -459,7 +477,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         params.addHeader("token",token);
         params.addQueryStringParameter("userId",userid);
         params.addQueryStringParameter("phone",login_username.getText().toString());
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.e("xiaopeng",userid);
         Log.e("xiaopeng",login_username.getText().toString());
 
@@ -512,7 +530,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else{
             params.addQueryStringParameter("verify",login_password.getText().toString());
         }
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_updatemembertonickname, params, new RequestCallBack<String>() {
 
@@ -525,11 +543,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                        PreferenceUtil.putString("token",jsonobject.getString("data"));
+                        PreferenceUtil.putString("token",jsonobject.getJSONObject("data").getString("token"));
+                        PreferenceUtil.putString("userId",jsonobject.getJSONObject("data").getString("userId"));
                         PreferenceUtil.putString("isLogin","yes");
-                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
-                        }
+                        PreferenceUtil.putString("finishRegister","yes");
+//                        PreferenceUtil.putString("finishNickNameYinDao","yes");
+//                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
+//
+//                        }
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
                         finish();
 
                     }else{
@@ -575,11 +597,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (200==jsonobject.getInt("code")||"SUCCESS".equals(jsonobject.getString("code"))) {
 
                         startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                        PreferenceUtil.putString("token",jsonobject.getString("data"));
+                        PreferenceUtil.putString("token",jsonobject.getJSONObject("data").getString("token"));
+                        PreferenceUtil.putString("userId",jsonobject.getJSONObject("data").getString("userId"));
                         PreferenceUtil.putString("isLogin","yes");
-                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
-                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
-                        }
+                        PreferenceUtil.putString("finishRegister","yes");
+//                        PreferenceUtil.putString("finishNickNameYinDao","yes");
+//                        if (!PreferenceUtil.getBool("setTagSuccess",false)){
+//                            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
+//                        }
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, PreferenceUtil.getString("userId","")));
+
                         finish();
 
                     }else{

@@ -47,6 +47,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:padding="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -58,9 +59,11 @@
             android:textColor="@color/gray_text_color"
             android:text="超过"/>
         <TextView
+            android:id="@+id/same_person_precent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:maxLength="5"
             android:textColor="@color/new_redbg"
             android:text="35%"/>
         <TextView
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@color/gray_text_color"
-            android:text="的用户和你有同类症状"/>
+            android:text="%的用户和你有同类症状"/>
 
     </LinearLayout>
 

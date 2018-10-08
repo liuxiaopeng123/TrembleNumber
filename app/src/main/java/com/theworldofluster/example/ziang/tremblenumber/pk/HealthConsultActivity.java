@@ -1,6 +1,7 @@
 package com.theworldofluster.example.ziang.tremblenumber.pk;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -177,6 +178,15 @@ public class HealthConsultActivity extends Activity {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==0){
+            ConsultTab3Controller controller = (ConsultTab3Controller) list.get(2);
+            controller.getList(controller.select);
         }
     }
 }

@@ -23,6 +23,11 @@ public class LevelBean {
     private int level;
     private LevelInfoVoBean levelInfoVo;
     private String userName;
+    /**
+     * growthValue : 10
+     */
+
+    private int growthValue;
 
     public String getBackGroupUrl() {
         return backGroupUrl;
@@ -70,6 +75,14 @@ public class LevelBean {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getGrowthValue() {
+        return growthValue;
+    }
+
+    public void setGrowthValue(int growthValue) {
+        this.growthValue = growthValue;
     }
 
     public static class LevelInfoVoBean {

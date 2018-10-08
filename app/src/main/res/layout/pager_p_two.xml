@@ -18,7 +18,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="15"
         android:padding="20dp"
         android:orientation="vertical"
         >
@@ -34,34 +35,31 @@
             android:drawablePadding="10dp"
             />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <TextView
             android:id="@+id/pager_xinlifenxi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="拖延只是种行为模式，背后是大脑里的自我对话·\n你想改变，确实只能靠行动去重建习惯：但与此同时，还需要有效处理大脑里的自我对话·否则，行动很难启动·\n持续进行情绪打卡·有助于全国分析你的心理状况哦！......"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:padding="10dp"
+            android:text="暂无心理分析~"
+            android:textSize="14sp"
+            android:padding="5dp"
             android:textColor="@color/black"
             android:drawablePadding="10dp"
             android:lineSpacingExtra="5dp"
             />
-
+        </ScrollView>
 
     </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
 
 
         <TextView
             android:id="@+id/pager_p_two_go"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@mipmap/orange_btn"
             android:text="去打卡"
             android:textColor="@color/white"

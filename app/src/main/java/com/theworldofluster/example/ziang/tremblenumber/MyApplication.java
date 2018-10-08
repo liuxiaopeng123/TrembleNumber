@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.mob.MobSDK;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import org.xutils.x;
@@ -71,6 +72,8 @@ public class MyApplication extends Application {
 
         //JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+        MobSDK.init(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();

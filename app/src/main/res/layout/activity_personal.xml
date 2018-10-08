@@ -50,7 +50,7 @@
             />
 
         <RelativeLayout
-            android:visibility="gone"
+            android:id="@+id/personal_activity_share"
             android:layout_width="60dp"
             android:layout_marginTop="20dp"
             android:layout_height="match_parent"
@@ -118,10 +118,10 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/personal_activity_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="Hue, 您暂无最近健康报告哦~"
         android:textSize="18sp"
         android:gravity="center"
         android:layout_centerVertical="true"

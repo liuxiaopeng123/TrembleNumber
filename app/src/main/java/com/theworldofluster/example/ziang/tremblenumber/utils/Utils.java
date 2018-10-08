@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,6 +19,7 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Display;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,6 +52,8 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class Utils {
 
@@ -133,27 +137,30 @@ public class Utils {
 	}
 
 //	//分享
-//
-//	public static void showShare(Context context,String content,String url) {
-//		OnekeyShare oks = new OnekeyShare();
-//		//关闭sso授权
-//		oks.disableSSOWhenAuthorize();
-//
-//		// title标题，微信、QQ和QQ空间等平台使用
-//		oks.setTitle(content);
-//		// titleUrl QQ和QQ空间跳转链接
+
+	public static void showShare(Context context,String content,String path) {
+		OnekeyShare oks = new OnekeyShare();
+		//关闭sso授权
+		oks.disableSSOWhenAuthorize();
+
+		// title标题，微信、QQ和QQ空间等平台使用
+		oks.setTitle(content);
+		// titleUrl QQ和QQ空间跳转链接
 //		oks.setTitleUrl(url);
-//		// text是分享文本，所有平台都需要这个字段
-//		oks.setText("我是分享文本");
-//		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-////		oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-//		// url在微信、微博，Facebook等平台中使用
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText("我的健康周报分");
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+//		oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+		oks.setImagePath(path);
+//		oks.setImageUrl(path);
+		Log.i("xiaopeng----path",path+"");
+		// url在微信、微博，Facebook等平台中使用
 //		oks.setUrl("http://sharesdk.cn");
-//		// comment是我对这条分享的评论，仅在人人网使用
+		// comment是我对这条分享的评论，仅在人人网使用
 //		oks.setComment("我是测试评论文本");
-//		// 启动分享GUI
-//		oks.show(context);
-//	}
+		// 启动分享GUI
+		oks.show(context);
+	}
 //
 public static void BJSloadImg(Context context, String url, ImageView imageView){
 
@@ -1713,7 +1720,7 @@ public static void BJSloadImg(Context context, String url, ImageView imageView){
 
 	public static int getrandom() {
 		Random random = new Random();// 定义随机类
-		int result = random.nextInt(100);// 返回[0,10)集合中的整数，注意不包括10
+		int result = random.nextInt(10000000);// 返回[0,10)集合中的整数，注意不包括10
 		return result + 1; // +1后，[0,10)集合变为[1,11)集合，满足要求
 	}
 }

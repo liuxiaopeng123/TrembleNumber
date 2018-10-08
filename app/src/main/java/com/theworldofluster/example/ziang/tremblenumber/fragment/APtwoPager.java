@@ -3,6 +3,7 @@ package com.theworldofluster.example.ziang.tremblenumber.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.activity.CalendarActivity;
 import com.theworldofluster.example.ziang.tremblenumber.activity.FoldlinediagramActivity;
 import com.theworldofluster.example.ziang.tremblenumber.personal.PersonalActivity;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 
 import org.w3c.dom.Text;
 
@@ -61,11 +63,16 @@ public class APtwoPager extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void update(){
+        if (pager_xinlifenxi!=null){
+            pager_xinlifenxi.setText(PreferenceUtil.getString("xinlifenxi","暂无心理分析~"));
+        }
+        Log.i("xiaopeng----resume","显示心理分析");
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (((PersonalActivity)getContext()).reportWeek!=null){
-            pager_xinlifenxi.setText(((PersonalActivity)getContext()).reportWeek.getPhysiologyAnalysis());
-        }
+
     }
 }

@@ -29,7 +29,9 @@ import com.theworldofluster.example.ziang.tremblenumber.MouthpieceUrl;
 import com.theworldofluster.example.ziang.tremblenumber.R;
 import com.theworldofluster.example.ziang.tremblenumber.dialog.HttpDialog;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.PwdCheckUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.ToastUtil;
+import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,7 +92,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+                if(login_username.getText().toString().length()==11&&login_password.getText().toString().length()==6&&login_newpassword.getText().toString().length()>=6){
                     login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     login_btn.setClickable(true);
@@ -118,7 +120,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+                if(login_username.getText().toString().length()==11&&login_password.getText().toString().length()==6&&login_newpassword.getText().toString().length()>=6){
                     login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     login_btn.setClickable(true);
@@ -145,7 +147,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(login_username.getText().toString().length()==11&&!login_password.getText().toString().equals("")&&!login_newpassword.getText().toString().equals("")){
+                if(login_username.getText().toString().length()==11&&login_password.getText().toString().length()==6&&login_newpassword.getText().toString().length()>=6){
                     login_btn.setBackgroundResource(R.drawable.button_shape_cricle_dian);
 
                     login_btn.setClickable(true);
@@ -200,16 +202,22 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
                     return;
                 }
 
-                if(login_password.getText().toString().equals("")){
+                if(login_password.getText().toString().length()!=6){
 
-                    ToastUtil.showContent(FoundPasswordActivity.this,"请输入验证码");
+                    ToastUtil.showContent(FoundPasswordActivity.this,"请输入正确验证码");
 
                     return;
                 }
 
-                if(login_newpassword.getText().toString().equals("")){
+                if(!PwdCheckUtil.isLetterDigit(login_newpassword.getText().toString())){
 
-                    ToastUtil.showContent(FoundPasswordActivity.this,"请输入新密码");
+                    ToastUtil.showContent(FoundPasswordActivity.this,"请按要求输入密码");
+
+                    return;
+                }
+                if(login_newpassword.getText().toString().contains("_")||login_newpassword.getText().toString().contains("-")){
+
+                    ToastUtil.showContent(FoundPasswordActivity.this,"密码不能包含“-”或“_”");
 
                     return;
                 }
@@ -250,7 +258,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
         params.addHeader("token", PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("phone",login_username.getText().toString());
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_code, params, new RequestCallBack<String>() {
 
@@ -266,7 +274,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
                         ToastUtil.showContent(FoundPasswordActivity.this,"验证码获取成功！");
 
                     }else{
-
+//                        ToastUtil.showContent(FoundPasswordActivity.this,"验证码错误");
                         ToastUtil.showContent(FoundPasswordActivity.this,jsonobject.getString("message"));
 
                     }
@@ -294,7 +302,7 @@ public class FoundPasswordActivity extends AppCompatActivity implements View.OnC
         params.addQueryStringParameter("userId",PreferenceUtil.getString("userId",""));
         params.addQueryStringParameter("verify",login_password.getText().toString());
         params.addQueryStringParameter("newPwd",login_newpassword.getText().toString());
-
+        params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET, MouthpieceUrl.base_perfectmemberinformation, params, new RequestCallBack<String>() {
 

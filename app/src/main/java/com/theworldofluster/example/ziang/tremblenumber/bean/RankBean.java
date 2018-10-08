@@ -29,7 +29,7 @@ public class RankBean {
     private double phyBehavScore;
     private double phyScore;
     private int ranking;
-    private int totalScore;
+    private double totalScore;
     private int trend;
     private String userId;
     /**
@@ -117,11 +117,11 @@ public class RankBean {
         this.ranking = ranking;
     }
 
-    public int getTotalScore() {
+    public double getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(int totalScore) {
+    public void setTotalScore(double totalScore) {
         this.totalScore = totalScore;
     }
 

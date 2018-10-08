@@ -3,18 +3,18 @@ package com.theworldofluster.example.ziang.tremblenumber.personal;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaActionSound;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -23,6 +23,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -45,7 +45,7 @@ import com.theworldofluster.example.ziang.tremblenumber.adapter.MyFragmentPagerA
 import com.theworldofluster.example.ziang.tremblenumber.bean.AleartBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.ExtrasBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.GsonObjModel;
-import com.theworldofluster.example.ziang.tremblenumber.bean.OptData;
+import com.theworldofluster.example.ziang.tremblenumber.bean.PKInfoBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.RankBean;
 import com.theworldofluster.example.ziang.tremblenumber.bean.WanNengBean;
 import com.theworldofluster.example.ziang.tremblenumber.fragment.APonePager;
@@ -54,16 +54,16 @@ import com.theworldofluster.example.ziang.tremblenumber.fragment.APtwoPager;
 import com.theworldofluster.example.ziang.tremblenumber.jpushdemo.ExampleUtil;
 import com.theworldofluster.example.ziang.tremblenumber.pk.HealthIntegralTableActivity;
 import com.theworldofluster.example.ziang.tremblenumber.services.PostDataService;
-import com.theworldofluster.example.ziang.tremblenumber.user.MyActivity;
 import com.theworldofluster.example.ziang.tremblenumber.utils.DateUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.HttpGet;
 import com.theworldofluster.example.ziang.tremblenumber.utils.PreferenceUtil;
 import com.theworldofluster.example.ziang.tremblenumber.utils.Utils;
 import com.theworldofluster.example.ziang.tremblenumber.view.CircularImage;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
@@ -82,6 +82,12 @@ public class PersonalActivity extends AppCompatActivity {
 
     @ViewInject(R.id.activity_personal_userdata)
     CircularImage activity_personal_userdata;
+
+    @ViewInject(R.id.personal_activity_user_name)
+    TextView personal_activity_user_name;
+
+    @ViewInject(R.id.personal_activity_share)
+    RelativeLayout personal_activity_share;
 
     @ViewInject(R.id.yuan_a)
     ImageView yuan_a;
@@ -181,7 +187,7 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
 
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(0);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -195,6 +201,7 @@ public class PersonalActivity extends AppCompatActivity {
                 if(position==0){
                     activity_personal_bg.setBackgroundResource(R.mipmap.activity_personal_02);
 
+
                     yuan_a.setImageResource(R.mipmap.yuan_a);
                     yuan_b.setImageResource(R.mipmap.yuan_b);
                     yuan_c.setImageResource(R.mipmap.yuan_b);
@@ -202,13 +209,16 @@ public class PersonalActivity extends AppCompatActivity {
                 }else if(position==1){
                     activity_personal_bg.setBackgroundResource(R.mipmap.activity_personal_01);
 
+                    APtwoPager pager2= (APtwoPager) fragmentsList.get(1);
+                    if (pager2!=null){pager2.update();}
                     yuan_a.setImageResource(R.mipmap.yuan_b);
                     yuan_b.setImageResource(R.mipmap.yuan_a);
                     yuan_c.setImageResource(R.mipmap.yuan_b);
 
                 }else if(position==2){
                     activity_personal_bg.setBackgroundResource(R.mipmap.activity_personal_03);
-
+                    APthreePager pager3= (APthreePager) fragmentsList.get(2);
+                    if (pager3!=null){pager3.update();}
                     yuan_a.setImageResource(R.mipmap.yuan_b);
                     yuan_b.setImageResource(R.mipmap.yuan_b);
                     yuan_c.setImageResource(R.mipmap.yuan_a);
@@ -242,20 +252,95 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
 
+        personal_activity_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                screenshot2();
+
+            }
+        });
+
 
 
 
         init();
-//        postData();
-        getReportWeek();
-        getHealthGraph();
         getPKUserStauts();
-        Intent intent = new Intent(this, PostDataService.class);
-        startService(intent);
-        Log.i("xiaopeng---","启动了一个服务");
 
-        Utils.BJSloadImg(this,PreferenceUtil.getString("userheadUrl",""),activity_personal_userdata);
+//        Utils.BJSloadImg(this,PreferenceUtil.getString("userheadUrl",""),activity_personal_userdata);
+        activity_personal_userdata.setImageResource(R.drawable.pingjingweixiao);
         getRankSelf("1");
+
+    }
+
+    private void screenshot2() {
+        // 获取屏幕
+        View dView = getWindow().getDecorView();
+        // 允许当前窗口保存缓存信息
+        dView.setDrawingCacheEnabled(true);
+        dView.buildDrawingCache();
+        Bitmap bmp = dView.getDrawingCache();
+        MediaActionSound mCameraSound= new MediaActionSound();
+        mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+        if (bmp != null) {
+            try {
+                // 获取状态栏高度
+                Rect rect = new Rect();
+                dView.getWindowVisibleDisplayFrame(rect);
+                int statusBarHeights = rect.top;
+                Display display = getWindowManager().getDefaultDisplay();
+                int widths = display.getWidth();
+                int heights = display.getHeight();
+                // 去掉状态栏
+                Bitmap saveBitmap = Bitmap.createBitmap(dView.getDrawingCache(), 0, statusBarHeights,
+                        widths, heights - statusBarHeights);
+                saveCurrentImage();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+//            initHandler.sendMessage(Message.obtain());
+        }
+
+    }
+
+    private void saveCurrentImage()
+    {
+        //获取当前屏幕的大小
+        int width = getWindow().getDecorView().getRootView().getWidth();
+        int height = getWindow().getDecorView().getRootView().getHeight();
+        //生成相同大小的图片
+        Bitmap temBitmap = Bitmap.createBitmap( width, height, Bitmap.Config.ARGB_8888 );
+        //找到当前页面的跟布局
+        View view =  getWindow().getDecorView().getRootView();
+        //设置缓存
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        //从缓存中获取当前屏幕的图片
+        temBitmap = view.getDrawingCache();
+
+        //输出到sd卡
+            File file = new File(Environment.getExternalStorageDirectory() + "/slwx/",Utils.getrandom()+"jieping.jpg");
+            try {
+                if (!file.exists()) {
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+                FileOutputStream foStream = new FileOutputStream(file);
+                temBitmap.compress(Bitmap.CompressFormat.PNG, 100, foStream);
+                foStream.flush();
+                foStream.close();
+                Intent imageIntent = new Intent(Intent.ACTION_SEND);
+                imageIntent.setType("image/jpeg");
+                imageIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.getPath()));
+//                startActivity(Intent.createChooser(imageIntent, "分享"));
+                Log.i("xiaopeng---Show", file.getPath()+"");
+                Utils.showShare(PersonalActivity.this,"抖擞",file.getPath());
+            } catch (Exception e) {
+                Log.i("xiaopeng---Show", e.toString());
+        }
     }
 
 
@@ -272,6 +357,7 @@ public class PersonalActivity extends AppCompatActivity {
             public void onParseSuccess(GsonObjModel<RankBean> response, String result) {
                 if (response.code==200){
                     rankBeanMySelf=response.data;
+                    updateBiaoqing();
                 }
 
                 Log.i("xiaopeng-----","result1-----"+result);
@@ -289,12 +375,44 @@ public class PersonalActivity extends AppCompatActivity {
         };
     }
 
+    private void updateBiaoqing() {
+        if (rankBeanMySelf!=null){
+            if (rankBeanMySelf.getTotalScore()<300){
+                activity_personal_userdata.setImageResource(R.drawable.nanguobeishang);
+            }else if (rankBeanMySelf.getTotalScore()<350){
+                activity_personal_userdata.setImageResource(R.drawable.yaoyaqiechi);
+            }else if (rankBeanMySelf.getTotalScore()<400){
+                activity_personal_userdata.setImageResource(R.drawable.zuohenghengshengqi);
+            }else if (rankBeanMySelf.getTotalScore()<450){
+                activity_personal_userdata.setImageResource(R.drawable.mianwubiaoqing);
+            }else if (rankBeanMySelf.getTotalScore()<500){
+                activity_personal_userdata.setImageResource(R.drawable.kelianxixibankeai);
+            }else if (rankBeanMySelf.getTotalScore()<550){
+                activity_personal_userdata.setImageResource(R.drawable.anwei);
+            }else if (rankBeanMySelf.getTotalScore()<600){
+                activity_personal_userdata.setImageResource(R.drawable.pingjingweixiao);
+            }else if (rankBeanMySelf.getTotalScore()<650){
+                activity_personal_userdata.setImageResource(R.drawable.liechixiao);
+            }else if (rankBeanMySelf.getTotalScore()<700){
+                activity_personal_userdata.setImageResource(R.drawable.jimeinongyanhuaixiao);
+            }else {
+                activity_personal_userdata.setImageResource(R.drawable.bixindianzan);
+            }
+        }else {
+            activity_personal_userdata.setImageResource(R.drawable.pingjingweixiao);
+        }
+
+        activity_personal_userdata.setImageResource(R.drawable.pingjingweixiao);
+
+    }
+
     Dialog dialog;
     private void showPKZhongDialog(){
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
         View view = View.inflate(this, R.layout.dialog_pk_result_jinxingzhong, null);
+        CircularImage userimg= view.findViewById(R.id.dialog_pk_result_userimg);
         ImageView close =view.findViewById(R.id.dialog_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,8 +421,15 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
         TextView jinxingzhong = view.findViewById(R.id.dialog_pk_result_pkzhong);
-        jinxingzhong.setText("正在与用户"+pkInfoBean.getPkSourceUserNickName()+"PK中");
         TextView date =view.findViewById(R.id.dialog_pk_result_date);
+        if (PreferenceUtil.getString("userId","").equals(pkInfoBean.getPkSourceUserId()+"")){
+            jinxingzhong.setText("正在与用户"+pkInfoBean.getPkTargetUserNickName()+"PK中");
+            Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkTargetUserHeadUrl(),userimg);
+        }else {
+            Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkSourceUserHeadUrl(),userimg);
+            jinxingzhong.setText("正在与用户"+pkInfoBean.getPkSourceUserNickName()+"PK中");
+        }
+
         date.setText(DateUtil.getXiaZhouMonday()+"8:00可查看PK结果");
         dialog.setContentView(view);
         dialog.show();
@@ -316,6 +441,8 @@ public class PersonalActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
         View view = View.inflate(this, R.layout.dialog_pk_result_shengli, null);
+        CircularImage img1 = view.findViewById(R.id.dialog_pk_result_shengli_userimg1);
+        CircularImage img2 = view.findViewById(R.id.dialog_pk_result_shengli_userimg2);
         Button button = view.findViewById(R.id.dialog_pk_result_shengli_button);
         TextView username1 = view.findViewById(R.id.dialog_pk_result_shengli_username1);
         TextView jifen1 = view.findViewById(R.id.dialog_pk_result_shengli_jifen1);
@@ -323,22 +450,52 @@ public class PersonalActivity extends AppCompatActivity {
         TextView username2 = view.findViewById(R.id.dialog_pk_result_shengli_username2);
         TextView jifen2 = view.findViewById(R.id.dialog_pk_result_shengli_jifen2);
         TextView jieguo2 = view.findViewById(R.id.dialog_pk_result_shengli_jieguo2);
-        username1.setText(pkInfoBean.getPkSourceUserNickName()+"");
-        username2.setText(pkInfoBean.getPkTargetUserNickName()+"");
-        switch (extrasBean.getStatus()){
+        switch (pkInfoBean.getPkSourceUserResult()){
             case 1://胜利
-                button.setText("再来一局");
-                jifen1.setText("+4积分");
-                jieguo1.setText("获胜奖励");
-                jifen2.setText("-4积分");
-                jifen2.setText("失败惩罚");
+                if (PreferenceUtil.getString("userId","").equals(pkInfoBean.getPkSourceUserId()+"")){
+                    username1.setText(pkInfoBean.getPkSourceUserNickName()+"");
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkSourceUserHeadUrl(),img1);
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkTargetUserHeadUrl(),img2);
+                    username2.setText(pkInfoBean.getPkTargetUserNickName()+"");
+                    button.setText("再来一局");
+                    jifen1.setText("+"+pkInfoBean.getPkSourceUserAddScore()+"积分");
+                    jieguo1.setText("获胜奖励");
+                    jifen2.setText(""+pkInfoBean.getPkTargetUserAddScore()+"积分");
+                    jieguo2.setText("失败惩罚");
+                }else {
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkSourceUserHeadUrl(),img1);
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkTargetUserHeadUrl(),img2);
+                    username1.setText(pkInfoBean.getPkSourceUserNickName()+"");
+                    username2.setText(pkInfoBean.getPkTargetUserNickName()+"");
+                    button.setText("再来一局");
+                    jifen1.setText("+"+pkInfoBean.getPkSourceUserAddScore()+"积分");
+                    jieguo1.setText("获胜奖励");
+                    jifen2.setText(""+pkInfoBean.getPkTargetUserAddScore()+"积分");
+                    jieguo2.setText("失败惩罚");
+                }
                 break;
             case -1://失败
-                button.setText("我要变强");
-                jifen1.setText("-4积分");
-                jieguo1.setText("失败惩罚");
-                jifen2.setText("+4积分");
-                jifen2.setText("获胜奖励");
+                if (PreferenceUtil.getString("userId","").equals(pkInfoBean.getPkSourceUserId()+"")){
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkSourceUserHeadUrl(),img2);
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkTargetUserHeadUrl(),img1);
+                    username1.setText(pkInfoBean.getPkTargetUserNickName()+"");
+                    username2.setText(pkInfoBean.getPkSourceUserNickName()+"");
+                    button.setText("再来一局");
+                    jifen1.setText("+"+pkInfoBean.getPkSourceUserAddScore()+"积分");
+                    jieguo1.setText("获胜奖励");
+                    jifen2.setText(""+pkInfoBean.getPkTargetUserAddScore()+"积分");
+                    jieguo2.setText("失败惩罚");
+                }else {
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkSourceUserHeadUrl(),img2);
+                    Utils.BJSloadImg(this,MouthpieceUrl.base_loading_img+pkInfoBean.getPkTargetUserHeadUrl(),img1);
+                    username1.setText(pkInfoBean.getPkTargetUserNickName()+"");
+                    username2.setText(pkInfoBean.getPkSourceUserNickName()+"");
+                    button.setText("再来一局");
+                    jifen1.setText("+"+pkInfoBean.getPkSourceUserAddScore()+"积分");
+                    jieguo1.setText("获胜奖励");
+                    jifen2.setText(""+pkInfoBean.getPkTargetUserAddScore()+"积分");
+                    jieguo2.setText("失败惩罚");
+                }
                 break;
             case 0://平局
                 break;
@@ -347,6 +504,7 @@ public class PersonalActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 startActivity(new Intent(PersonalActivity.this,HealthIntegralTableActivity.class));
             }
         });
@@ -376,28 +534,31 @@ public class PersonalActivity extends AppCompatActivity {
                     if (extrasBean!=null){
                         switch (extrasBean.getStatus()){
                             case -1:
-                                activity_persion_pk.setVisibility(View.INVISIBLE);
-                                activity_persion_pk.setText("PK失败");
+                                activity_persion_pk.setVisibility(View.VISIBLE);
+//                                activity_persion_pk.setText("PK失败");
+                                activity_persion_pk.setText("PK进行中");
                                 if (extrasBean.getPkId()>0){
                                     getPKInfoStauts();
                                 }
                                 break;
                             case 0:
-                                activity_persion_pk.setVisibility(View.INVISIBLE);
-                                activity_persion_pk.setText("PK平局");
+                                activity_persion_pk.setVisibility(View.VISIBLE);
+//                                activity_persion_pk.setText("PK平局");
+                                activity_persion_pk.setText("PK进行中");
                                 if (extrasBean.getPkId()>0){
                                     getPKInfoStauts();
                                 }
                                 break;
                             case 1:
-                                activity_persion_pk.setVisibility(View.INVISIBLE);
-                                activity_persion_pk.setText("PK胜利");
+                                activity_persion_pk.setVisibility(View.VISIBLE);
+//                                activity_persion_pk.setText("PK胜利");
+                                activity_persion_pk.setText("PK进行中");
                                 if (extrasBean.getPkId()>0){
                                     getPKInfoStauts();
                                 }
                                 break;
                             case 2:
-                                activity_persion_pk.setVisibility(View.INVISIBLE);
+                                activity_persion_pk.setVisibility(View.VISIBLE);
                                 activity_persion_pk.setText("PK进行中");
                                 if (extrasBean.getPkId()>0){
                                     getPKInfoStauts();
@@ -428,7 +589,7 @@ public class PersonalActivity extends AppCompatActivity {
         };
     }
 
-    private WanNengBean pkInfoBean;
+    private PKInfoBean pkInfoBean;
     private void getPKInfoStauts() {
         com.lidroid.xutils.http.RequestParams params = new com.lidroid.xutils.http.RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
@@ -436,9 +597,9 @@ public class PersonalActivity extends AppCompatActivity {
         params.addQueryStringParameter("pkId", extrasBean.getPkId()+"");
         params.addQueryStringParameter("Ziang", Utils.getrandom()+"");
         Log.i("xiaopeng", "url----6:" + MouthpieceUrl.base_pk_info + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_pk_info , this, params) {
+        new HttpGet<GsonObjModel<PKInfoBean>>(MouthpieceUrl.base_pk_info , this, params) {
             @Override
-            public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
+            public void onParseSuccess(GsonObjModel<PKInfoBean> response, String result) {
                 if (response.code==200){
                     pkInfoBean=response.data;
 
@@ -487,20 +648,25 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     public WanNengBean reportWeek;
-    private void getReportWeek() {
+    public void getReportWeek() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
         params.addHeader("token",PreferenceUtil.getString("token",""));
         params.addQueryStringParameter("startDate", "2018-07-23");
         params.addQueryStringParameter("endDate","2018-07-29");
-//        params.addQueryStringParameter("startDate", DateUtil.getMonday());
-//        params.addQueryStringParameter("endDate",DateUtil.getLastWeekSunday());
+        params.addQueryStringParameter("startDate", DateUtil.getMonday());
+        params.addQueryStringParameter("endDate",DateUtil.getLastWeekSunday());
         Log.i("xiaopeng", "url----1:" + MouthpieceUrl.base_health_report_week + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
         new HttpGet<GsonObjModel<WanNengBean>>(MouthpieceUrl.base_health_report_week , this, params) {
             @Override
             public void onParseSuccess(GsonObjModel<WanNengBean> response, String result) {
                 if (response.code==200){
                     reportWeek=response.data;
+                    if (reportWeek==null){
+                        personal_activity_user_name.setText("您暂无最近健康报告哦~");
+                    }else {
+                        personal_activity_user_name.setText("您有最新健康报告~");
+                    }
                 }
                 Log.i("xiaopeng-----1","result-----"+result);
             }
@@ -517,32 +683,32 @@ public class PersonalActivity extends AppCompatActivity {
         };
     }
 
-    private void getHealthGraph() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
-        params.addHeader("token",PreferenceUtil.getString("token",""));
-        params.addQueryStringParameter("startDate", "2018-07-23");
-        params.addQueryStringParameter("endDate","2018-07-29");
-        Log.i("xiaopeng", "url----2:" + MouthpieceUrl.base_health_report_graph + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
-        new HttpGet<GsonObjModel<List<AleartBean>>>(MouthpieceUrl.base_health_report_graph , this, params) {
-            @Override
-            public void onParseSuccess(GsonObjModel<List<AleartBean>> response, String result) {
-                if (response.code==200){
-                }
-                Log.i("xiaopeng-----2","result-----"+result);
-            }
-
-            @Override
-            public void onParseError(GsonObjModel<String> response, String result) {
-                Log.i("xiaopeng-----2","result-----"+result);
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                super.onFailure(e, s);
-            }
-        };
-    }
+//    private void getHealthGraph() {
+//        RequestParams params = new RequestParams();
+//        params.addQueryStringParameter("userId", PreferenceUtil.getString("userId",""));
+//        params.addHeader("token",PreferenceUtil.getString("token",""));
+//        params.addQueryStringParameter("startDate", "2018-07-23");
+//        params.addQueryStringParameter("endDate","2018-07-29");
+//        Log.i("xiaopeng", "url----2:" + MouthpieceUrl.base_health_report_graph + "?" + params.getQueryStringParams().toString().replace(",", "&").replace("[", "").replace("]", "").replace(" ", ""));
+//        new HttpGet<GsonObjModel<List<AleartBean>>>(MouthpieceUrl.base_health_report_graph , this, params) {
+//            @Override
+//            public void onParseSuccess(GsonObjModel<List<AleartBean>> response, String result) {
+//                if (response.code==200){
+//                }
+//                Log.i("xiaopeng-----2","result-----"+result);
+//            }
+//
+//            @Override
+//            public void onParseError(GsonObjModel<String> response, String result) {
+//                Log.i("xiaopeng-----2","result-----"+result);
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException e, String s) {
+//                super.onFailure(e, s);
+//            }
+//        };
+//    }
 
     //监控
     private void init() {

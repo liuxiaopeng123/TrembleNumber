@@ -85,12 +85,12 @@ public class WanNengBean {
     private int healthRanking;
     private String latterUserHeadUrl;
     private String physiologyAnalysis;
-    private int physiologyScore;
+    private double physiologyScore;
     private String previousUserHeadUrl;
     private int previousUserId;
     private String psychologyAnalysis;
-    private int psychologyScore;
-    private int score;
+    private double psychologyScore;
+    private double score;
     private int scoreTrend;
     /**
      * pkConfirmDate : 2018-08-16 15:57:54
@@ -316,11 +316,11 @@ public class WanNengBean {
         this.physiologyAnalysis = physiologyAnalysis;
     }
 
-    public int getPhysiologyScore() {
+    public double getPhysiologyScore() {
         return physiologyScore;
     }
 
-    public void setPhysiologyScore(int physiologyScore) {
+    public void setPhysiologyScore(double physiologyScore) {
         this.physiologyScore = physiologyScore;
     }
 
@@ -348,19 +348,19 @@ public class WanNengBean {
         this.psychologyAnalysis = psychologyAnalysis;
     }
 
-    public int getPsychologyScore() {
+    public double getPsychologyScore() {
         return psychologyScore;
     }
 
-    public void setPsychologyScore(int psychologyScore) {
+    public void setPsychologyScore(double psychologyScore) {
         this.psychologyScore = psychologyScore;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

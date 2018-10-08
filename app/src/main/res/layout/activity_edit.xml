@@ -141,6 +141,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
+            android:maxLength="60"
             android:padding="15dp"
             android:hint="个性签名，支持中文，英文，表情..."
             android:textSize="15sp"
